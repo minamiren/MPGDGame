@@ -28,6 +28,10 @@ Library/
 # Visual Studio cache directory
 .vs/
 
+# Ignore the EdDevelopment scene and its .meta file
+/[Aa]ssets/EdDevelopment.unity
+/[Aa]ssets/EdDevelopment.unity.meta
+
 # Gradle cache directory
 .gradle/
 
