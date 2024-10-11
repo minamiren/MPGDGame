@@ -31,6 +31,10 @@ Library/
 # Ignore the EdDevelopment scene and its .meta file
 /[Aa]ssets/EdDevelopment.unity
 /[Aa]ssets/EdDevelopment.unity.meta
+/[Aa]ssets/Scenes/RenScene.*
+
+# vsconfig
+.vsconfig
 
 # Gradle cache directory
 .gradle/
