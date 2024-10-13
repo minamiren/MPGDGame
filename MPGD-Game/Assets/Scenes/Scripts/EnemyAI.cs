@@ -82,9 +82,14 @@ public class EnemyAiTutorial : MonoBehaviour
         if (!alreadyAttacked)
         {
             ///Attack code here
-            Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
+            // Calculate the direction to the player at the time of firing
+            Vector3 directionToPlayer = (player.position - transform.position).normalized;
+
+            // Instantiate the projectile
+            GameObject firedProjectile = Instantiate(projectile, transform.position + transform.forward, Quaternion.identity);
+
+            // Initialize the projectile with the direction
+            firedProjectile.GetComponent<Projectile>().Initialize(directionToPlayer);
             ///End of attack code
 
             alreadyAttacked = true;
@@ -107,11 +112,11 @@ public class EnemyAiTutorial : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, sightRange);
-    }
+    //private void OnDrawGizmosSelected()
+    //{
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawWireSphere(transform.position, attackRange);
+    //    Gizmos.color = Color.yellow;
+    //    Gizmos.DrawWireSphere(transform.position, sightRange);
+    //}
 }
