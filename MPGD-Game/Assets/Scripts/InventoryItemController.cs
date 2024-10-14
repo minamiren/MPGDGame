@@ -30,4 +30,9 @@ public class InventoryItemController : MonoBehaviour
 
         Destroy(gameObject);
     }
+
+    private void OnSelect()
+    {
+        Debug.Log("selected item");
+    }
 }
