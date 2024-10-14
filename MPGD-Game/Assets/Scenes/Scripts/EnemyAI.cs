@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
 public class EnemyAiTutorial : MonoBehaviour
 {
@@ -20,6 +21,10 @@ public class EnemyAiTutorial : MonoBehaviour
     public float timeBetweenAttacks;
     bool alreadyAttacked;
     public GameObject projectile;
+    public int damage;
+    public GameObject spikePrefab;  // Assign a cube prefab in the Inspector
+    public float spikeRotationSpeed = 100f;  // Rotation speed (can be set in Inspector)
+    private GameObject activeSpike;  // Reference to the active spike
 
     //States
     public float sightRange, attackRange;
@@ -71,35 +76,81 @@ public class EnemyAiTutorial : MonoBehaviour
     {
         agent.SetDestination(player.position);
     }
+    
 
     private void AttackPlayer()
     {
-        //Make sure enemy doesn't move
+        // Make sure enemy doesn't move
         agent.SetDestination(transform.position);
 
+        // Face the player
         transform.LookAt(player);
 
         if (!alreadyAttacked)
         {
-            ///Attack code here
-            // Calculate the direction to the player at the time of firing
-            Vector3 directionToPlayer = (player.position - transform.position).normalized;
-
-            // Instantiate the projectile
-            GameObject firedProjectile = Instantiate(projectile, transform.position + transform.forward, Quaternion.identity);
-
-            // Initialize the projectile with the direction
-            firedProjectile.GetComponent<Projectile>().Initialize(directionToPlayer);
-            ///End of attack code
-
+            // Spawn the spike when the attack starts
+            StartCoroutine(SpinAndAttack());
             alreadyAttacked = true;
-            Invoke(nameof(ResetAttack), timeBetweenAttacks);
+            Invoke(nameof(ResetAttack), timeBetweenAttacks);  // Set the cooldown between attacks
         }
     }
+
+    private IEnumerator SpinAndAttack()
+    {
+        // Spawn the spike as a cube around the enemy
+        activeSpike = Instantiate(spikePrefab, transform.position + transform.right * 1f, Quaternion.identity);
+        activeSpike.transform.localScale = new Vector3(0.1f, 0.1f, 2f);  // Adjust size to represent a spike
+        activeSpike.transform.SetParent(transform);  // Make spike a child of the enemy
+
+        float totalRotation = 0f;  // Track the total rotation to perform one full spin
+
+        // Spin the spike around the enemy
+        while (totalRotation < 360f)
+        {
+            float step = spikeRotationSpeed * Time.deltaTime;  // Rotation step per frame
+
+            activeSpike.transform.RotateAround(transform.position, Vector3.up, step);  // Rotate around enemy
+
+            totalRotation += step;  // Update total rotation
+
+            // Check if the player is within the spike's path during rotation
+            if (IsPlayerHitBySpike())
+            {
+                DealDamageToPlayer();  // Deal damage if the player is hit by the spike
+            }
+
+            yield return null;  // Wait until next frame
+        }
+
+        // Destroy the spike after one full spin
+        Destroy(activeSpike);
+    }
+
+    private bool IsPlayerHitBySpike()
+    {
+        // Calculate the distance from the spike to the player
+        float distanceToPlayer = Vector3.Distance(activeSpike.transform.position, player.position);
+
+        // Check if the player is close enough to the spike to take damage
+        return distanceToPlayer <= 1.0f;  // You can adjust this value based on the spike's size
+    }
+
+    private void DealDamageToPlayer()
+    {
+        // Assuming your player has a method to take damage
+        PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
+
+        if (playerHealth != null)
+        {
+            playerHealth.TakeDamage(10);  // Adjust damage value as necessary
+        }
+    }
+
     private void ResetAttack()
     {
-        alreadyAttacked = false;
+        alreadyAttacked = false;  // Allow the enemy to attack again after cooldown
     }
+
 
     public void TakeDamage(int damage)
     {
@@ -112,11 +163,4 @@ public class EnemyAiTutorial : MonoBehaviour
         Destroy(gameObject);
     }
 
-    //private void OnDrawGizmosSelected()
-    //{
-    //    Gizmos.color = Color.red;
-    //    Gizmos.DrawWireSphere(transform.position, attackRange);
-    //    Gizmos.color = Color.yellow;
-    //    Gizmos.DrawWireSphere(transform.position, sightRange);
-    //}
 }
