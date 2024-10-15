@@ -25,6 +25,7 @@ public class EnemyAiTutorial : MonoBehaviour
     public GameObject spikePrefab;  // Assign a cube prefab in the Inspector
     public float spikeRotationSpeed = 100f;  // Rotation speed (can be set in Inspector)
     private GameObject activeSpike;  // Reference to the active spike
+    private bool hasDealtDamage;
 
     //States
     public float sightRange, attackRange;
@@ -83,6 +84,9 @@ public class EnemyAiTutorial : MonoBehaviour
         // Make sure enemy doesn't move
         agent.SetDestination(transform.position);
 
+        // Reset damage
+        hasDealtDamage = false;
+
         // Face the player
         transform.LookAt(player);
 
@@ -114,7 +118,7 @@ public class EnemyAiTutorial : MonoBehaviour
             totalRotation += step;  // Update total rotation
 
             // Check if the player is within the spike's path during rotation
-            if (IsPlayerHitBySpike())
+            if (IsPlayerHitBySpike() && !hasDealtDamage)
             {
                 DealDamageToPlayer();  // Deal damage if the player is hit by the spike
             }
@@ -132,7 +136,7 @@ public class EnemyAiTutorial : MonoBehaviour
         float distanceToPlayer = Vector3.Distance(activeSpike.transform.position, player.position);
 
         // Check if the player is close enough to the spike to take damage
-        return distanceToPlayer <= 1.0f;  // You can adjust this value based on the spike's size
+        return (distanceToPlayer <= 2f);
     }
 
     private void DealDamageToPlayer()
@@ -143,6 +147,7 @@ public class EnemyAiTutorial : MonoBehaviour
         if (playerHealth != null)
         {
             playerHealth.TakeDamage(10);  // Adjust damage value as necessary
+            hasDealtDamage = true;
         }
     }
 
