@@ -2,7 +2,11 @@
   "dependencies": {
     "com.unity.burst": {
       "version": "1.8.9",
+<<<<<<< HEAD:MPGD-Game/Packages/packages-lock.json
+      "depth": 1,
+=======
       "depth": 0,
+>>>>>>> Player:Player/Packages/packages-lock.json
       "source": "registry",
       "dependencies": {
         "com.unity.mathematics": "1.2.1"
@@ -81,7 +85,11 @@
     },
     "com.unity.mathematics": {
       "version": "1.2.6",
+<<<<<<< HEAD:MPGD-Game/Packages/packages-lock.json
+      "depth": 1,
+=======
       "depth": 0,
+>>>>>>> Player:Player/Packages/packages-lock.json
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
@@ -95,7 +103,11 @@
     },
     "com.unity.render-pipelines.core": {
       "version": "15.0.7",
+<<<<<<< HEAD:MPGD-Game/Packages/packages-lock.json
+      "depth": 1,
+=======
       "depth": 0,
+>>>>>>> Player:Player/Packages/packages-lock.json
       "source": "builtin",
       "dependencies": {
         "com.unity.mathematics": "1.2.4",
@@ -118,7 +130,11 @@
     },
     "com.unity.searcher": {
       "version": "4.9.2",
+<<<<<<< HEAD:MPGD-Game/Packages/packages-lock.json
+      "depth": 2,
+=======
       "depth": 0,
+>>>>>>> Player:Player/Packages/packages-lock.json
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
@@ -132,7 +148,11 @@
     },
     "com.unity.shadergraph": {
       "version": "15.0.7",
+<<<<<<< HEAD:MPGD-Game/Packages/packages-lock.json
+      "depth": 1,
+=======
       "depth": 0,
+>>>>>>> Player:Player/Packages/packages-lock.json
       "source": "builtin",
       "dependencies": {
         "com.unity.render-pipelines.core": "15.0.7",
