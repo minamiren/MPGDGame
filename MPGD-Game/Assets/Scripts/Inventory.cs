@@ -9,7 +9,9 @@ public class Inventory : MonoBehaviour
 {
     public List<GameObject> PickUps = new List<GameObject>(); // 存放撿到的物件
     public List<Button> hotbarButtons; // HotBar中的按鈕，最多6個
-    private int currentIndex = 0; // 追踪目前已填滿的格子數
+    public int currentIndex = 0; // 追踪目前已填滿的格子數
+
+    public TextMeshProUGUI itemText;
 
     // 撿到物品後的處理
     public void AddItem(GameObject pickup)
@@ -22,10 +24,6 @@ public class Inventory : MonoBehaviour
             // 更新HotBar顯示
             UpdateHotBar(pickup);
         }
-        else
-        {
-            Debug.Log("HotBar is full!");
-        }
     }
 
     // 更新HotBar UI
@@ -33,10 +31,10 @@ public class Inventory : MonoBehaviour
     {
         // 獲取當前空槽的按鈕
         Button currentButton = hotbarButtons[currentIndex];
-        TextMeshProUGUI tmpText = currentButton.GetComponentInChildren<TextMeshProUGUI>();
+        TextMeshProUGUI itemText = currentButton.transform.Find("ItemText").GetComponent<TextMeshProUGUI>();
 
         // 更新按鈕的文本為物品名稱
-        tmpText.text = pickup.name;
+        itemText.text = pickup.name;
 
         // 如果有圖示，更新圖示
         Image icon = currentButton.transform.GetChild(0).GetComponent<Image>();

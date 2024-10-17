@@ -12,17 +12,14 @@ public class PlayerController : MonoBehaviour
 
     public Vector2 moveValue;
     public float speed;
-
-    private Vector3 oldPosition;
-    private Vector3 velocity;
     private float scalarSpeed;
 
     public Inventory inventory;
+    public TextMeshProUGUI hotBarFulledText;
 
     void Start()
     {
-        oldPosition = transform.position;
-
+        hotBarFulledText.text = "";
     }
 
     void OnMove(InputValue value)
@@ -39,10 +36,23 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "PickUp")
+        if (inventory.currentIndex < 6)
         {
-            inventory.AddItem(other.gameObject);
-            other.gameObject.SetActive(false);
+            if (other.gameObject.tag == "PickUp")
+            {
+                inventory.AddItem(other.gameObject);
+                other.gameObject.SetActive(false);
+            }
         }
+        else
+        {
+            hotBarFulledText.text = "HotBar is fulled!";
+            StartCoroutine(ClearHotBarFullText(1.5f));
+        }
+    }
+    private IEnumerator ClearHotBarFullText(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        hotBarFulledText.text = ""; // 清空提示文字
     }
 }
