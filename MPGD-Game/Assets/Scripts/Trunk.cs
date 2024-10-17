@@ -11,6 +11,7 @@ public class Trunk : MonoBehaviour
     public Transform trunkPos;
     public TMP_Text trunkText;
     public GameObject inventory;
+    public GameObject itemMenu;
 
     void Start()
     {
@@ -33,10 +34,12 @@ public class Trunk : MonoBehaviour
                 if(!inventory.activeSelf)
                 {
                     inventory.SetActive(true);
+                    itemMenu.SetActive(true);
                     InventoryManager.Instance.ListItems();
                 } else
                 {
                     inventory.SetActive(false);
+                    itemMenu.SetActive(false);
                 }
             } 
         } else
@@ -46,6 +49,11 @@ public class Trunk : MonoBehaviour
                 trunkText.enabled = false;
             }
         }
+    }
+
+    public void PopulateItemMenu(Item item)
+    {
+        Debug.Log("Call populate item menu  "+item);
     }
 
 

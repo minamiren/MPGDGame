@@ -8,6 +8,14 @@ public class InventoryItemController : MonoBehaviour
     Item item;
 
     public Button removeButton;
+    private bool selected;
+    public GameObject trunk;
+
+    void Start()
+    {
+        selected = false;
+
+    }
 
     public void RemoveItem()
     {
@@ -23,16 +31,13 @@ public class InventoryItemController : MonoBehaviour
 
     public void UseItem()
     {
-        Debug.Log(item.value);
+        // Debug.Log(item.value);
         // TODO: do something with this item value
         // probably call Player.AddHealth(item.value) or Player.ReduceHunger(item.value) depending on item value
-        InventoryManager.Instance.Remove(item);
+        /*InventoryManager.Instance.Remove(item);
+        
+        Destroy(gameObject);*/
+        trunk.GetComponent<Trunk>().PopulateItemMenu(item);
 
-        Destroy(gameObject);
-    }
-
-    private void OnSelect()
-    {
-        Debug.Log("selected item");
     }
 }
