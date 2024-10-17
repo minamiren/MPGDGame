@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:MPGD-Game/Assets/UniversalRenderPipelineGlobalSettings.asset.meta
 guid: 376c5d4d78c24485082fbdbfa863ea12
+=======
+guid: fe9fd5ebf9448744cb852e3a62e21d6c
+>>>>>>> Player:Player/Assets/UniversalRenderPipelineGlobalSettings.asset.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 11400000
