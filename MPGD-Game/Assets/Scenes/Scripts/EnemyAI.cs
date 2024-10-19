@@ -25,7 +25,7 @@ public class EnemyAiTutorial : MonoBehaviour
     public GameObject spikePrefab;  // Assign a cube prefab in the Inspector
     public float spikeRotationSpeed = 100f;  // Rotation speed (can be set in Inspector)
     private GameObject activeSpike;  // Reference to the active spike
-    private bool hasDealtDamage;
+    private bool hasDealtDamage = false;
 
     //States
     public float sightRange, attackRange;
@@ -82,13 +82,14 @@ public class EnemyAiTutorial : MonoBehaviour
     private void AttackPlayer()
     {
         // Make sure enemy doesn't move
+        // uncommenting this causes jerky behaviour when the attacker is close to the player
         agent.SetDestination(transform.position);
 
         // Reset damage
-        hasDealtDamage = false;
+        //hasDealtDamage = false;
 
         // Face the player
-        transform.LookAt(player);
+        // transform.LookAt(player);
 
         if (!alreadyAttacked)
         {
@@ -127,6 +128,7 @@ public class EnemyAiTutorial : MonoBehaviour
         }
 
         // Destroy the spike after one full spin
+        hasDealtDamage = false;
         Destroy(activeSpike);
     }
 
