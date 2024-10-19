@@ -33,7 +33,7 @@ public class EnemyAiTutorial : MonoBehaviour
 
     private void Awake()
     {
-        player = GameObject.Find("PlayerObj").transform;
+        player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
     }
 
@@ -144,7 +144,7 @@ public class EnemyAiTutorial : MonoBehaviour
     private void DealDamageToPlayer()
     {
         // Assuming your player has a method to take damage
-        PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
+        PlayerStates playerHealth = player.GetComponent<PlayerStates>();
 
         if (playerHealth != null)
         {
