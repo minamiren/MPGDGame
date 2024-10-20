@@ -11,7 +11,6 @@ public class Trunk : MonoBehaviour
     public Transform trunkPos;
     public TMP_Text trunkText;
     public GameObject inventory;
-    public GameObject itemMenu;
 
     void Start()
     {
@@ -23,37 +22,32 @@ public class Trunk : MonoBehaviour
     {
         playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
         var distance = Vector3.Distance(playerPos, trunkPos.position);
-        if(distance < 5)
+        if (distance < 5)
         {
-            if(trunkText.enabled != true)
+            if (trunkText.enabled != true)
             {
                 trunkText.enabled = true;
             }
-            if(Keyboard.current[Key.E].wasPressedThisFrame)
+            if (Keyboard.current[Key.E].wasPressedThisFrame)
             {
-                if(!inventory.activeSelf)
+                if (!inventory.activeSelf)
                 {
                     inventory.SetActive(true);
-                    itemMenu.SetActive(true);
                     InventoryManager.Instance.ListItems();
-                } else
+                }
+                else
                 {
                     inventory.SetActive(false);
-                    itemMenu.SetActive(false);
                 }
-            } 
-        } else
+            }
+        }
+        else
         {
             if (trunkText.enabled == true)
             {
                 trunkText.enabled = false;
             }
         }
-    }
-
-    public void PopulateItemMenu(Item item)
-    {
-        Debug.Log("Call populate item menu  "+item);
     }
 
 

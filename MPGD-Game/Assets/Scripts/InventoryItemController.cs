@@ -34,17 +34,4 @@ public class InventoryItemController : MonoBehaviour
         InventoryManager.Instance.BackToHotbar(item);
         Destroy(gameObject);
     }
-
-
-    public void UseItem()
-    {
-        // Debug.Log(item.value);
-        // TODO: do something with this item value
-        // probably call Player.AddHealth(item.value) or Player.ReduceHunger(item.value) depending on item value
-        /*InventoryManager.Instance.Remove(item);
-        
-        Destroy(gameObject);*/
-        trunk.GetComponent<Trunk>().PopulateItemMenu(item);
-
-    }
 }
