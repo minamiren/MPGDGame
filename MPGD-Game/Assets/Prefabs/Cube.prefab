@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 1493807322474640619}
   - component: {fileID: 4906904611235219176}
   - component: {fileID: 3971961072280361641}
+  - component: {fileID: 2628985686652682832}
+  - component: {fileID: 6770715958267070936}
   m_Layer: 0
   m_Name: Cube
   m_TagString: PickUp
@@ -118,3 +120,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b07c121a303ff594791139ef60ddd566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2628985686652682832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4664932603021715786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 453d9f268035dc041a3246b5c0d76d16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 0}
+--- !u!114 &6770715958267070936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4664932603021715786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd7ed929da55044a98e00dbb8254dce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 0}

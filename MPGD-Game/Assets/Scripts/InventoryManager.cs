@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -85,5 +85,10 @@ public class InventoryManager : MonoBehaviour
         {
             inventoryItems[i].AddItem(items[i]);
         }
+    }
+    public void AddToInventory(Item item)
+    {
+        items.Add(item);
+        ListItems();
     }
 }

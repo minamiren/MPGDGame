@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -36,23 +36,28 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (inventory.currentIndex < 6)
+        if (other.gameObject.tag == "PickUp")
         {
-            if (other.gameObject.tag == "PickUp")
+            int availableSlot = inventory.FindFirstAvailableSlot();
+            Debug.Log("Available Slot: " + availableSlot);
+            if (availableSlot < inventory.hotbarButtons.Count && inventory.currentHotbarCount < 6)
             {
+                // 如果有可用槽位，撿起物品並將其添加到 inventory 中
                 inventory.AddItem(other.gameObject);
                 other.gameObject.SetActive(false);
             }
+            else
+            {
+                hotBarFulledText.text = "HotBar is fulled!";
+                StartCoroutine(ClearHotBarFullText(1.5f));
+            }
         }
-        else
-        {
-            hotBarFulledText.text = "HotBar is fulled!";
-            StartCoroutine(ClearHotBarFullText(1.5f));
-        }
+
     }
     private IEnumerator ClearHotBarFullText(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        hotBarFulledText.text = ""; // �M�Ŵ��ܤ�r
+        hotBarFulledText.text = ""; // 清空提示文字
     }
+
 }
