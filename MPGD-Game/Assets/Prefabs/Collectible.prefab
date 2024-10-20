@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1644878584602989379}
   - component: {fileID: -5891852001170316026}
   - component: {fileID: 2132197620412114589}
+  - component: {fileID: 6221953418697114739}
   m_Layer: 0
   m_Name: Collectible
   m_TagString: PickUp
@@ -64,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 03043c19f4638ba40bf02b3290f245aa, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -119,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 453d9f268035dc041a3246b5c0d76d16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 8f4e19e7566f88647a8d9fb6579fb8cb, type: 2}
+  item: {fileID: 11400000, guid: ef75af612da07e148a69226ccd06c510, type: 2}
 --- !u!114 &2132197620412114589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,4 +133,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd7ed929da55044a98e00dbb8254dce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 8f4e19e7566f88647a8d9fb6579fb8cb, type: 2}
+  item: {fileID: 11400000, guid: ef75af612da07e148a69226ccd06c510, type: 2}
+--- !u!114 &6221953418697114739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6589639852322385769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b07c121a303ff594791139ef60ddd566, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

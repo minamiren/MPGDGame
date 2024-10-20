@@ -7,21 +7,52 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
-    public List<GameObject> PickUps = new List<GameObject>(); // 存放撿到的物件
-    public List<Button> hotbarButtons; // HotBar中的按鈕，最多6個
-    public bool[] hotbarSlotOccupied; // if hotbar is avalible
+    public List<GameObject> PickUps = new List<GameObject>();
+    public List<Button> hotbarButtons;
+    public ItemController itemController;
+    public PlayerStates playerHungry;
+    public bool[] hotbarSlotOccupied;
     public TextMeshProUGUI itemText;
     public TextMeshProUGUI hotBarFulledText;
-
-    public int currentHotbarCount = 0; // 当前Hotbar中物品数量
+    public int currentHotbarCount = 0;
+    public int PlayerFillBelly = 10;
 
     void Start()
     {
         hotbarSlotOccupied = new bool[hotbarButtons.Count];
         ResetHotbarSlots();
+
     }
 
-    // 撿到物品後的處理
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            UseHotbarItem(0);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            UseHotbarItem(1);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            UseHotbarItem(2);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            UseHotbarItem(3);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            UseHotbarItem(4);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            UseHotbarItem(5);
+        }
+    }
+
+
     public void AddItem(GameObject pickup)
     {        
         int availableSlot = FindFirstAvailableSlot();
@@ -48,18 +79,18 @@ public class Inventory : MonoBehaviour
         hotBarFulledText.text = ""; // 清空提示文字
     }
 
-    // 更新HotBar UI
     private void UpdateHotBar(GameObject pickup, int slotIndex)
     {
         // 獲取當前空槽的按鈕
         Button currentButton = hotbarButtons[slotIndex];
-        TextMeshProUGUI itemText = currentButton.transform.Find("ItemText").GetComponent<TextMeshProUGUI>();
+        
+        TextMeshProUGUI itemText = currentButton.transform.Find("ItemText").GetComponent<TextMeshProUGUI>(); 
         itemText.text = pickup.name;
 
         Image icon = currentButton.transform.GetChild(0).GetComponent<Image>();
         if (icon != null && pickup.GetComponent<SpriteRenderer>() != null)
         {
-            icon.sprite = pickup.GetComponent<SpriteRenderer>().sprite; // 假設物品有 sprite 圖示
+            icon.sprite = pickup.GetComponent<SpriteRenderer>().sprite;
             icon.enabled = true;
         }
 
@@ -88,26 +119,49 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    private void UseHotbarItem(int slotIndex)
+    {
+        if (slotIndex < hotbarSlotOccupied.Length && hotbarSlotOccupied[slotIndex])
+        {
+            GameObject pickup = PickUps[slotIndex];
+            ItemController itemController = pickup.GetComponent<ItemController>();
+
+            if (itemController != null)
+            {
+                Item item = itemController.item;
+                GameObject player = GameObject.FindWithTag("Player");
+                playerHungry = player.GetComponent<PlayerStates>();
+
+                if (playerHungry != null)
+                {
+                    playerHungry.FillBelly(PlayerFillBelly);
+                }
+                Debug.Log("Removing item from hotbar slot: " + slotIndex + ", Item: " + pickup.name);
+                ClearHotBarSlot(hotbarButtons[slotIndex]);
+                PickUps.RemoveAt(slotIndex);
+                currentHotbarCount--;
+            }
+        }
+    }
 
     private void ClearHotBarSlot(Button hotbarButton)
     {
-        // 清空文字
         TextMeshProUGUI itemText = hotbarButton.transform.Find("ItemText").GetComponent<TextMeshProUGUI>();
-        itemText.text = " "; // 将按键文字设为空白
+        itemText.text = " ";
 
         /* 清空图标
         Image icon = hotbarButton.transform.GetChild(0).GetComponent<Image>();
         icon.sprite = null;  // 移除图标
         icon.enabled = false; // 隐藏图标
         */
-        // 移除所有点击事件
+        
         hotbarButton.onClick.RemoveAllListeners();
 
-        // 找到按钮索引并清除槽位状态
+        
         int index = hotbarButtons.IndexOf(hotbarButton);
         if (index >= 0 && index < hotbarSlotOccupied.Length)
         {
-            hotbarSlotOccupied[index] = false;  // 标记槽位为未占用
+            hotbarSlotOccupied[index] = false;
         }
     }
 

@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f; // Movement speed
-    public float lookSpeed = 0.2f;  // Mouse look speed
+    public float lookSpeed = 0.002f;  // Mouse look speed
     public Transform playerCamera; // Reference to the camera
 
     private Vector2 movementInput; // Store movement input
