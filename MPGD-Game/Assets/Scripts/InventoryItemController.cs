@@ -16,11 +16,11 @@ public class InventoryItemController : MonoBehaviour
         selected = false;
 
     }
+    public Button backtoHotbarButton;
 
     public void RemoveItem()
     {
         InventoryManager.Instance.Remove(item);
-
         Destroy(gameObject);
     }
 
@@ -28,6 +28,13 @@ public class InventoryItemController : MonoBehaviour
     {
         item = newItem;
     }
+
+    public void MoveBackToHotBar()
+    {
+        InventoryManager.Instance.BackToHotbar(item);
+        Destroy(gameObject);
+    }
+
 
     public void UseItem()
     {
