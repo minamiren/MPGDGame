@@ -22,24 +22,26 @@ public class Trunk : MonoBehaviour
     {
         playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
         var distance = Vector3.Distance(playerPos, trunkPos.position);
-        if(distance < 5)
+        if (distance < 5)
         {
-            if(trunkText.enabled != true)
+            if (trunkText.enabled != true)
             {
                 trunkText.enabled = true;
             }
-            if(Keyboard.current[Key.E].wasPressedThisFrame)
+            if (Keyboard.current[Key.E].wasPressedThisFrame)
             {
-                if(!inventory.activeSelf)
+                if (!inventory.activeSelf)
                 {
                     inventory.SetActive(true);
                     InventoryManager.Instance.ListItems();
-                } else
+                }
+                else
                 {
                     inventory.SetActive(false);
                 }
-            } 
-        } else
+            }
+        }
+        else
         {
             if (trunkText.enabled == true)
             {

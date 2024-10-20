@@ -4,8 +4,9 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f; // Movement speed
-    public float lookSpeed = 0.002f;  // Mouse look speed
+    public float lookSpeed = 15f;  // Mouse look speed
     public Transform playerCamera; // Reference to the camera
+    public GameObject inventory;
 
     private Vector2 movementInput; // Store movement input
     private Vector2 lookInput; // Store look input
@@ -61,9 +62,12 @@ public class PlayerMovement : MonoBehaviour
     private void LookAround()
     {
         // Adjust rotation angles based on mouse input
-        rotationY -= lookInput.y * lookSpeed; // Invert Y-axis
-        rotationY = Mathf.Clamp(rotationY, -90f, 90f); // Limit up and down rotation
-        rotationX += lookInput.x * lookSpeed; // Left and right rotation
+        if(!inventory.activeSelf)
+        {
+            rotationY -= Mathf.Clamp(lookInput.y, -lookSpeed, lookSpeed); // Invert Y-axis
+            rotationY = Mathf.Clamp(rotationY, -20f, 20f); // Limit up and down rotation
+            rotationX += Mathf.Clamp(lookInput.x, -lookSpeed, lookSpeed); // Left and right rotation
+        }
 
         // Apply the rotation to the camera
         playerCamera.localEulerAngles = new Vector3(rotationY, 0, 0);
