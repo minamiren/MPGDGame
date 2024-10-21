@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eb56f15524998341940862666c138c9, type: 3}
   m_Name: Collectible
   m_EditorClassIdentifier: 
-  id: 1
+  id: 0
   itemName: Stone
   value: 0
   icon: {fileID: 0}
