@@ -12,6 +12,8 @@ public class EnemyAiTutorial : MonoBehaviour
 
     public float health;
 
+    public EnemySpawner spawner;
+
     //Patroling
     public Vector3 walkPoint;
     bool walkPointSet;
@@ -167,6 +169,8 @@ public class EnemyAiTutorial : MonoBehaviour
     }
     private void DestroyEnemy()
     {
+        if (spawner != null)
+            spawner.OnEnemyDestroyed();
         Destroy(gameObject);
     }
 
