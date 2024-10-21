@@ -42,25 +42,21 @@ public class InventoryManager : MonoBehaviour
 
         if (availableSlot < inventory.hotbarButtons.Count && inventory.currentHotbarCount < 6)
         {
-            // 創建一個新的 GameObject 來模擬物品
+            // Create a new GameObject to simulate the item
             GameObject newPickup = new GameObject(item.itemName);
             ItemController itemController = newPickup.AddComponent<ItemController>();
-            itemController.item = item; // 把 Item 賦值給這個物品控制器
+            itemController.item = item; 
+            
+            inventory.AddItem(newPickup);   // add item to Hotbar           
+            items.Remove(item);             // remove item from inventory
 
-            // 將這個新的物品添加到 Hotbar
-            inventory.AddItem(newPickup);
-
-            // 從 Inventory 列表中移除該物品
-            items.Remove(item);
-
-            // 更新 Inventory 顯示
-            CleanContent();
-            ListItems();
+            ListItems();                    // update the inventory
         }
     }
 
     public void CleanContent()
     {
+        //show item in inventory
         foreach (Transform item in itemContent)
         {
             Destroy(item.gameObject);
@@ -109,6 +105,7 @@ public class InventoryManager : MonoBehaviour
 
     public void SetInventoryItems()
     {
+        // set all items in inventory
         inventoryItems = itemContent.GetComponentsInChildren<InventoryItemController>();
 
         for (int i = 0; i < items.Count; i++)
