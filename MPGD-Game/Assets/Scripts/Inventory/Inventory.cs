@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 
 public class Inventory : MonoBehaviour
 {
-    public List<GameObject> PickUps = new List<GameObject>();
+    public GameObject[] PickUps;
     public List<Button> hotbarButtons;
     public ItemController itemController;
     public PlayerStates playerHungry;
@@ -21,32 +22,32 @@ public class Inventory : MonoBehaviour
     {
         hotbarSlotOccupied = new bool[hotbarButtons.Count];
         ResetHotbarSlots();
-
+        PickUps = new GameObject[6];
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Keyboard.current[Key.Digit1].wasPressedThisFrame)
         {
             UseHotbarItem(0);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        else if (Keyboard.current[Key.Digit2].wasPressedThisFrame)
         {
             UseHotbarItem(1);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        else if (Keyboard.current[Key.Digit3].wasPressedThisFrame)
         {
             UseHotbarItem(2);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        else if (Keyboard.current[Key.Digit4].wasPressedThisFrame)
         {
             UseHotbarItem(3);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha5))
+        else if (Keyboard.current[Key.Digit5].wasPressedThisFrame)
         {
             UseHotbarItem(4);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha6))
+        else if (Keyboard.current[Key.Digit6].wasPressedThisFrame)
         {
             UseHotbarItem(5);
         }
@@ -62,9 +63,17 @@ public class Inventory : MonoBehaviour
         {
             // 添加物品至 PickUps 列表
             ItemController itemController = pickup.GetComponent<ItemController>();
-            PickUps.Add(pickup);
-            UpdateHotBar(pickup, availableSlot); // 将物品添加至 hotbar 并显示
-            currentHotbarCount++; // 增加 Hotbar 中物品数量
+            for(int i=0; i < PickUps.Length; i++)
+            {
+                if(PickUps[i] == null)
+                {
+                    PickUps[i] = pickup;
+                    break;
+                }
+            }
+            // PickUps.Add(pickup);
+            UpdateHotBar(pickup, availableSlot); // add the object to hotbar and update to show
+            currentHotbarCount++; // the number of object hotbar holding++
         }
         else
         {
@@ -102,7 +111,7 @@ public class Inventory : MonoBehaviour
     private void MoveToInventory( Button hotbarButton)
     {
         int index = hotbarButtons.IndexOf(hotbarButton);
-        if (index >= 0 && index < PickUps.Count)
+        if (PickUps[index] != null)
         {
             GameObject pickup = PickUps[index]; // 獲取該物品的引用
             ItemController itemController = pickup.GetComponent<ItemController>();
@@ -110,11 +119,12 @@ public class Inventory : MonoBehaviour
             if (itemController != null)
             {
                 Item item = itemController.item;
-                InventoryManager.Instance.AddToInventory(item);
+                //InventoryManager.Instance.CleanContent();
+                InventoryManager.Instance.AddToInventory(item); 
                 ClearHotBarSlot(hotbarButton);
                 hotbarSlotOccupied[index] = false;
-                currentHotbarCount--; // 减少 Hotbar 中物品数量
-                PickUps.RemoveAt(index);
+                currentHotbarCount--;
+                PickUps[index] = null; // remove object from the hotbar
             }
         }
     }
@@ -138,7 +148,7 @@ public class Inventory : MonoBehaviour
                 }
                 Debug.Log("Removing item from hotbar slot: " + slotIndex + ", Item: " + pickup.name);
                 ClearHotBarSlot(hotbarButtons[slotIndex]);
-                PickUps.RemoveAt(slotIndex);
+                PickUps[slotIndex] = null;
                 currentHotbarCount--;
             }
         }

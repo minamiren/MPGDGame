@@ -54,16 +54,22 @@ public class InventoryManager : MonoBehaviour
             items.Remove(item);
 
             // 更新 Inventory 顯示
+            CleanContent();
             ListItems();
         }
     }
 
-    public void ListItems()
+    public void CleanContent()
     {
         foreach (Transform item in itemContent)
         {
             Destroy(item.gameObject);
         }
+    }
+
+    public void ListItems()
+    {
+        
         foreach (var item in items)
         {
             GameObject obj = Instantiate(inventoryItem, itemContent);
@@ -80,7 +86,6 @@ public class InventoryManager : MonoBehaviour
                 removeButton.gameObject.SetActive(true);
             }
         }
-
         SetInventoryItems();
     }
 
@@ -113,6 +118,7 @@ public class InventoryManager : MonoBehaviour
     }
     public void AddToInventory(Item item)
     {
+        CleanContent();
         items.Add(item);
         ListItems();
     }

@@ -64,9 +64,9 @@ public class PlayerMovement : MonoBehaviour
         // Adjust rotation angles based on mouse input
         if(!inventory.activeSelf)
         {
-            rotationY -= Mathf.Clamp(lookInput.y, -lookSpeed, lookSpeed); // Invert Y-axis
+            rotationY -= lookInput.y * lookSpeed; // Invert Y-axis
             rotationY = Mathf.Clamp(rotationY, -20f, 20f); // Limit up and down rotation
-            rotationX += Mathf.Clamp(lookInput.x, -lookSpeed, lookSpeed); // Left and right rotation
+            rotationX += lookInput.x * lookSpeed; // Left and right rotation
         }
 
         // Apply the rotation to the camera
