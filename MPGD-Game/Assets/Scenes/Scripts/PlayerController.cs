@@ -2,23 +2,41 @@ using System.Collections;
 using System . Collections . Generic ;
 using UnityEngine ;
 using UnityEngine . InputSystem ;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
+    public Inventory inventory;
+    public PlayerStates playerHungry;
+    public TextMeshProUGUI hotBarFulledText;
 
-    public Vector2 moveValue;
-    public float speed;
-
-    void OnMove(InputValue value)
+    void Start()
     {
-        moveValue = value.Get<Vector2>();
+        hotBarFulledText.text = "";
     }
 
-    void FixedUpdate()
+    void OnTriggerEnter(Collider other)
     {
-        Vector3 movement = new Vector3(moveValue.x, 0.0f, moveValue.y);
+        if (other.gameObject.tag == "PickUp")
+        {
+            int availableSlot = inventory.FindFirstAvailableSlot();
+            if (availableSlot < inventory.hotbarButtons.Count && inventory.currentHotbarCount < 6)
+            {
+                // 如果有可用槽位，撿起物品並將其添加到 inventory 中
+                inventory.AddItem(other.gameObject);
+                other.gameObject.SetActive(false);
+            }
+            else
+            {
+                hotBarFulledText.text = "HotBar is fulled!";
+                StartCoroutine(ClearHotBarFullText(1.5f));
+            }
+        }
 
-        GetComponent<Rigidbody>().AddForce(movement * speed * Time.
-        fixedDeltaTime);
+    }
+    private IEnumerator ClearHotBarFullText(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        hotBarFulledText.text = ""; // 清空提示文字
     }
 }
