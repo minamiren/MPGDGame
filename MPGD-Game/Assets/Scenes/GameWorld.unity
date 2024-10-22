@@ -846,6 +846,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7579286684273359424, guid: 7521981a8e1b1a649a4d4edca978e642, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 8828925121110341298, guid: 7521981a8e1b1a649a4d4edca978e642, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2931,6 +2935,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6773500401188880552, guid: 77975b8a9e04c0f4b83993b5fac79ac3, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7237682890354827694, guid: 77975b8a9e04c0f4b83993b5fac79ac3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7680466964873643616, guid: 77975b8a9e04c0f4b83993b5fac79ac3, type: 3}
+      propertyPath: m_text
+      value: 'CONTROLS
+
+
+        Mouse: Look around
+
+        WASD/Arrows: Move
+
+        Space:
+        Attack
+
+        E: Interact with object
+
+        Left click: Select
+
+        1-6:
+        Use from HotBar'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7680466964873643616, guid: 77975b8a9e04c0f4b83993b5fac79ac3, type: 3}
+      propertyPath: m_fontSize
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 7680466964873643616, guid: 77975b8a9e04c0f4b83993b5fac79ac3, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 40
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 5850871868853588499, guid: 77975b8a9e04c0f4b83993b5fac79ac3, type: 3}
@@ -3545,6 +3584,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8088976283049180739, guid: 3cc21dbf43ffd38409f30eda7e0c7358, type: 3}
   m_PrefabInstance: {fileID: 1878440577}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1922273775 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1112401111023917878, guid: 77975b8a9e04c0f4b83993b5fac79ac3, type: 3}
+  m_PrefabInstance: {fileID: 1250601142}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1952403620
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4152,7 +4196,7 @@ PrefabInstance:
       objectReference: {fileID: 1250601145}
     - target: {fileID: 1896729043676007361, guid: f0b6bceb48d48464c9876ee7af13933c, type: 3}
       propertyPath: lookSpeed
-      value: 10
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 5826898379686898108, guid: f0b6bceb48d48464c9876ee7af13933c, type: 3}
       propertyPath: m_Layer
@@ -4178,6 +4222,10 @@ PrefabInstance:
       propertyPath: HungerText
       value: 
       objectReference: {fileID: 4463251713887862292}
+    - target: {fileID: 6378096431915017147, guid: f0b6bceb48d48464c9876ee7af13933c, type: 3}
+      propertyPath: startPanel
+      value: 
+      objectReference: {fileID: 1922273775}
     - target: {fileID: 6378096431915017147, guid: f0b6bceb48d48464c9876ee7af13933c, type: 3}
       propertyPath: HealthSlider
       value: 

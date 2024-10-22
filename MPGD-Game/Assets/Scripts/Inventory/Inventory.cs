@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 
 public class Inventory : MonoBehaviour
 {
-    public List<GameObject> PickUps = new List<GameObject>();
+    public GameObject[] PickUps;
     public List<Button> hotbarButtons;
 
     public ItemController itemController;
@@ -26,7 +26,7 @@ public class Inventory : MonoBehaviour
     {
         hotbarSlotOccupied = new bool[hotbarButtons.Count];
         ResetHotbarSlots();
-
+        PickUps = new GameObject[6];
     }
 
     void Update()
@@ -68,7 +68,15 @@ public class Inventory : MonoBehaviour
         {
             // to add gameobject to PickUp List
             ItemController itemController = pickup.GetComponent<ItemController>();
-            PickUps.Add(pickup);
+            for(int i=0; i < PickUps.Length; i++)
+            {
+                if(PickUps[i] == null)
+                {
+                    PickUps[i] = pickup;
+                    break;
+                }
+            }
+            // PickUps.Add(pickup);
             UpdateHotBar(pickup, availableSlot); // add the object to hotbar and update to show
             currentHotbarCount++; // the number of object hotbar holding++
         }
@@ -114,7 +122,7 @@ public class Inventory : MonoBehaviour
     {
         // Find the index of the hotbar button that was clicked
         int index = hotbarButtons.IndexOf(hotbarButton);
-        if (index >= 0 && index < PickUps.Count)
+        if (PickUps[index] != null)
         {
             GameObject pickup = PickUps[index];
             ItemController itemController = pickup.GetComponent<ItemController>();
@@ -123,12 +131,12 @@ public class Inventory : MonoBehaviour
             {
                 // If the gameobject is valid add the item to the inventory
                 Item item = itemController.item;
-                InventoryManager.Instance.AddToInventory(item);
-                Destroy(item);
+                //InventoryManager.Instance.CleanContent();
+                InventoryManager.Instance.AddToInventory(item); 
                 ClearHotBarSlot(hotbarButton);
                 hotbarSlotOccupied[index] = false;
                 currentHotbarCount--;
-                PickUps.RemoveAt(index); // remove object from the hotbar
+                PickUps[index] = null; // remove object from the hotbar
             }
         }
     }
@@ -151,7 +159,7 @@ public class Inventory : MonoBehaviour
                     playerHungry.FillBelly(PlayerFillBelly);
                 }
                 ClearHotBarSlot(hotbarButtons[slotIndex]);
-                PickUps.RemoveAt(slotIndex);
+                PickUps[slotIndex] = null;
                 currentHotbarCount--;
             }
         }

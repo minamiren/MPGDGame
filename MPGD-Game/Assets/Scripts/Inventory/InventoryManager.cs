@@ -50,17 +50,23 @@ public class InventoryManager : MonoBehaviour
             inventory.AddItem(newPickup);   // add item to Hotbar           
             items.Remove(item);             // remove item from inventory
 
+            CleanContent();
             ListItems();                    // update the inventory
+        }
+    }
+
+    public void CleanContent()
+    {
+        foreach (Transform item in itemContent)
+        {
+            Destroy(item.gameObject);
         }
     }
 
     public void ListItems()
     {
         //show item in inventory
-        foreach (Transform item in itemContent)
-        {
-            Destroy(item.gameObject);
-        }
+        CleanContent();
         foreach (var item in items)
         {
             GameObject obj = Instantiate(inventoryItem, itemContent);
@@ -109,6 +115,7 @@ public class InventoryManager : MonoBehaviour
             inventoryItems[i].AddItem(items[i]);
         }
     }
+
     public void AddToInventory(Item item)
     {
         items.Add(item);

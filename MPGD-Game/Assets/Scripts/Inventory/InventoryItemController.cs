@@ -8,14 +8,8 @@ public class InventoryItemController : MonoBehaviour
     Item item;
 
     public Button removeButton;
-    private bool selected;
     public GameObject trunk;
 
-    void Start()
-    {
-        selected = false;
-
-    }
     public Button backtoHotbarButton;
 
     public void RemoveItem()
