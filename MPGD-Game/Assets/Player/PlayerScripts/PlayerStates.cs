@@ -70,7 +70,7 @@ public class PlayerStates : MonoBehaviour
        // HungerText.text = "HUNGER: " + (int)currentHunger;
     }
 
-    public void hungerByTime()
+    public void HungerByTime()
     {
         currentHunger += HungerIncreseRate * Time.deltaTime;
         //currentHunger = Mathf.Clamp(currentHunger, 0, maxFullBelly);
@@ -99,9 +99,9 @@ public class PlayerStates : MonoBehaviour
         currentHunger = Mathf.Clamp(currentHunger, 0, maxFullBelly);
 
         UpdateHealthUI();
-        if(!startPanel.activeSelf)
+        if(!startPanel.activeSelf || !PlayerMovement.dialogue)
         {
-            hungerByTime();
+            HungerByTime();
             UpdateHunegrUI();
         }
 
