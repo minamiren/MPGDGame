@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 lookInput; // Store look input
     private float rotationY = 0f;  // Vertical rotation angle
     private float rotationX = 0f;  // Horizontal rotation angle
+    public static bool dialogue = false;
 
     private Rigidbody rb;
 
@@ -35,11 +36,11 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        MovePlayer();
-     
-        LookAround();
-
- 
+        if (!dialogue)
+        {
+            MovePlayer();
+            LookAround();
+        }
     }
 
     public void OnMove(InputAction.CallbackContext context)

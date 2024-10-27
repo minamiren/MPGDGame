@@ -36,6 +36,9 @@
                     "name": "Fire",
                     "type": "Button",
                     "id": "4a924c81-a7df-4bfe-af61-4195e4ae497b",
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "aa12dcd4-4758-4352-9172-ff817b8d0cb9",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -172,6 +175,12 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Fire",
+                    "id": "44050f80-532b-425a-b3bb-fb00095d0e2d",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
