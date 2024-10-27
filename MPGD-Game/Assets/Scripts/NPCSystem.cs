@@ -18,7 +18,6 @@ public class NPCSystem : MonoBehaviour
     {
         GameObject player = GameObject.FindWithTag("Player");
         playerInput = player.GetComponent<PlayerInput>();
-        Debug.Log(playerInput);
         interact = playerInput.actions["Interact"];
     }
     // Start is called before the first frame update
@@ -33,12 +32,12 @@ public class NPCSystem : MonoBehaviour
     {
         if (playerInRange == true && interact.ReadValue<float>() == 1 && startDialogue == false  && !PlayerMovement.dialogue)
         {
-            canvas.transform.GetChild(3).gameObject.SetActive(true);
+            //canvas.transform.GetChild(3).gameObject.SetActive(true);
             PlayerMovement.dialogue = true;
             startDialogue = true;
-            Debug.Log("Player in range and am now talking");
             NewDialogue("Hello!");
             NewDialogue("I will not be this friendly in the real game probably");
+            NewDialogue("It sure would be cool if you could click through all this dialogue");
             canvas.transform.GetChild(3).gameObject.SetActive(true);
         }
     }
@@ -49,7 +48,6 @@ public class NPCSystem : MonoBehaviour
         if (other.tag == "Player")
         {
             playerInRange = true;
-            Debug.Log("Player in range to talk");
         }
     }
 

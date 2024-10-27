@@ -42,7 +42,11 @@ public class NextDialogue : MonoBehaviour
                 }
             } else
             {
-                transform.GetChild(3).gameObject.SetActive(false);
+                for (int i = transform.childCount-1; i >= 3; i--)
+                {
+                    Destroy(transform.GetChild(i).gameObject);
+                }
+                //transform.GetChild(3).gameObject.SetActive(false);
             }
         } 
     }
