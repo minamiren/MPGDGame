@@ -20,7 +20,11 @@ public class EnemySpawner : MonoBehaviour
         {
             currentEnemy = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
             // Optional: Set a reference to this spawner in the enemy, if needed
-            currentEnemy.GetComponent<EnemyAiTutorial>().spawner = this;
+            EnemyAI enemyAI = currentEnemy.GetComponent<EnemyAI>();
+            if (enemyAI != null)
+            {
+                enemyAI.SetSpawner(this);
+            }
         }
     }
 

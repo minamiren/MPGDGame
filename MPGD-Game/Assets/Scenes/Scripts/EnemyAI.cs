@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
 
-public class EnemyAiTutorial : MonoBehaviour
+public class EnemyAI : MonoBehaviour
 {
     public NavMeshAgent agent;
 
@@ -12,7 +12,7 @@ public class EnemyAiTutorial : MonoBehaviour
 
     public float health;
 
-    public EnemySpawner spawner;
+    private EnemySpawner spawner;
 
     //Patroling
     public Vector3 walkPoint;
@@ -167,11 +167,17 @@ public class EnemyAiTutorial : MonoBehaviour
 
         if (health <= 0) Invoke(nameof(DestroyEnemy), 0.5f);
     }
-    private void DestroyEnemy()
+
+    public void DestroyEnemy()
     {
+        //Debug.Log("DestroyEnemy, spawner here = " + spawner);
         if (spawner != null)
             spawner.OnEnemyDestroyed();
         Destroy(gameObject);
     }
 
+    public void SetSpawner(EnemySpawner spawnerReference)
+    {
+        spawner = spawnerReference;
+    }
 }

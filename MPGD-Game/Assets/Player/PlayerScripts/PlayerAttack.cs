@@ -36,7 +36,12 @@ public class PlayerAttack : MonoBehaviour
                 else
                 {
                     // If there's no health system, destroy the enemy
-                    Destroy(enemy);
+                    EnemyAI enemyAI = enemy.GetComponent<EnemyAI>();
+                    if (enemyAI != null)
+                    {
+                        enemyAI.DestroyEnemy();
+                    }
+               
                 }
             }
         }
