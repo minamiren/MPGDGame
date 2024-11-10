@@ -13,6 +13,7 @@ public class Inventory : MonoBehaviour
 
     public ItemController itemController;
     public PlayerStates playerHungry;
+    public ObjectSpawn objectSpawn;
 
     public bool[] hotbarSlotOccupied;
     public int currentHotbarCount = 0;
@@ -68,14 +69,21 @@ public class Inventory : MonoBehaviour
         {
             // to add gameobject to PickUp List
             ItemController itemController = pickup.GetComponent<ItemController>();
-            for(int i=0; i < PickUps.Length; i++)
+            bool itemAdded = false;
+
+            for (int i=0; i < PickUps.Length; i++)
             {
                 if(PickUps[i] == null)
                 {
                     PickUps[i] = pickup;
+                    itemAdded = true;
                     break;
                 }
             }
+            if (itemAdded && objectSpawn != null)
+                {
+                    objectSpawn.SpawnNewFood();
+                }
             // PickUps.Add(pickup);
             UpdateHotBar(pickup, availableSlot); // add the object to hotbar and update to show
             currentHotbarCount++; // the number of object hotbar holding++
@@ -161,7 +169,7 @@ public class Inventory : MonoBehaviour
                 ClearHotBarSlot(hotbarButtons[slotIndex]);
                 PickUps[slotIndex] = null;
                 currentHotbarCount--;
-            }
+            };
         }
     }
 

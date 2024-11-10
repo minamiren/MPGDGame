@@ -22,7 +22,6 @@ public class PlayerController : MonoBehaviour
             int availableSlot = inventory.FindFirstAvailableSlot();
             if (availableSlot < inventory.hotbarButtons.Count && inventory.currentHotbarCount < 6)
             {
-                // 如果有可用槽位，撿起物品並將其添加到 inventory 中
                 inventory.AddItem(other.gameObject);
                 other.gameObject.SetActive(false);
             }
@@ -37,6 +36,6 @@ public class PlayerController : MonoBehaviour
     private IEnumerator ClearHotBarFullText(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        hotBarFulledText.text = ""; // 清空提示文字
+        hotBarFulledText.text = "";
     }
 }
