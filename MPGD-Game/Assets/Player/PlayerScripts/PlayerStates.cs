@@ -23,6 +23,8 @@ public class PlayerStates : MonoBehaviour
     public TextMeshProUGUI HungerText;
     public TextMeshProUGUI gameState;
 
+    public GameObject startPanel;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -97,8 +99,11 @@ public class PlayerStates : MonoBehaviour
         currentHunger = Mathf.Clamp(currentHunger, 0, maxFullBelly);
 
         UpdateHealthUI();
-        hungerByTime();
-        UpdateHunegrUI();
+        if(!startPanel.activeSelf)
+        {
+            hungerByTime();
+            UpdateHunegrUI();
+        }
 
     }
 }
