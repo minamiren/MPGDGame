@@ -20,26 +20,26 @@ public class NextDialogue : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {   
-        if(interact.triggered && transform.childCount > dialogueIndexStart)
+    {
+        if (interact.triggered && transform.childCount > index)
         {
             if(PlayerMovement.dialogue)
             {
-                transform.GetChild(index).gameObject.SetActive(true);
                 index += 1;
+                if (index < transform.childCount)
+                {
+                    transform.GetChild(index).gameObject.SetActive(true);
+                }
                 if(transform.childCount == index)
                 {
                     index = dialogueIndexStart;
                     PlayerMovement.dialogue = false;
+                    for (int i = transform.childCount - 1; i >= dialogueIndexStart; i--)
+                    {
+                        Destroy(transform.GetChild(i).gameObject);
+                    }
                 }
-            } else
-            {
-                for (int i = transform.childCount-1; i >= dialogueIndexStart; i--)
-                {
-                    Destroy(transform.GetChild(i).gameObject);
-                }
-                //transform.GetChild(3).gameObject.SetActive(false);
-            }
+            } 
         } 
     }
 }
