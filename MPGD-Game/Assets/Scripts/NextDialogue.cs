@@ -8,6 +8,7 @@ public class NextDialogue : MonoBehaviour
     private PlayerInput playerInput;
     private InputAction interact;
     private int index = 4;
+    private int dialogueIndexStart = 4;
 
     private void Awake()
     {
@@ -20,21 +21,20 @@ public class NextDialogue : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
-        if(interact.triggered && transform.childCount > 3)
+        if(interact.triggered && transform.childCount > dialogueIndexStart)
         {
             if(PlayerMovement.dialogue)
             {
                 transform.GetChild(index).gameObject.SetActive(true);
-                Debug.Log("adding child with name " + transform.GetChild(index).gameObject.name);
                 index += 1;
                 if(transform.childCount == index)
                 {
-                    index = 4;
+                    index = dialogueIndexStart;
                     PlayerMovement.dialogue = false;
                 }
             } else
             {
-                for (int i = transform.childCount-1; i >= 3; i--)
+                for (int i = transform.childCount-1; i >= dialogueIndexStart; i--)
                 {
                     Destroy(transform.GetChild(i).gameObject);
                 }
