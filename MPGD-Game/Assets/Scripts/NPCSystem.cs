@@ -56,12 +56,13 @@ public class NPCSystem : MonoBehaviour
         {
             if (dialogueLength == 0)
             {
-                //canvas.transform.GetChild(3).gameObject.SetActive(true);
                 PlayerMovement.dialogue = true;
+                //canvas.transform.GetChild(3).gameObject.SetActive(true);
                 startDialogue = true;
                 SetDialoguePath();
                 canvas.transform.GetChild(4).gameObject.SetActive(true);
-            } else
+            }
+            else
             {
                 dialogueLength -= 1;
             }
@@ -130,11 +131,12 @@ public class NPCSystem : MonoBehaviour
                 }
             case 2:
                 {
-                    if(mostRecentResponse == "Yes")
+                    if (mostRecentResponse == "Yes")
                     {
                         dialogueLength = 1;
                         NewDialogue("That's a relief to hear. I will wait here until you can find us something useful.");
-                    } else
+                    }
+                    else
                     {
                         dialogueLength = 2;
                         NewDialogue("We are part of an exploratory party, but there was a cave-in and we were separated. It's likely our team thinks that we were lost to the falling rocks.");
