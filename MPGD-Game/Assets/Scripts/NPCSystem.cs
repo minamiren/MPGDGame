@@ -13,6 +13,7 @@ public class NPCSystem : MonoBehaviour
     private InputAction interact;
     public GameObject template;
     public GameObject canvas;
+    private int interactionCount = 0;
 
     private void Awake()
     {
@@ -30,14 +31,12 @@ public class NPCSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerInRange == true && interact.ReadValue<float>() == 1 && startDialogue == false  && !PlayerMovement.dialogue)
+        if (playerInRange == true && interact.ReadValue<float>() == 1 && startDialogue == false && !PlayerMovement.dialogue)
         {
             //canvas.transform.GetChild(3).gameObject.SetActive(true);
             PlayerMovement.dialogue = true;
             startDialogue = true;
-            NewDialogue("Hello!");
-            NewDialogue("I will not be this friendly in the real game probably");
-            NewDialogue("It sure would be cool if you could click through all this dialogue");
+            SetDialoguePath();
             canvas.transform.GetChild(3).gameObject.SetActive(true);
         }
     }
@@ -54,8 +53,38 @@ public class NPCSystem : MonoBehaviour
     void NewDialogue(string text)
     {
         GameObject templateClone = Instantiate(template, template.transform);
-        //templateClone.transform.parent = canvas.transform;
-        templateClone.transform.SetParent(canvas.transform, false );
+        templateClone.transform.SetParent(canvas.transform, false);
         templateClone.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = text;
+    }
+
+    void NewPlayerResponse(List<string> responseOptions)
+    {
+        for (int i = 0; i < responseOptions.Count; i++)
+        {
+            Debug.Log(responseOptions[i]); 
+        }
+    }
+
+    void SetDialoguePath()
+    {
+        // for first interaction, npc just says some things
+        // later we will check for triggered events
+        // this should maybe be a switch or case or whatever c# uses
+        if (interactionCount == 0)
+        {
+            NewDialogue("Hello!");
+            NewDialogue("I will not be this friendly in the real game probably");
+            NewDialogue("It sure would be cool if you could click through all this dialogue");
+            startDialogue = false;
+        }
+        if (interactionCount == 1)
+        {
+            NewDialogue("Now, could you answer a question for me?");
+            List<string> playerResponses = new List<string>();
+            playerResponses.Add("Yes");
+            playerResponses.Add("No");
+            NewPlayerResponse(playerResponses);
+        }
+        interactionCount++;
     }
 }

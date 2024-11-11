@@ -9,20 +9,12 @@ public class NextDialogue : MonoBehaviour
     private InputAction interact;
     private int index = 4;
 
-    private float timeElapsed;
-
     private void Awake()
     {
         // Set up input system for use
         GameObject player = GameObject.FindWithTag("Player");
         playerInput = player.GetComponent<PlayerInput>();
-        Debug.Log(playerInput);
         interact = playerInput.actions["Interact"];
-    }
-
-    void Start()
-    {
-        timeElapsed = 0;
     }
 
     // Update is called once per frame
