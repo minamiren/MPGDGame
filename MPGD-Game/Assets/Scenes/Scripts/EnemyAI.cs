@@ -10,7 +10,17 @@ public class EnemyAI : MonoBehaviour
 
     public LayerMask whatIsGround, whatIsPlayer;
 
-    public float health;
+    private Renderer enemyRenderer;
+    private int attackCount = 0;
+
+    private Color[] healthColors = new Color[]
+    {
+        Color.green,
+        new Color (1f, 0.64f, 0f),
+        Color.red,
+        new Color (0.65f, 0.16f, 0.16f),
+        Color.black
+    };
 
     private EnemySpawner spawner;
 
@@ -37,6 +47,8 @@ public class EnemyAI : MonoBehaviour
     {
         player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
+        enemyRenderer = GetComponent<Renderer>();
+        UpdateColor();
     }
 
     private void Update()
@@ -161,11 +173,22 @@ public class EnemyAI : MonoBehaviour
     }
 
 
-    public void TakeDamage(int damage)
+    public void TakeDamage()
     {
-        health -= damage;
+        if (attackCount < healthColors.Length -1)
+        {
+            attackCount++;
+            UpdateColor();
+        }
+        else
+        {
+            DestroyEnemy();
+        }
+    }
 
-        if (health <= 0) Invoke(nameof(DestroyEnemy), 0.5f);
+    public void UpdateColor()
+    {
+        enemyRenderer.material.color = healthColors[attackCount];
     }
 
     public void DestroyEnemy()
