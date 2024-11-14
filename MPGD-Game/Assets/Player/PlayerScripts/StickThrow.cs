@@ -46,9 +46,16 @@ public class StickThrow : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        foreach (GameObject enemy in enemies)
+            if (collision.gameObject.CompareTag("Enemy"))
         {
-            Destroy(collision.gameObject);
+            EnemyAI enemyAI = enemy.GetComponent<EnemyAI>();
+            if (enemyAI != null)
+            {
+                enemyAI.TakeDamage();
+            }
             Destroy(gameObject);
         }
 

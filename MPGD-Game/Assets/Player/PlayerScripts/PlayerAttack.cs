@@ -27,16 +27,10 @@ public class PlayerAttack : MonoBehaviour
             // Check if the enemy is within the attack range
             if (distanceToEnemy <= attackRange)
             {
-                // Optionally, you can deal damage to the enemy if it has a health system
-                EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
-                if (enemyHealth != null)
+                EnemyAI enemyAI = enemy.GetComponent<EnemyAI>();
+                if (enemyAI != null)
                 {
-                    enemyHealth.TakeDamage(damageAmount); // Call the TakeDamage method if the enemy has health
-                }
-                else
-                {
-                    // If there's no health system, destroy the enemy
-                    Destroy(enemy);
+                        enemyAI.TakeDamage();
                 }
             }
         }

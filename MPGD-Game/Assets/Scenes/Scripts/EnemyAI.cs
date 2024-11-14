@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
 
-public class EnemyAiTutorial : MonoBehaviour
+public class EnemyAI : MonoBehaviour
 {
     public NavMeshAgent agent;
 
@@ -10,7 +10,19 @@ public class EnemyAiTutorial : MonoBehaviour
 
     public LayerMask whatIsGround, whatIsPlayer;
 
-    public float health;
+    private Renderer enemyRenderer;
+    private int attackCount = 0;
+
+    private Color[] healthColors = new Color[]
+    {
+        Color.green,
+        new Color (1f, 0.64f, 0f),
+        Color.red,
+        new Color (0.65f, 0.16f, 0.16f),
+        Color.black
+    };
+
+    private EnemySpawner spawner;
 
     //Patroling
     public Vector3 walkPoint;
@@ -35,6 +47,8 @@ public class EnemyAiTutorial : MonoBehaviour
     {
         player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
+        enemyRenderer = GetComponent<Renderer>();
+        UpdateColor();
     }
 
     private void Update()
@@ -159,15 +173,34 @@ public class EnemyAiTutorial : MonoBehaviour
     }
 
 
-    public void TakeDamage(int damage)
+    public void TakeDamage()
     {
-        health -= damage;
-
-        if (health <= 0) Invoke(nameof(DestroyEnemy), 0.5f);
+        if (attackCount < healthColors.Length -1)
+        {
+            attackCount++;
+            UpdateColor();
+        }
+        else
+        {
+            DestroyEnemy();
+        }
     }
-    private void DestroyEnemy()
+
+    public void UpdateColor()
     {
+        enemyRenderer.material.color = healthColors[attackCount];
+    }
+
+    public void DestroyEnemy()
+    {
+        //Debug.Log("DestroyEnemy, spawner here = " + spawner);
+        if (spawner != null)
+            spawner.OnEnemyDestroyed();
         Destroy(gameObject);
     }
 
+    public void SetSpawner(EnemySpawner spawnerReference)
+    {
+        spawner = spawnerReference;
+    }
 }
