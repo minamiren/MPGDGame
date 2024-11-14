@@ -52,6 +52,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "6477474f-7ed8-4b45-897e-fc3e642c439f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -185,6 +194,17 @@
                     "groups": "Keyboard&Mouse",
                     "action": "Fire",
                     "id": "44050f80-532b-425a-b3bb-fb00095d0e2d",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "58db6484-95d9-414e-8e2d-a401edd935d4",
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
