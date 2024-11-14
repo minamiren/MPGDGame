@@ -31,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;  // Prevent unwanted rotation
         transform.rotation = Quaternion.Euler(0f, 90f, 0f);//keep the player's world coordinate, rotateY in 90 degree.
+        UnityEngine.Cursor.lockState = CursorLockMode.Confined; // keep confined in the game window
 
     }
 
@@ -79,7 +80,6 @@ public class PlayerMovement : MonoBehaviour
             // Calculate the direction from the shooting point to the mouse's world position
             Vector3 targetPoint = cameraRay.GetPoint(1000f); // Get a point far away along the ray
             Vector3 direction = (targetPoint - shootingPoint.position).normalized;
-
             // Perform a raycast from shootingPoint in the calculated direction
             if (Physics.Raycast(shootingPoint.position, direction, out RaycastHit hit))
             {
