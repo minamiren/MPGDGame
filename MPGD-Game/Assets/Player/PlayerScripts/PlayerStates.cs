@@ -99,7 +99,7 @@ public class PlayerStates : MonoBehaviour
         currentHunger = Mathf.Clamp(currentHunger, 0, maxFullBelly);
 
         UpdateHealthUI();
-        if(!startPanel.activeSelf || !PlayerMovement.dialogue)
+        if(!startPanel.activeSelf && !PlayerMovement.dialogue)
         {
             HungerByTime();
             UpdateHunegrUI();

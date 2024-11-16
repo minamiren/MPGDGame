@@ -70,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnFire(InputAction.CallbackContext context)
     {
-        if (context.performed && Time.time >= lastFireTime + fireCooldown)
+        if (!dialogue && context.performed && Time.time >= lastFireTime + fireCooldown)
         {
             Debug.Log("Fire action triggered!");
            // Get the mouse position and create a ray from the camera to that point

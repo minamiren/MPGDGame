@@ -7,16 +7,41 @@ using TMPro;
 
 public class NPCDialogue : MonoBehaviour
 {
+    // Various controls to detect if player is in range and already speaking, etc
     private bool playerInRange;
     private bool startDialogue;
     private PlayerInput playerInput;
     private InputAction interact;
-    public GameObject template;
-    private int interactionCount = 0;
-    public TMP_Text dialogueText;
     private bool keyReleased;
+
+    // The actual dialogue and response UI
+    public GameObject template; 
+    public TMP_Text dialogueText;
     public GameObject dialogueBox;
+
+    // Keeps track of where we are in the conversation
     private string mostRecentResponse;
+    private int dialogueIndex;
+    private List<int> conversationIndex = new List<int>();
+    private struct DialogueLine
+    {
+        public bool isQuestion;
+        public string message;
+        public string res1;
+        public string res2;
+        public string res3;
+        public string res4;
+        public DialogueLine(bool isQuestion, string message, string res1, string res2, string res3, string res4)
+        {
+            this.isQuestion = isQuestion;
+            this.message = message;
+            this.res1 = res1;
+            this.res2 = res2;
+            this.res3 = res3;
+            this.res4 = res4;
+        }
+    }
+    private List<DialogueLine> dialogue = new List<DialogueLine>();
 
     private void Awake()
     {
@@ -30,7 +55,22 @@ public class NPCDialogue : MonoBehaviour
         keyReleased = true;
         startDialogue = false;
         playerInRange = false;
+        dialogueText.enabled = false;
         mostRecentResponse = "";
+        dialogueIndex = 0;
+
+        // This is so that we can talk to the NPC more than once. This control should be useful when it comes to needing to check for things like
+        // Specific benchmarks to continue conversation, otherwise I would include it in the struct
+        conversationIndex.Add(1);
+        conversationIndex.Add(4);
+
+        // Add all dialogue
+        dialogue.Add(new DialogueLine(false, "I have been waiting for you to wake.", "", "", "", ""));
+        dialogue.Add(new DialogueLine(false, "It seems you have hit your head.", "", "", "", ""));
+        dialogue.Add(new DialogueLine(false, "I am afraid that we are in a bit of a bind, if you don't remember.", "", "", "", ""));
+        dialogue.Add(new DialogueLine(true, "Do you remember what happened to you?", "Yes", "No", "", ""));
+        //dialogue.Add(new DialogueLine(false, "", "", "", "", ""));
+
     }
 
     // Update is called once per frame
@@ -40,31 +80,51 @@ public class NPCDialogue : MonoBehaviour
         {
             keyReleased = true;
         }
-        if (playerInRange)
-        {
-            dialogueText.enabled = true;
-        }
-        else
-        {
-            dialogueText.enabled = false;
-        }
+
+        // determines if we enter conversation
         if (playerInRange == true && interact.ReadValue<float>() == 1 && startDialogue == false && keyReleased && !dialogueBox.activeSelf)
         {
             PlayerMovement.dialogue = true;
-            NextDialogueLine();
-            //SetDialoguePath();
-            //canvas.transform.GetChild(3).gameObject.SetActive(true);
-            startDialogue = true;
+            if (!template.activeSelf)
+            {
+                // Dialogue not currently being shown
+                if(dialogue.Count <= dialogueIndex)
+                {
+                    // End of scripted conversation
+                    PlayerMovement.dialogue = false;
+                    // here we want to give a default line
+                } else
+                {
+                    // Show dialogue box and start conversation
+                    template.SetActive(true);
+                    NextDialogueLine(dialogueIndex);
+                }
+            } else
+            {
+                // Dialogue box already open
+                if(conversationIndex.Contains(dialogueIndex))
+                {
+                    // We are at the end of a conversation. Close dialogue
+                    conversationIndex.Remove(dialogueIndex);
+                    template.SetActive(false);
+                    PlayerMovement.dialogue = false;
+                } else
+                {
+                    // Continue to next line in conversation
+                    NextDialogueLine(dialogueIndex);
+                }
+            }
             keyReleased = false;
         }
     }
 
-
+    // Show 'press E to talk' if in range of player
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
             playerInRange = true;
+            dialogueText.enabled = true;
         }
     }
 
@@ -73,77 +133,50 @@ public class NPCDialogue : MonoBehaviour
         if (other.tag == "Player")
         {
             playerInRange = false;
+            dialogueText.enabled = false;
         }
     }
 
+    // Set all potential responses for the player to the question
     void NewPlayerResponse(List<string> responseOptions)
     {
-        dialogueBox.SetActive(true);
         for (int i = 0; i < responseOptions.Count; i++)
         {
-            GameObject button = dialogueBox.transform.GetChild(i).gameObject;
-            button.SetActive(true);
-            button.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = responseOptions[i];
+            if (!responseOptions[i].Equals(""))
+            {
+                GameObject button = dialogueBox.transform.GetChild(i).gameObject;
+                button.SetActive(true);
+                button.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = responseOptions[i];
+            }
+        }
+        dialogueBox.SetActive(true);
+    }
+
+    // Get the response that the player selected
+    public void GetPlayerResponse(string response)
+    {
+        mostRecentResponse = response;
+        Debug.Log(System.Convert.ToInt32(mostRecentResponse));
+        template.SetActive(false);
+        PlayerMovement.dialogue = false;
+        dialogueIndex += System.Convert.ToInt32(mostRecentResponse);
+    }
+
+    // Show the current dialogue line
+    void NextDialogueLine(int index)
+    {
+        DialogueLine dialogueLine = dialogue[index];
+        template.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = dialogueLine.message;
+        dialogueIndex+=1;
+
+        if (dialogueLine.isQuestion)
+        {
+            List<string> responseList = new List<string>();
+            responseList.Add(dialogueLine.res1);
+            responseList.Add(dialogueLine.res2);
+            responseList.Add(dialogueLine.res3);
+            responseList.Add(dialogueLine.res4);
+            NewPlayerResponse(responseList);
         }
     }
-
-    public void GetPlayerResponse(GameObject response)
-    {
-        mostRecentResponse = response.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text;
-    }
-
-    void NextDialogueLine()
-    {
-        Debug.Log("setting active");
-        template.SetActive(true);
-        Debug.Log("finished setting active");
-        template.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "I have been waiting for you to wake.";
-        Debug.Log("set template text");
-    }
-
-        //void SetDialoguePath()
-        //{
-        //    // for first interaction, npc just says some things
-        //    // later we will check for triggered events
-        //    // this should maybe be a switch or case or whatever c# uses
-        //    switch (interactionCount)
-        //    {
-        //        case 0:
-        //            {
-        //                NewDialogue("I have been waiting for you to wake.");
-        //                NewDialogue("It seems you have hit your head.");
-        //                NewDialogue("I am afraid that we are in a bit of a bind, if you don't remember.");
-        //                startDialogue = false;
-        //                break;
-        //            }
-        //        case 1:
-        //            {
-        //                NewDialogue("Do you remember what happened to you?");
-        //                List<string> playerResponses = new List<string>();
-        //                playerResponses.Add("Yes");
-        //                playerResponses.Add("No");
-        //                NewPlayerResponse(playerResponses);
-        //                startDialogue = false;
-        //                break;
-        //            }
-        //        case 2:
-        //            {
-        //                if (mostRecentResponse == "Yes")
-        //                {
-        //                    NewDialogue("That's a relief to hear. I will wait here until you can find us something useful.");
-        //                }
-        //                else
-        //                {
-        //                    NewDialogue("We are part of an exploratory party, but there was a cave-in and we were separated. It's likely our team thinks that we were lost to the falling rocks.");
-        //                    NewDialogue("We are on our own until we find something that we can use to help ourselves.");
-        //                }
-        //                startDialogue = false;
-        //                break;
-        //            }
-        //        default:
-        //            NewDialogue("Thank you for speaking with me.");
-        //            break;
-        //    }
-        //    interactionCount++;
-        //}
-    }
+}
