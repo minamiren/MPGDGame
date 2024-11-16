@@ -31,7 +31,8 @@ public class NPCDialogue : MonoBehaviour
         public string res2;
         public string res3;
         public string res4;
-        public DialogueLine(bool isQuestion, string message, string res1, string res2, string res3, string res4)
+        public int skip;
+        public DialogueLine(bool isQuestion, string message, string res1, string res2, string res3, string res4, int skip)
         {
             this.isQuestion = isQuestion;
             this.message = message;
@@ -39,6 +40,7 @@ public class NPCDialogue : MonoBehaviour
             this.res2 = res2;
             this.res3 = res3;
             this.res4 = res4;
+            this.skip = skip;
         }
     }
     private List<DialogueLine> dialogue = new List<DialogueLine>();
@@ -61,16 +63,19 @@ public class NPCDialogue : MonoBehaviour
 
         // This is so that we can talk to the NPC more than once. This control should be useful when it comes to needing to check for things like
         // Specific benchmarks to continue conversation, otherwise I would include it in the struct
-        conversationIndex.Add(1);
-        conversationIndex.Add(4);
+        //conversationIndex.Add(4);
+        conversationIndex.Add(5);
+        conversationIndex.Add(7);
 
         // Add all dialogue
-        dialogue.Add(new DialogueLine(false, "I have been waiting for you to wake.", "", "", "", ""));
-        dialogue.Add(new DialogueLine(false, "It seems you have hit your head.", "", "", "", ""));
-        dialogue.Add(new DialogueLine(false, "I am afraid that we are in a bit of a bind, if you don't remember.", "", "", "", ""));
-        dialogue.Add(new DialogueLine(true, "Do you remember what happened to you?", "Yes", "No", "", ""));
+        dialogue.Add(new DialogueLine(false, "I have been waiting for you to wake.", "", "", "", "", 0));
+        dialogue.Add(new DialogueLine(false, "It seems you have hit your head.", "", "", "", "", 0));
+        dialogue.Add(new DialogueLine(false, "I am afraid that we are in a bit of a bind, if you don't remember.", "", "", "", "", 0));
+        dialogue.Add(new DialogueLine(true, "Do you remember what happened to you?", "Yes", "No", "", "", 0));
+        dialogue.Add(new DialogueLine(false, "That's a relief to hear. I will wait here until you can find us something useful.", "", "", "", "", 2));
+        dialogue.Add(new DialogueLine(false, "We are part of an exploratory party, but there was a cave-in and we were separated. It's likely our team thinks that we were lost to the falling rocks.", "", "", "", "", 0));
+        dialogue.Add(new DialogueLine(false, "We are on our own until we find something that we can use to help ourselves.", "", "", "", "", 0));
         //dialogue.Add(new DialogueLine(false, "", "", "", "", ""));
-
     }
 
     // Update is called once per frame
@@ -87,22 +92,24 @@ public class NPCDialogue : MonoBehaviour
             PlayerMovement.dialogue = true;
             if (!template.activeSelf)
             {
+                template.SetActive(true);
                 // Dialogue not currently being shown
-                if(dialogue.Count <= dialogueIndex)
+                if (dialogue.Count <= dialogueIndex)
                 {
                     // End of scripted conversation
-                    PlayerMovement.dialogue = false;
+                    //PlayerMovement.dialogue = false;
+                    DefaultDialogueLine();
                     // here we want to give a default line
                 } else
                 {
                     // Show dialogue box and start conversation
-                    template.SetActive(true);
+                    //template.SetActive(true);
                     NextDialogueLine(dialogueIndex);
                 }
             } else
             {
                 // Dialogue box already open
-                if(conversationIndex.Contains(dialogueIndex))
+                if(conversationIndex.Contains(dialogueIndex) || dialogue.Count <= dialogueIndex)
                 {
                     // We are at the end of a conversation. Close dialogue
                     conversationIndex.Remove(dialogueIndex);
@@ -156,10 +163,9 @@ public class NPCDialogue : MonoBehaviour
     public void GetPlayerResponse(string response)
     {
         mostRecentResponse = response;
-        Debug.Log(System.Convert.ToInt32(mostRecentResponse));
-        template.SetActive(false);
         PlayerMovement.dialogue = false;
         dialogueIndex += System.Convert.ToInt32(mostRecentResponse);
+        NextDialogueLine(dialogueIndex);
     }
 
     // Show the current dialogue line
@@ -167,7 +173,7 @@ public class NPCDialogue : MonoBehaviour
     {
         DialogueLine dialogueLine = dialogue[index];
         template.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = dialogueLine.message;
-        dialogueIndex+=1;
+        dialogueIndex+=(dialogueLine.skip+1);
 
         if (dialogueLine.isQuestion)
         {
@@ -178,5 +184,10 @@ public class NPCDialogue : MonoBehaviour
             responseList.Add(dialogueLine.res4);
             NewPlayerResponse(responseList);
         }
+    }
+
+    void DefaultDialogueLine()
+    {
+        template.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Why don't you try exploring some?";
     }
 }

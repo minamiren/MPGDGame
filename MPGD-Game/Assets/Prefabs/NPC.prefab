@@ -114,8 +114,8 @@ GameObject:
   - component: {fileID: 2272165427331212228}
   - component: {fileID: 4236082226395272623}
   - component: {fileID: 730865425286726328}
-  - component: {fileID: 1358357947919858434}
   - component: {fileID: 9037724022135975498}
+  - component: {fileID: 3141476471197895874}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -212,21 +212,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1358357947919858434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2471153818066156237}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c62d616e78023bc4fb316a8d4ce03410, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  template: {fileID: 0}
-  canvas: {fileID: 0}
-  dialogueText: {fileID: 2505419883642283755}
 --- !u!135 &9037724022135975498
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -248,6 +233,21 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 4
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3141476471197895874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2471153818066156237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63653a7afbf54cf46811df11313c7fe9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  template: {fileID: 0}
+  dialogueText: {fileID: 2505419883642283755}
+  dialogueBox: {fileID: 0}
 --- !u!1 &2559461271904646174
 GameObject:
   m_ObjectHideFlags: 0
