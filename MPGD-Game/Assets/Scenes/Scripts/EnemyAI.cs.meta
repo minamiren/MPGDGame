@@ -3,7 +3,12 @@ guid: 540d633505f884b32b24f1824813b296
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - agent: {instanceID: 0}
+  - player: {instanceID: 0}
+  - projectile: {instanceID: 0}
+  - spikePrefab: {instanceID: 0}
+  - dropPrefabs: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

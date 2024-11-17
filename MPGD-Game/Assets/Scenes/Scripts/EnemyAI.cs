@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -43,11 +44,15 @@ public class EnemyAI : MonoBehaviour
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
 
+    //DropDown
+    private DropDown dropDown;
+
     private void Awake()
     {
         player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
         enemyRenderer = GetComponent<Renderer>();
+        dropDown = GetComponent<DropDown>();
         UpdateColor();
     }
 
@@ -196,6 +201,10 @@ public class EnemyAI : MonoBehaviour
         //Debug.Log("DestroyEnemy, spawner here = " + spawner);
         if (spawner != null)
             spawner.OnEnemyDestroyed();
+        if (dropDown != null)
+        {
+            dropDown.DropItem(transform.position);
+        }
         Destroy(gameObject);
     }
 
