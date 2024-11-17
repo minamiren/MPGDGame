@@ -8,6 +8,8 @@ TagManager:
   - PickUp
   - Food
   - Enemy
+  - Terrain
+  - Cave
   layers:
   - Default
   - TransparentFX
