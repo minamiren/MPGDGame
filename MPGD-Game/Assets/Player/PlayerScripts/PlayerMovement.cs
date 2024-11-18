@@ -31,12 +31,11 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;  // Prevent unwanted rotation
         transform.rotation = Quaternion.Euler(0f, 90f, 0f);//keep the player's world coordinate, rotateY in 90 degree.
-        UnityEngine.Cursor.lockState = CursorLockMode.Confined; // keep confined in the game window
-
     }
 
     void Update()
     {
+        UnityEngine.Cursor.lockState = CursorLockMode.Confined; // keep confined in the game window
         if (!dialogue)
         {
             MovePlayer();
