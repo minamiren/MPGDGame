@@ -80,7 +80,7 @@ public class Inventory : MonoBehaviour
                     break;
                 }
             }
-            if (itemAdded && objectSpawn != null)
+            if (itemAdded && pickup.CompareTag("Food") && objectSpawn != null)
                 {
                     objectSpawn.SpawnNewFood();
                 }

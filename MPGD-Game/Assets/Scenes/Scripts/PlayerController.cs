@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public PlayerStates playerHungry;
     public TextMeshProUGUI hotBarFulledText;
 
+
     void Start()
     {
         hotBarFulledText.text = "";
@@ -17,7 +18,7 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "PickUp")
+        if (other.gameObject.tag == "PickUp"|| other.gameObject.tag == "Food")
         {
             int availableSlot = inventory.FindFirstAvailableSlot();
             if (availableSlot < inventory.hotbarButtons.Count && inventory.currentHotbarCount < 6)
