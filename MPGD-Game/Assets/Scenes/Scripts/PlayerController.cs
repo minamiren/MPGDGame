@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public PlayerStates playerHungry;
     public TextMeshProUGUI hotBarFulledText;
 
+
     void Start()
     {
         hotBarFulledText.text = "";
@@ -17,12 +18,11 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "PickUp")
+        if (other.gameObject.tag == "PickUp"|| other.gameObject.tag == "Food")
         {
             int availableSlot = inventory.FindFirstAvailableSlot();
             if (availableSlot < inventory.hotbarButtons.Count && inventory.currentHotbarCount < 6)
             {
-                // 如果有可用槽位，撿起物品並將其添加到 inventory 中
                 inventory.AddItem(other.gameObject);
                 other.gameObject.SetActive(false);
             }
@@ -37,6 +37,6 @@ public class PlayerController : MonoBehaviour
     private IEnumerator ClearHotBarFullText(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        hotBarFulledText.text = ""; // 清空提示文字
+        hotBarFulledText.text = "";
     }
 }
