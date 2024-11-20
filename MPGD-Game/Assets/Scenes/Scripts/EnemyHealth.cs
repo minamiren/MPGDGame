@@ -6,6 +6,9 @@ public class EnemyHealth : MonoBehaviour
     private int attackCount = 0;
     private EnemySpawner spawner;
 
+    //DropDown
+    private DropDown dropDown;
+
     private Color[] healthColors = new Color[]
     {
         Color.green,
@@ -19,6 +22,7 @@ public class EnemyHealth : MonoBehaviour
     {
         enemyRenderer = GetComponent<Renderer>();
         UpdateColor();
+        dropDown = GetComponent<DropDown>();
     }
 
     public void TakeDamage()
@@ -48,7 +52,10 @@ public class EnemyHealth : MonoBehaviour
     {
         if (spawner != null)
             spawner.OnEnemyDestroyed();
-
+        if (dropDown != null)
+        {
+            dropDown.DropItem(transform.position);
+        }
         Destroy(gameObject);
     }
 }
