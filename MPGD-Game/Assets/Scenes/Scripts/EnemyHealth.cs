@@ -1,55 +1,54 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class EnemyHealth : MonoBehaviour
 {
-    public float maxHealth = 100f;
-    public float currentHealth;
-    public Slider healthBar;  // Reference to health bar slider
+    private Renderer enemyRenderer;
+    private int attackCount = 0;
+    private EnemySpawner spawner;
 
-    public GameObject healthBarPrefab;  // Assign Health Bar prefab
-    private GameObject healthBarInstance;
-
-    private void Start()
+    private Color[] healthColors = new Color[]
     {
-        currentHealth = maxHealth;
+        Color.green,
+        new Color(1f, 0.64f, 0f),
+        Color.red,
+        new Color(0.65f, 0.16f, 0.16f),
+        Color.black
+    };
 
-        // Instantiate health bar above the enemy
-        healthBarInstance = Instantiate(healthBarPrefab, transform.position + Vector3.up * 2, Quaternion.identity);
-        healthBar = healthBarInstance.GetComponent<Slider>();
-
-        UpdateHealthBar();
+    private void Awake()
+    {
+        enemyRenderer = GetComponent<Renderer>();
+        UpdateColor();
     }
 
-    private void Update()
+    public void TakeDamage()
     {
-        // Follow the enemy's position
-        healthBarInstance.transform.position = transform.position + Vector3.up * 2;
-    }
-
-    public void TakeDamage(float damage)
-    {
-        currentHealth -= damage;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-        UpdateHealthBar();
-
-        if (currentHealth <= 0)
+        if (attackCount < healthColors.Length - 1)
         {
-            Die();
+            attackCount++;
+            UpdateColor();
+        }
+        else
+        {
+            DestroyEnemy();
         }
     }
 
-    private void UpdateHealthBar()
+    private void UpdateColor()
     {
-        healthBar.value = currentHealth / maxHealth;  // Update health bar
+        enemyRenderer.material.color = healthColors[attackCount];
     }
 
-    private void Die()
+    public void SetSpawner(EnemySpawner spawnerReference)
     {
-        // Destroy health bar when enemy dies
-        Destroy(healthBarInstance);
+        spawner = spawnerReference;
+    }
+
+    private void DestroyEnemy()
+    {
+        if (spawner != null)
+            spawner.OnEnemyDestroyed();
+
         Destroy(gameObject);
     }
 }
-
-
