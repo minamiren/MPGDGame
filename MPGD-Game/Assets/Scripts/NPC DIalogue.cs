@@ -23,6 +23,7 @@ public class NPCDialogue : MonoBehaviour
     private string mostRecentResponse;
     private int dialogueIndex;
     private List<int> conversationIndex = new List<int>();
+    private bool waitingForItem;
     private struct DialogueLine
     {
         public bool isQuestion;
@@ -60,12 +61,15 @@ public class NPCDialogue : MonoBehaviour
         dialogueText.enabled = false;
         mostRecentResponse = "";
         dialogueIndex = 0;
+        waitingForItem = false;
 
         // This is so that we can talk to the NPC more than once. This control should be useful when it comes to needing to check for things like
         // Specific benchmarks to continue conversation, otherwise I would include it in the struct
-        //conversationIndex.Add(4);
-        conversationIndex.Add(5);
+        // this is actually very dangerous i should add this and a potential item to the struct
         conversationIndex.Add(7);
+        conversationIndex.Add(8);
+        conversationIndex.Add(9);
+        conversationIndex.Add(11);
 
         // Add all dialogue
         dialogue.Add(new DialogueLine(false, "I have been waiting for you to wake.", "", "", "", "", 0));
@@ -75,6 +79,10 @@ public class NPCDialogue : MonoBehaviour
         dialogue.Add(new DialogueLine(false, "That's a relief to hear. I will wait here until you can find us something useful.", "", "", "", "", 2));
         dialogue.Add(new DialogueLine(false, "We are part of an exploratory party, but there was a cave-in and we were separated. It's likely our team thinks that we were lost to the falling rocks.", "", "", "", "", 0));
         dialogue.Add(new DialogueLine(false, "We are on our own until we find something that we can use to help ourselves.", "", "", "", "", 0));
+        dialogue.Add(new DialogueLine(false, "Bring me food.", "", "", "", "", 0));
+        dialogue.Add(new DialogueLine(true, "Would you give me some food?", "Yes", "No", "", "", 0));
+        dialogue.Add(new DialogueLine(false, "Thank you. Now we may continue.", "", "", "", "", 1));
+        dialogue.Add(new DialogueLine(false, "Please bring me some food.", "", "", "", "", -3));
         //dialogue.Add(new DialogueLine(false, "", "", "", "", ""));
     }
 
@@ -93,12 +101,24 @@ public class NPCDialogue : MonoBehaviour
             if (!template.activeSelf)
             {
                 template.SetActive(true);
+                if (dialogueIndex == 8)
+                {
+                    //waitingForItem = true;
+                    // what item are we checking for?
+                }
                 // Dialogue not currently being shown
                 if (dialogue.Count <= dialogueIndex)
                 {
+                   
                     // End of scripted conversation
                     //PlayerMovement.dialogue = false;
-                    DefaultDialogueLine();
+                    if(waitingForItem)
+                    {
+                        NextDialogueLine(dialogueIndex-1);
+                    } else
+                    {
+                        DefaultDialogueLine();
+                    }
                     // here we want to give a default line
                 } else
                 {
@@ -165,7 +185,17 @@ public class NPCDialogue : MonoBehaviour
         mostRecentResponse = response;
         PlayerMovement.dialogue = false;
         dialogueIndex += System.Convert.ToInt32(mostRecentResponse);
-        NextDialogueLine(dialogueIndex);
+        if (dialogue.Count > dialogueIndex)
+        {
+            NextDialogueLine(dialogueIndex);
+        } else
+        {
+            template.SetActive(false);
+        }
+        if(waitingForItem && mostRecentResponse.Equals("0"))
+        {
+            // remove item from hotbar
+        }
     }
 
     // Show the current dialogue line
@@ -173,21 +203,31 @@ public class NPCDialogue : MonoBehaviour
     {
         DialogueLine dialogueLine = dialogue[index];
         template.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = dialogueLine.message;
-        dialogueIndex+=(dialogueLine.skip+1);
+        if(!waitingForItem)
+        {
+            dialogueIndex+=(dialogueLine.skip+1);
+        }
 
         if (dialogueLine.isQuestion)
         {
             List<string> responseList = new List<string>();
-            responseList.Add(dialogueLine.res1);
-            responseList.Add(dialogueLine.res2);
-            responseList.Add(dialogueLine.res3);
-            responseList.Add(dialogueLine.res4);
+            if(waitingForItem)
+            {
+                // if item is in hotbar then add yes
+                // add no either way
+            } else
+            {
+                responseList.Add(dialogueLine.res1);
+                responseList.Add(dialogueLine.res2);
+                responseList.Add(dialogueLine.res3);
+                responseList.Add(dialogueLine.res4);
+            }
             NewPlayerResponse(responseList);
         }
     }
 
     void DefaultDialogueLine()
     {
-        template.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Why don't you try exploring some?";
+        template.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Why don't you try exploring some? We need food to survive.";
     }
 }

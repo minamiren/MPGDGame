@@ -30,7 +30,7 @@ public class PlayerStates : MonoBehaviour
     void Start()
     {
         //HealthIncreseRate = 5; //Increase Rate
-        HungerIncreseRate = -50f; //decrese Rate
+        HungerIncreseRate = -0.5f; //decrese Rate
 
         maxHealth = 100;
         maxFullBelly = 100;
