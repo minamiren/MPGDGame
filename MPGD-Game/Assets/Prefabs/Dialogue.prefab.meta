@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:MPGD-Game/Assets/Scenes/EdsScene.unity.meta
+guid: c6fec1ae27b70486893ae5e96067a0b2
+DefaultImporter:
+========
 guid: 25b97b238821e6642983a304631bd74b
 PrefabImporter:
+>>>>>>>> main:MPGD-Game/Assets/Prefabs/Dialogue.prefab.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
