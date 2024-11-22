@@ -4,6 +4,7 @@ using TMPro.Examples;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using System.Linq;
 
 public class NPCDialogue : MonoBehaviour
 {
@@ -46,6 +47,9 @@ public class NPCDialogue : MonoBehaviour
     }
     private List<DialogueLine> dialogue = new List<DialogueLine>();
 
+    // Items to give the player
+    public GameObject stick;
+
     private void Awake()
     {
         GameObject player = GameObject.FindWithTag("Player");
@@ -66,29 +70,34 @@ public class NPCDialogue : MonoBehaviour
         // This is so that we can talk to the NPC more than once. This control should be useful when it comes to needing to check for things like
         // Specific benchmarks to continue conversation, otherwise I would include it in the struct
         // this is actually very dangerous i should add this and a potential item to the struct
-        conversationIndex.Add(7);
-        conversationIndex.Add(8);
-        conversationIndex.Add(9);
-        conversationIndex.Add(11);
+        //conversationIndex.Add(7);
+        //conversationIndex.Add(8);
+        //conversationIndex.Add(9);
+        //conversationIndex.Add(11);
 
         // Add all dialogue
-        dialogue.Add(new DialogueLine(false, "I have been waiting for you to wake.", "", "", "", "", 0));
-        dialogue.Add(new DialogueLine(false, "It seems you have hit your head.", "", "", "", "", 0));
-        dialogue.Add(new DialogueLine(false, "I am afraid that we are in a bit of a bind, if you don't remember.", "", "", "", "", 0));
-        dialogue.Add(new DialogueLine(true, "Do you remember what happened to you?", "Yes", "No", "", "", 0));
-        dialogue.Add(new DialogueLine(false, "That's a relief to hear. I will wait here until you can find us something useful.", "", "", "", "", 2));
-        dialogue.Add(new DialogueLine(false, "We are part of an exploratory party, but there was a cave-in and we were separated. It's likely our team thinks that we were lost to the falling rocks.", "", "", "", "", 0));
-        dialogue.Add(new DialogueLine(false, "We are on our own until we find something that we can use to help ourselves.", "", "", "", "", 0));
-        dialogue.Add(new DialogueLine(false, "Bring me food.", "", "", "", "", 0));
-        dialogue.Add(new DialogueLine(true, "Would you give me some food?", "Yes", "No", "", "", 0));
-        dialogue.Add(new DialogueLine(false, "Thank you. Now we may continue.", "", "", "", "", 1));
-        dialogue.Add(new DialogueLine(false, "Please bring me some food.", "", "", "", "", -3));
+        dialogue.Add(new DialogueLine(false, "Could you bring me a food?", "", "", "", "", 0));
+        //dialogue.Add(new DialogueLine(false, "I have been waiting for you to wake.", "", "", "", "", 0));
+        //dialogue.Add(new DialogueLine(false, "It seems you have hit your head.", "", "", "", "", 0));
+        //dialogue.Add(new DialogueLine(false, "I am afraid that we are in a bit of a bind, if you don't remember.", "", "", "", "", 0));
+        //dialogue.Add(new DialogueLine(true, "Do you remember what happened to you?", "Yes", "No", "", "", 0));
+        //dialogue.Add(new DialogueLine(false, "That's a relief to hear. I will wait here until you can find us something useful.", "", "", "", "", 2));
+        //dialogue.Add(new DialogueLine(false, "We are part of an exploratory party, but there was a cave-in and we were separated. It's likely our team thinks that we were lost to the falling rocks.", "", "", "", "", 0));
+        //dialogue.Add(new DialogueLine(false, "We are on our own until we find something that we can use to help ourselves.", "", "", "", "", 0));
+        //dialogue.Add(new DialogueLine(false, "Bring me food.", "", "", "", "", 0));
+        //dialogue.Add(new DialogueLine(true, "Would you give me some food?", "Yes", "No", "", "", 0));
+        //dialogue.Add(new DialogueLine(false, "Thank you. Now we may continue.", "", "", "", "", 1));
+        //dialogue.Add(new DialogueLine(false, "Please bring me some food.", "", "", "", "", -3));
         //dialogue.Add(new DialogueLine(false, "", "", "", "", ""));
     }
 
     // Update is called once per frame
     void Update()
     {
+        //foreach(var item in Inventory.Instance.GetHotBarList())
+        //{
+        //    Debug.Log(item.ToString());
+        //}
         if (!keyReleased && interact.ReadValue<float>() == 0)
         {
             keyReleased = true;
@@ -104,7 +113,7 @@ public class NPCDialogue : MonoBehaviour
                 if (dialogueIndex == 8)
                 {
                     //waitingForItem = true;
-                    // what item are we checking for?
+                    
                 }
                 // Dialogue not currently being shown
                 if (dialogue.Count <= dialogueIndex)
@@ -194,7 +203,13 @@ public class NPCDialogue : MonoBehaviour
         }
         if(waitingForItem && mostRecentResponse.Equals("0"))
         {
-            // remove item from hotbar
+            string[] hotbar = Inventory.Instance.GetHotBarList();
+            if (hotbar.Contains("Food"))
+            {
+                int index = System.Array.IndexOf(hotbar, "Food");
+                Inventory.Instance.GiveHotbarItem(index);
+                Inventory.Instance.AddItem(stick);
+            }
         }
     }
 
