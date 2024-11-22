@@ -106,6 +106,13 @@ public class NPCDialogue : MonoBehaviour
         // determines if we enter conversation
         if (playerInRange == true && interact.ReadValue<float>() == 1 && startDialogue == false && keyReleased && !dialogueBox.activeSelf)
         {
+            string[] hotbar = Inventory.Instance.GetHotBarList();
+            if (hotbar.Contains("Food"))
+            {
+                int index = System.Array.IndexOf(hotbar, "Food");
+                Inventory.Instance.GiveHotbarItem(index);
+                Inventory.Instance.AddItem(stick);
+            }
             PlayerMovement.dialogue = true;
             if (!template.activeSelf)
             {
