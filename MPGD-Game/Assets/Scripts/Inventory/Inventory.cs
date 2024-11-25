@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 
 public class Inventory : MonoBehaviour
 {
+    public static Inventory Instance;
     public GameObject[] PickUps;
     public List<Button> hotbarButtons;
 
@@ -23,6 +24,13 @@ public class Inventory : MonoBehaviour
     
     public int PlayerFillBelly = 10;
 
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+    }
     void Start()
     {
         hotbarSlotOccupied = new bool[hotbarButtons.Count];
@@ -59,6 +67,21 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public string[] GetHotBarList()
+    {
+        string[] names = new string[PickUps.Length];
+        for (int i = 0; i < PickUps.Length; i++)
+        {
+            if(PickUps[i] != null)
+            {
+                names[i] = PickUps[i].name;
+            } else
+            {
+                names[i] = "";
+            }
+        }
+        return names;
+    }
 
     public void AddItem(GameObject pickup)
     {        
@@ -146,6 +169,25 @@ public class Inventory : MonoBehaviour
                 currentHotbarCount--;
                 PickUps[index] = null; // remove object from the hotbar
             }
+        }
+    }
+
+    // The same as use, but for use when giving an item to the NPC. So there is no effect for the player
+    // It just leaves the inventory
+    public void GiveHotbarItem(int slotIndex)
+    {
+        if (slotIndex < hotbarSlotOccupied.Length && hotbarSlotOccupied[slotIndex])
+        {
+            GameObject pickup = PickUps[slotIndex];
+            ItemController itemController = pickup.GetComponent<ItemController>();
+
+            if (itemController != null)
+            {
+                Item item = itemController.item;
+                ClearHotBarSlot(hotbarButtons[slotIndex]);
+                PickUps[slotIndex] = null;
+                currentHotbarCount--;
+            };
         }
     }
 

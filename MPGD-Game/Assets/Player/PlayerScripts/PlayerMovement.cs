@@ -48,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        UnityEngine.Cursor.lockState = CursorLockMode.Confined; // keep confined in the game window
         if (!dialogue)
         {
             MovePlayer();

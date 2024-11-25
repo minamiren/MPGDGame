@@ -24,6 +24,7 @@ public class PlayerStates : MonoBehaviour
     public TextMeshProUGUI gameState;
 
     public GameObject startPanel;
+    public GameObject endPanel;
 
     // Start is called before the first frame update
     void Start()
@@ -90,7 +91,9 @@ public class PlayerStates : MonoBehaviour
 
     public void PlayerDie()
     {
-        gameState.text = "Game Over!";
+        //gameState.text = "Game Over!";
+        endPanel.SetActive(true);
+
     }
     // Update is called once per frame
     void Update()
