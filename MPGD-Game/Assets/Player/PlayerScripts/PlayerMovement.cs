@@ -2,6 +2,7 @@ using System.Drawing;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class PlayerMovement : MonoBehaviour
@@ -9,6 +10,11 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed = 5f; // Movement speed
     public float lookSpeed = 0.1f;  // Mouse look speed
     public float jumpSpeed = 5f; //Jump speed
+    public float lastJumpTime = 0f;
+    public float jumpCooldown = 0.2f;
+    public float groundCheckDistance = 0.1f;
+    public bool isGrounded = true;
+
 
     public float lastFireTime = 0f;//Attacking
     public float fireCooldown = 0.5f;
@@ -26,6 +32,10 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody rb;
 
+    public Texture2D crosshairTexture; // Crosshair icon texture
+    public Vector2 crosshairHotspot = new Vector2(16, 16); // The center of the crosshair texture
+
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -33,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, 90f, 0f);//keep the player's world coordinate, rotateY in 90 degree.
         UnityEngine.Cursor.lockState = CursorLockMode.Confined; // keep confined in the game window
 
+   
     }
 
     void Update()
@@ -42,6 +53,8 @@ public class PlayerMovement : MonoBehaviour
             MovePlayer();
             LookAround();
         }
+        
+
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -57,10 +70,22 @@ public class PlayerMovement : MonoBehaviour
     }
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        // Only allow jump if grounded and cooldown time has passed
+        if (context.performed && isGrounded && Time.time >= lastJumpTime + jumpCooldown)
         {
-            rb.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
+            rb.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse); // Apply jump force
             Debug.Log("Jump pressed");
+
+            lastJumpTime = Time.time; // Update the last jump time
+            isGrounded = false; // Set to false as the player is now in the air
+        }
+
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Terrain" || collision.gameObject.tag == "Cave")
+        {
+            isGrounded = true;
         }
     }
     public void OnLook(InputAction.CallbackContext context)
