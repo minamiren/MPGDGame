@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 using System.Linq;
+using System;
 
 public class NPCDialogue : MonoBehaviour
 {
@@ -25,6 +26,9 @@ public class NPCDialogue : MonoBehaviour
     private int dialogueIndex;
     private List<int> conversationIndex = new List<int>();
     private bool waitingForItem;
+
+    // temporary for sake of prototype
+    private bool broughtItem;
     private struct DialogueLine
     {
         public bool isQuestion;
@@ -66,6 +70,7 @@ public class NPCDialogue : MonoBehaviour
         mostRecentResponse = "";
         dialogueIndex = 0;
         waitingForItem = false;
+        broughtItem = false;
 
         // This is so that we can talk to the NPC more than once. This control should be useful when it comes to needing to check for things like
         // Specific benchmarks to continue conversation, otherwise I would include it in the struct
@@ -76,7 +81,7 @@ public class NPCDialogue : MonoBehaviour
         //conversationIndex.Add(11);
 
         // Add all dialogue
-        dialogue.Add(new DialogueLine(false, "Could you bring me a food?", "", "", "", "", 0));
+        dialogue.Add(new DialogueLine(false, "Why don't you try exploring some? We need food to survive.", "", "", "", "", 0));
         //dialogue.Add(new DialogueLine(false, "I have been waiting for you to wake.", "", "", "", "", 0));
         //dialogue.Add(new DialogueLine(false, "It seems you have hit your head.", "", "", "", "", 0));
         //dialogue.Add(new DialogueLine(false, "I am afraid that we are in a bit of a bind, if you don't remember.", "", "", "", "", 0));
@@ -112,6 +117,7 @@ public class NPCDialogue : MonoBehaviour
                 int index = System.Array.IndexOf(hotbar, "Food");
                 Inventory.Instance.GiveHotbarItem(index);
                 Inventory.Instance.AddItem(stick);
+                broughtItem = true;
             }
             PlayerMovement.dialogue = true;
             if (!template.activeSelf)
@@ -216,6 +222,7 @@ public class NPCDialogue : MonoBehaviour
                 int index = System.Array.IndexOf(hotbar, "Food");
                 Inventory.Instance.GiveHotbarItem(index);
                 Inventory.Instance.AddItem(stick);
+                broughtItem = true;
             }
         }
     }
@@ -250,6 +257,14 @@ public class NPCDialogue : MonoBehaviour
 
     void DefaultDialogueLine()
     {
-        template.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Why don't you try exploring some? We need food to survive.";
+        string quote = "";
+        if(!broughtItem)
+        {
+            quote = "Please bring me food.";
+        } else
+        {
+            quote = "Thank you for the food. You now have a stick.";
+        }
+        template.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = quote;
     }
 }
