@@ -46,19 +46,23 @@ public class StickThrow : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        // Check if the collision is with an enemy
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Destroy(collision.gameObject);
-            Destroy(gameObject);
+            // Get the EnemyAI component from the specific enemy involved in the collision
+            EnemyHealth enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();
+            if (enemyHealth != null)
+            {
+                enemyHealth.TakeDamage(); // Damage only this enemy
+            }
+            Destroy(gameObject); // Destroy the projectile after hitting an enemy
         }
 
-        if (collision.gameObject.CompareTag("Terrain"))
+        // Check if the collision is with terrain or other objects
+        if (collision.gameObject.CompareTag("Terrain") || collision.gameObject.CompareTag("Cave"))
         {
-            Destroy(gameObject);
-        }
-        if (collision.gameObject.CompareTag("Cave"))
-        {
-            Destroy(gameObject);
+            Destroy(gameObject); // Destroy the projectile on impact with terrain or caves
         }
     }
+
 }
