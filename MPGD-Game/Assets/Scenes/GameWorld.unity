@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028408, g: 0.22571413, b: 0.30692232, a: 1}
+  m_IndirectSpecularColor: {r: 0.1802841, g: 0.2257142, b: 0.3069225, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1599,9 +1599,13 @@ PrefabInstance:
       value: NPC
       objectReference: {fileID: 0}
     - target: {fileID: 3141476471197895874, guid: 0ae9d054d0abc654894f62c75c199a13, type: 3}
+      propertyPath: stick
+      value: 
+      objectReference: {fileID: 9205403111066279728, guid: f9714246a596a6f4f994a4371814f45d, type: 3}
+    - target: {fileID: 3141476471197895874, guid: 0ae9d054d0abc654894f62c75c199a13, type: 3}
       propertyPath: template
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1250601146}
     - target: {fileID: 3141476471197895874, guid: 0ae9d054d0abc654894f62c75c199a13, type: 3}
       propertyPath: dialogueBox
       value: 
@@ -2800,6 +2804,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3469992142931873333, guid: 77975b8a9e04c0f4b83993b5fac79ac3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3702368043962965095, guid: 77975b8a9e04c0f4b83993b5fac79ac3, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -3044,6 +3052,11 @@ RectTransform:
 --- !u!1 &1250601145 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1521187305824947528, guid: 77975b8a9e04c0f4b83993b5fac79ac3, type: 3}
+  m_PrefabInstance: {fileID: 1250601142}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1250601146 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3469992142931873333, guid: 77975b8a9e04c0f4b83993b5fac79ac3, type: 3}
   m_PrefabInstance: {fileID: 1250601142}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1287889590 stripped

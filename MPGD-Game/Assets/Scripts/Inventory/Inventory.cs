@@ -172,7 +172,9 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    private void UseHotbarItem(int slotIndex)
+    // The same as use, but for use when giving an item to the NPC. So there is no effect for the player
+    // It just leaves the inventory
+    public void GiveHotbarItem(int slotIndex)
     {
         if (slotIndex < hotbarSlotOccupied.Length && hotbarSlotOccupied[slotIndex])
         {
@@ -189,9 +191,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    // The same as use, but for use when giving an item to the NPC. So there is no effect for the player
-    // It just leaves the inventory
-    public void GiveHotbarItem(int slotIndex)
+    private void UseHotbarItem(int slotIndex)
     {
         if (slotIndex < hotbarSlotOccupied.Length && hotbarSlotOccupied[slotIndex])
         {
