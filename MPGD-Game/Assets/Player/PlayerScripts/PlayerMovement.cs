@@ -72,7 +72,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!dialogue && context.performed && Time.time >= lastFireTime + fireCooldown)
         {
-            Debug.Log("Fire action triggered!");
+            // Debug.Log("Fire action triggered!");
            // Get the mouse position and create a ray from the camera to that point
             Vector2 mousePosition = Mouse.current.position.ReadValue();
             Ray cameraRay = Camera.main.ScreenPointToRay(mousePosition);

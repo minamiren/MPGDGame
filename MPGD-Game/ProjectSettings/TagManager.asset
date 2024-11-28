@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - Terrain
   - Cave
+  - MudParticles
   layers:
   - Default
   - TransparentFX
