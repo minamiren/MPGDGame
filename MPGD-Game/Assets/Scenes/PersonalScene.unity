@@ -4135,9 +4135,25 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3151874125211890220, guid: 7351e43543b2249c983ef5324977e3a6, type: 3}
+      propertyPath: m_UseCustomVertexStreams
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3151874125211890220, guid: 7351e43543b2249c983ef5324977e3a6, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 16a4f29328a8c4fb58749143221b044b, type: 2}
+    - target: {fileID: 3151874125211890220, guid: 7351e43543b2249c983ef5324977e3a6, type: 3}
+      propertyPath: 'm_VertexStreams.Array.data[1]'
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3151874125211890220, guid: 7351e43543b2249c983ef5324977e3a6, type: 3}
+      propertyPath: 'm_VertexStreams.Array.data[2]'
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3151874125211890220, guid: 7351e43543b2249c983ef5324977e3a6, type: 3}
+      propertyPath: 'm_VertexStreams.Array.data[3]'
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 5000951205286162078, guid: 7351e43543b2249c983ef5324977e3a6, type: 3}
       propertyPath: m_Name
       value: MudSpray
