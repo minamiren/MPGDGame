@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+using static UnityEngine.UI.Button;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -32,8 +33,18 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody rb;
 
-    public Texture2D crosshairTexture; // Crosshair icon texture
-    public Vector2 crosshairHotspot = new Vector2(16, 16); // The center of the crosshair texture
+    //public Texture2D crosshairTexture; // Crosshair icon texture
+    //public Vector2 crosshairHotspot = new Vector2(16, 16); // The center of the crosshair texture
+    public GameObject crosshair;
+
+    public enum GameState
+    {
+        StartScene,
+        PlayScene
+
+    };
+
+    public GameState currentState = GameState.StartScene;
 
 
     private void Start()
@@ -41,20 +52,54 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;  // Prevent unwanted rotation
         transform.rotation = Quaternion.Euler(0f, 90f, 0f);//keep the player's world coordinate, rotateY in 90 degree.
-        UnityEngine.Cursor.lockState = CursorLockMode.Confined; // keep confined in the game window
+        //UnityEngine.Cursor.lockState = CursorLockMode.Confined; // keep locked in the game window
+        updateCursorState();
+        ShowCrossshair(false);
 
-   
+    }
+
+    public void ShowCrossshair(bool isVisible)
+    {
+        if(crosshair != null)
+        {
+            crosshair.SetActive(isVisible);//show or hide the crosshair
+        }
+    }
+
+    public void updateCursorState()
+    {
+        if(currentState == GameState.StartScene)
+        {
+            //UnityEngine.Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);//Default cursor
+            UnityEngine.Cursor.lockState = CursorLockMode.Confined;
+           // UnityEngine.Cursor.visible = true;//hide the system cursor
+        }
+
+        if(currentState == GameState.PlayScene)
+        {
+            //UnityEngine.Cursor.SetCursor(crosshairTexture, crosshairHotspot, CursorMode.Auto);
+            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+            //UnityEngine.Cursor.visible = false;//hide the system cursor
+        }
+    }
+
+    public void GameStart()
+    {
+        currentState = GameState.PlayScene;
+        ShowCrossshair(true);
     }
 
     void Update()
     {
+        //UnityEngine.Cursor.lockState = CursorLockMode.Confined; // keep confined in the game window
+
         if (!dialogue)
         {
             MovePlayer();
             LookAround();
         }
-        
 
+        updateCursorState();
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -98,18 +143,28 @@ public class PlayerMovement : MonoBehaviour
         if (!dialogue && context.performed && Time.time >= lastFireTime + fireCooldown)
         {
             Debug.Log("Fire action triggered!");
-           // Get the mouse position and create a ray from the camera to that point
-            Vector2 mousePosition = Mouse.current.position.ReadValue();
-            Ray cameraRay = Camera.main.ScreenPointToRay(mousePosition);
+            // Get the mouse position and create a ray from the camera to that point
+            // Vector2 mousePosition = Mouse.current.position.ReadValue();
+            // Ray cameraRay = Camera.main.ScreenPointToRay(mousePosition);
+
+            //Calculate the centre of the screen
+            Vector2 screenCenter = new Vector2(Screen.width / 2, Screen.height / 2);
+
+            //Create a ray from the camera thorugh the centre of the screen
+            Ray cameraRay = Camera.main.ScreenPointToRay(screenCenter);
 
             // Calculate the direction from the shooting point to the mouse's world position
-            Vector3 targetPoint = cameraRay.GetPoint(1000f); // Get a point far away along the ray
-            Vector3 direction = (targetPoint - shootingPoint.position).normalized;
+           // Vector3 targetPoint = cameraRay.GetPoint(1000f); // Get a point far away along the ray
+            //Vector3 direction = (targetPoint - shootingPoint.position).normalized;
+
+
             // Perform a raycast from shootingPoint in the calculated direction
-            if (Physics.Raycast(shootingPoint.position, direction, out RaycastHit hit))
+            //if (Physics.Raycast(shootingPoint.position, direction, out RaycastHit hit))
+            if(Physics.Raycast(cameraRay, out RaycastHit hit, Mathf.Infinity))
             {
 
                 GameObject stickInstance = Instantiate(stickPrefab, shootingPoint.position, shootingPoint.rotation);
+                //GameObject stickInstance = Instantiate(stickPrefab, Camera.main.transform.position, Quaternion.identity);
                 StickThrow stickThrowScript = stickInstance.GetComponent<StickThrow>();
                 if(stickThrowScript != null)
                 {
