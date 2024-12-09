@@ -24,11 +24,11 @@ public class NPCDialogue : MonoBehaviour
     // Keeps track of where we are in the conversation
     private string mostRecentResponse;
     private int dialogueIndex;
-    private List<int> conversationIndex = new List<int>();
     private bool waitingForItem;
+    private bool closeDialogue;
 
-    // temporary for sake of prototype
-    private bool broughtItem;
+    // which item we are waiting on
+    private int itemIndex;
     private struct DialogueLine
     {
         public bool isQuestion;
@@ -38,7 +38,9 @@ public class NPCDialogue : MonoBehaviour
         public string res3;
         public string res4;
         public int skip;
-        public DialogueLine(bool isQuestion, string message, string res1, string res2, string res3, string res4, int skip)
+        public bool closeDialogue;
+        public bool awaitingItem;
+        public DialogueLine(bool isQuestion, string message, string res1, string res2, string res3, string res4, int skip, bool closeDialogue, bool awaitingItem)
         {
             this.isQuestion = isQuestion;
             this.message = message;
@@ -47,9 +49,25 @@ public class NPCDialogue : MonoBehaviour
             this.res3 = res3;
             this.res4 = res4;
             this.skip = skip;
+            this.closeDialogue = closeDialogue;
+            this.awaitingItem = awaitingItem;
         }
     }
     private List<DialogueLine> dialogue = new List<DialogueLine>();
+
+    private struct AwaitedItems
+    {
+        public string[] waitingList;
+        public string[] returnedList;
+        public string defaultDialogue;
+        public AwaitedItems(string[] waitingList, string[] returnedList, string defaultDialogue)
+        {
+            this.waitingList = waitingList;
+            this.returnedList = returnedList;
+            this.defaultDialogue = defaultDialogue;
+        }
+    }
+    private List<AwaitedItems> itemExchange = new List<AwaitedItems>();
 
     // Items to give the player
     public GameObject stick;
@@ -69,40 +87,30 @@ public class NPCDialogue : MonoBehaviour
         dialogueText.enabled = false;
         mostRecentResponse = "";
         dialogueIndex = 0;
+        itemIndex = 0;
         waitingForItem = false;
-        broughtItem = false;
-
-        // This is so that we can talk to the NPC more than once. This control should be useful when it comes to needing to check for things like
-        // Specific benchmarks to continue conversation, otherwise I would include it in the struct
-        // this is actually very dangerous i should add this and a potential item to the struct
-        //conversationIndex.Add(7);
-        //conversationIndex.Add(8);
-        //conversationIndex.Add(9);
-        //conversationIndex.Add(11);
+        closeDialogue = false;
 
         // Add all dialogue
-        dialogue.Add(new DialogueLine(false, "Why don't you try exploring some? We need food to survive.", "", "", "", "", 0));
-        //dialogue.Add(new DialogueLine(false, "I have been waiting for you to wake.", "", "", "", "", 0));
-        //dialogue.Add(new DialogueLine(false, "It seems you have hit your head.", "", "", "", "", 0));
-        //dialogue.Add(new DialogueLine(false, "I am afraid that we are in a bit of a bind, if you don't remember.", "", "", "", "", 0));
-        //dialogue.Add(new DialogueLine(true, "Do you remember what happened to you?", "Yes", "No", "", "", 0));
-        //dialogue.Add(new DialogueLine(false, "That's a relief to hear. I will wait here until you can find us something useful.", "", "", "", "", 2));
-        //dialogue.Add(new DialogueLine(false, "We are part of an exploratory party, but there was a cave-in and we were separated. It's likely our team thinks that we were lost to the falling rocks.", "", "", "", "", 0));
-        //dialogue.Add(new DialogueLine(false, "We are on our own until we find something that we can use to help ourselves.", "", "", "", "", 0));
-        //dialogue.Add(new DialogueLine(false, "Bring me food.", "", "", "", "", 0));
-        //dialogue.Add(new DialogueLine(true, "Would you give me some food?", "Yes", "No", "", "", 0));
-        //dialogue.Add(new DialogueLine(false, "Thank you. Now we may continue.", "", "", "", "", 1));
-        //dialogue.Add(new DialogueLine(false, "Please bring me some food.", "", "", "", "", -3));
-        //dialogue.Add(new DialogueLine(false, "", "", "", "", ""));
+        dialogue.Add(new DialogueLine(false, "I have been waiting for you to wake.", "", "", "", "", 0, true, false));
+        dialogue.Add(new DialogueLine(false, "It seems you have hit your head.", "", "", "", "", 0, false, false));
+        dialogue.Add(new DialogueLine(false, "I am afraid that we are in a bit of a bind, if you don't remember.", "", "", "", "", 0, false, false));
+        dialogue.Add(new DialogueLine(true, "Do you remember what happened to you?", "Yes", "No", "", "", 0, false, false));
+        dialogue.Add(new DialogueLine(false, "That's a relief to hear. I will wait here until you can find us something  useful.", "", "", "", "", 2, true, false));
+        dialogue.Add(new DialogueLine(false, "We are part of an exploratory party, but there was a cave-in and we were separated. It's likely our team thinks that we were lost to the falling rocks.", "", "", "", "", 0, false, false));
+        dialogue.Add(new DialogueLine(false, "We are on our own until we find something that we can use to help ourselves.", "", "", "", "", 0, false, false));
+        dialogue.Add(new DialogueLine(false, "Why don't you try exploring some? We need food to survive.", "", "", "", "", 0, true, true));
+        dialogue.Add(new DialogueLine(false, "Now that you have a stick, why don't you go fetch me more food?", "", "", "", "", 0, true, true));
+        dialogue.Add(new DialogueLine(false, "Now that you have two sticks, go win.", "", "", "", "", 0, true, false));
+        //dialogue.Add(new DialogueLine(false, "", "", "", "", "", 0, false, false));
+
+        itemExchange.Add(new AwaitedItems(new string[] {"Food"}, new string[] {"Stick"}, "If you bring me food, I might be able to do something with it."));
+        itemExchange.Add(new AwaitedItems(new string[] {"Food"}, new string[] {"Stick"}, "If you bring me food, can transmute it into a secret second stick."));
     }
 
     // Update is called once per frame
     void Update()
     {
-        //foreach(var item in Inventory.Instance.GetHotBarList())
-        //{
-        //    Debug.Log(item.ToString());
-        //}
         if (!keyReleased && interact.ReadValue<float>() == 0)
         {
             keyReleased = true;
@@ -111,58 +119,83 @@ public class NPCDialogue : MonoBehaviour
         // determines if we enter conversation
         if (playerInRange == true && interact.ReadValue<float>() == 1 && startDialogue == false && keyReleased && !dialogueBox.activeSelf)
         {
-            string[] hotbar = Inventory.Instance.GetHotBarList();
-            if (hotbar.Contains("Food"))
-            {
-                int index = System.Array.IndexOf(hotbar, "Food");
-                Inventory.Instance.GiveHotbarItem(index);
-                Inventory.Instance.AddItem(stick);
-                broughtItem = true;
-            }
             PlayerMovement.dialogue = true;
             if (!template.activeSelf)
             {
                 template.SetActive(true);
-                if (dialogueIndex == 8)
-                {
-                    //waitingForItem = true;
-                    
-                }
                 // Dialogue not currently being shown
                 if (dialogue.Count <= dialogueIndex)
                 {
-                   
+                    string defaultLine = "Use the items I've given you near the lake next to the mountains in order to escape.";
+                    if (waitingForItem)
+                    {
+                        bool hasItems = HandleItemCheck(itemIndex);
+                        Debug.Log(hasItems);
+                        Debug.Log(itemIndex);
+                        if (!hasItems)
+                        {
+                            defaultLine = itemExchange[itemIndex].defaultDialogue;
+                        } else
+                        {
+                            defaultLine = "Thank you. I've given you something in return.";
+                        }
+                    } 
                     // End of scripted conversation
-                    //PlayerMovement.dialogue = false;
-                    if(waitingForItem)
-                    {
-                        NextDialogueLine(dialogueIndex-1);
-                    } else
-                    {
-                        DefaultDialogueLine();
-                    }
-                    // here we want to give a default line
+                    DefaultDialogueLine(defaultLine);
                 } else
                 {
-                    // Show dialogue box and start conversation
-                    //template.SetActive(true);
-                    NextDialogueLine(dialogueIndex);
+                    if (waitingForItem)
+                    {
+                        bool hasItems = HandleItemCheck(itemIndex);
+                        Debug.Log("not at end of dialogue");
+                        Debug.Log(hasItems);
+                        Debug.Log(itemIndex);
+                        if (!hasItems)
+                        {
+                            DefaultDialogueLine(itemExchange[itemIndex].defaultDialogue);
+                        }
+                        else
+                        {
+                            NextDialogueLine(dialogueIndex);
+                        }
+                    }
+                    else
+                    {
+                        NextDialogueLine(dialogueIndex);
+                    }
                 }
             } else
             {
                 // Dialogue box already open
-                if(conversationIndex.Contains(dialogueIndex) || dialogue.Count <= dialogueIndex)
+                if(closeDialogue || dialogue.Count <= dialogueIndex)
                 {
                     // We are at the end of a conversation. Close dialogue
-                    conversationIndex.Remove(dialogueIndex);
                     template.SetActive(false);
                     PlayerMovement.dialogue = false;
+                    closeDialogue = false;
                 } else
                 {
-                    // Continue to next line in conversation
-                    NextDialogueLine(dialogueIndex);
+                    if (waitingForItem)
+                    {
+                        bool hasItems = HandleItemCheck(itemIndex);
+                        if (!hasItems)
+                        {
+                            template.SetActive(false);
+                            PlayerMovement.dialogue = false;
+                            closeDialogue = false;
+                        }
+                        else
+                        {
+                            NextDialogueLine(dialogueIndex);
+                        }
+                    }
+                    else
+                    {
+                        NextDialogueLine(dialogueIndex);
+                    }
                 }
             }
+            
             keyReleased = false;
         }
     }
@@ -214,17 +247,6 @@ public class NPCDialogue : MonoBehaviour
         {
             template.SetActive(false);
         }
-        if(waitingForItem && mostRecentResponse.Equals("0"))
-        {
-            string[] hotbar = Inventory.Instance.GetHotBarList();
-            if (hotbar.Contains("Food"))
-            {
-                int index = System.Array.IndexOf(hotbar, "Food");
-                Inventory.Instance.GiveHotbarItem(index);
-                Inventory.Instance.AddItem(stick);
-                broughtItem = true;
-            }
-        }
     }
 
     // Show the current dialogue line
@@ -237,14 +259,12 @@ public class NPCDialogue : MonoBehaviour
             dialogueIndex+=(dialogueLine.skip+1);
         }
 
+        closeDialogue = dialogueLine.closeDialogue;
+
         if (dialogueLine.isQuestion)
         {
             List<string> responseList = new List<string>();
-            if(waitingForItem)
-            {
-                // if item is in hotbar then add yes
-                // add no either way
-            } else
+            if(!waitingForItem) 
             {
                 responseList.Add(dialogueLine.res1);
                 responseList.Add(dialogueLine.res2);
@@ -253,18 +273,67 @@ public class NPCDialogue : MonoBehaviour
             }
             NewPlayerResponse(responseList);
         }
+
+        waitingForItem = dialogueLine.awaitingItem;
     }
 
-    void DefaultDialogueLine()
+    // Shows whatever line is passed as a quote
+    void DefaultDialogueLine(string line)
     {
-        string quote = "";
-        if(!broughtItem)
+        template.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = line;
+    }
+
+    // Checks to see if items are had. Returns true if switch made successfully, and false if there are items still missing
+    bool HandleItemCheck(int idx)
+    {
+        AwaitedItems items = itemExchange[idx];
+        string[] hotbar = Inventory.Instance.GetHotBarList();
+        Debug.Log(hotbar);
+        bool broughtAllItems = true;
+        foreach(string food in hotbar)
         {
-            quote = "Please bring me food.";
-        } else
-        {
-            quote = "Thank you for the food. You now have a stick.";
+            Debug.Log(food);
         }
-        template.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = quote;
+        bool hasItem = false;
+        foreach (string item in items.waitingList)
+        {
+            // if hotbar does not contain tiem, broughtAllItems is false
+            // if hotbar at any point contains item, becomes true
+            // have to do comparison this way to handle clones
+            foreach (string barItem in hotbar)
+            {
+                if(barItem.Contains(item))
+                {
+                    hasItem = true;
+                }
+            }
+            broughtAllItems = hasItem;
+        }
+        if(broughtAllItems)
+        {
+            foreach (string item in items.waitingList)
+            {
+                //int index = System.Array.IndexOf(hotbar, item);
+                for(int i = 0; i < hotbar.Length; i++)
+                {
+                    if (hotbar[i].Contains(item))
+                    {
+                        Inventory.Instance.GiveHotbarItem(i);
+                        break;
+                    }
+                }
+            }
+            foreach (string ret in items.returnedList) 
+            {
+                Inventory.Instance.AddItem(stick);
+            }
+            if(itemIndex == 1)
+            {
+                WinGame.Instance.SetWinCondition(true);
+            }
+            waitingForItem = false;
+            itemIndex += 1;
+        }
+        return broughtAllItems;
     }
 }
