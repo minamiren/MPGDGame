@@ -7,6 +7,7 @@ public class SandboxEnemyAttack : MonoBehaviour
     public float timeBetweenAttacks = 2f;
     public float sprayDuration = 0.5f;
     private bool alreadyAttacked;
+    private Transform player;
 
     private void Awake()
     {
@@ -19,21 +20,33 @@ public class SandboxEnemyAttack : MonoBehaviour
         GetComponent<NavMeshAgent>().SetDestination(transform.position);
         if (!alreadyAttacked)
         {
-            SprayMud();
+            SpraySeed();
             alreadyAttacked = true;
-            Invoke(nameof(StopMudSpray), sprayDuration);
+            Invoke(nameof(StopSeedSpray), sprayDuration);
             Invoke(nameof(ResetAttack), timeBetweenAttacks); // Cooldown before the next attack
         }
     }
 
-    private void SprayMud()
+    private void SpraySeed()
     {
         seedExp.Play(); // Trigger the particle system
     }
 
-    private void StopMudSpray()
+    private void StopSeedSpray()
     {
         seedExp.Stop();
+    }
+
+    private void OnParticleCollision(GameObject other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            PlayerStates playerHealth = player.GetComponent<PlayerStates>();
+            if (playerHealth != null)
+            {
+                playerHealth.TakeDamage(10); // Adjust damage value as necessary
+            }
+        }
     }
 
     private void ResetAttack()
