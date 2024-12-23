@@ -196,22 +196,31 @@ public class Inventory : MonoBehaviour
         if (slotIndex < hotbarSlotOccupied.Length && hotbarSlotOccupied[slotIndex])
         {
             GameObject pickup = PickUps[slotIndex];
-            ItemController itemController = pickup.GetComponent<ItemController>();
-
-            if (itemController != null)
+            if (pickup != null && pickup.CompareTag("Food"))
             {
-                Item item = itemController.item;
-                GameObject player = GameObject.FindWithTag("Player");
-                playerHungry = player.GetComponent<PlayerStates>();
+                ItemController itemController = pickup.GetComponent<ItemController>();
 
-                if (playerHungry != null)
+                if (itemController != null)
                 {
-                    playerHungry.FillBelly(PlayerFillBelly);
+                    Item item = itemController.item;
+                    GameObject player = GameObject.FindWithTag("Player");
+                    playerHungry = player.GetComponent<PlayerStates>();
+
+                    if (playerHungry != null)
+                    {
+                        playerHungry.FillBelly(PlayerFillBelly);
+                    }
+
+                    // 清空該熱鍵欄槽位
+                    ClearHotBarSlot(hotbarButtons[slotIndex]);
+                    PickUps[slotIndex] = null;
+                    currentHotbarCount--;
                 }
-                ClearHotBarSlot(hotbarButtons[slotIndex]);
-                PickUps[slotIndex] = null;
-                currentHotbarCount--;
-            };
+            }
+            else
+            {
+                Debug.Log($"Cannot use item in slot {slotIndex}. It is not tagged as 'Food'.");
+            }
         }
     }
 
