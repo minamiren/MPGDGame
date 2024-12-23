@@ -668,6 +668,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 17.652, z: 8.002}
+--- !u!1 &189667289 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1753896587948119473, guid: 77975b8a9e04c0f4b83993b5fac79ac3, type: 3}
+  m_PrefabInstance: {fileID: 1250601142}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &255300748
 GameObject:
   m_ObjectHideFlags: 0
@@ -4540,6 +4545,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: MainCamera
       objectReference: {fileID: 0}
+    - target: {fileID: 6378096431915017147, guid: f0b6bceb48d48464c9876ee7af13933c, type: 3}
+      propertyPath: endPanel
+      value: 
+      objectReference: {fileID: 189667289}
     - target: {fileID: 6378096431915017147, guid: f0b6bceb48d48464c9876ee7af13933c, type: 3}
       propertyPath: HealthBar
       value: 
