@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class SeedDamage : MonoBehaviour
 {
-    private Transform player;
-
     private void OnParticleCollision(GameObject other)
     {
+        // Check if the colliding particle has the tag "SeedParticles"
         if (other.CompareTag("SeedParticles"))
         {
             DealDamageToPlayer();
@@ -16,11 +15,12 @@ public class SeedDamage : MonoBehaviour
 
     private void DealDamageToPlayer()
     {
-        PlayerStates playerHealth = player.GetComponent<PlayerStates>();
+        // Access the PlayerStates component attached to this GameObject
+        PlayerStates playerHealth = GetComponent<PlayerStates>();
         if (playerHealth != null)
         {
-            playerHealth.TakeDamage(10); // Adjust damage value as necessary
+            playerHealth.TakeDamage(10); // Deal damage to the player
         }
     }
-
 }
+

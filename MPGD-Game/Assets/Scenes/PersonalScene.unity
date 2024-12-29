@@ -4910,7 +4910,7 @@ MonoBehaviour:
   duration: 20
   minSize: 900
   maxSize: 4000
---- !u!114 &2960930006125538300
+--- !u!114 &2960930006125538308
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5250,7 +5250,7 @@ PrefabInstance:
       addedObject: {fileID: 2960930006125538299}
     - targetCorrespondingSourceObject: {fileID: 9029137299295368709, guid: f0b6bceb48d48464c9876ee7af13933c, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2960930006125538300}
+      addedObject: {fileID: 2960930006125538308}
   m_SourcePrefab: {fileID: 100100000, guid: f0b6bceb48d48464c9876ee7af13933c, type: 3}
 --- !u!1001 &6815386381342194995
 PrefabInstance:
