@@ -100,7 +100,8 @@ public class NPCDialogue : MonoBehaviour
         dialogue.Add(new DialogueLine(false, "We are part of an exploratory party, but there was a cave-in and we were separated. It's likely our team thinks that we were lost to the falling rocks.", "", "", "", "", 0, false, false));
         dialogue.Add(new DialogueLine(false, "We are on our own until we find something that we can use to help ourselves.", "", "", "", "", 0, false, false));
         dialogue.Add(new DialogueLine(false, "Why don't you try exploring some? We need food to survive.", "", "", "", "", 0, true, true));
-        dialogue.Add(new DialogueLine(false, "I've given you some sticks to use to light the fire in the cave.", "", "", "", "", 0, true, false));
+        dialogue.Add(new DialogueLine(false, "It looks like you've found food. I won't take it from you; eat it instead if you are hungry.", "", "", "", "", 0, true, false));
+        dialogue.Add(new DialogueLine(false, "However, there are very important things for you to look for.", "", "", "", "", 0, true, false));
         dialogue.Add(new DialogueLine(false, "In order to signal the party looking for us, we need to climb the mountain.", "", "", "", "", 0, false, false));
         dialogue.Add(new DialogueLine(false, "Maybe with some tools, we can create some rope to do so.", "", "", "", "", 0, false, false));
         dialogue.Add(new DialogueLine(false, "Some of the monsters around seem to be made of materials. Can you find me a stone and a stick?", "", "", "", "", 0, true, true));
@@ -111,7 +112,7 @@ public class NPCDialogue : MonoBehaviour
         dialogue.Add(new DialogueLine(false, "You've done it!", "", "", "", "", 0, false, false));
         //dialogue.Add(new DialogueLine(false, "", "", "", "", "", 0, false, false));
 
-        itemExchange.Add(new AwaitedItems(new string[] {"Food"}, "I'll trade you some food for something that might be useful."));
+        itemExchange.Add(new AwaitedItems(new string[] {"Food"}, "Explore a little bit and bring me some food if you can."));
         itemExchange.Add(new AwaitedItems(new string[] {"Stick", "Stone"}, "Fight some enemies to find me a stone and a stick. I can make you a tool with it."));
         itemExchange.Add(new AwaitedItems(new string[] {"Little Tree"}, "Go explore the trees for small ones and use your axe to cut them down."));
         itemExchange.Add(new AwaitedItems(new string[] { "Little Tree" }, "Continue searching the trees for small trees to cut down."));
