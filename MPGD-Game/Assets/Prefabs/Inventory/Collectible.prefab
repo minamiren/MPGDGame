@@ -121,6 +121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: ef75af612da07e148a69226ccd06c510, type: 2}
+  icon: {fileID: 21300000, guid: da7129ed6a246f048a49d8d97de2d2d4, type: 3}
 --- !u!114 &2132197620412114589
 MonoBehaviour:
   m_ObjectHideFlags: 0

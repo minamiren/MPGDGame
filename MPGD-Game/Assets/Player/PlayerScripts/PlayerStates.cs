@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Xml.Serialization;
+using System.IO;
+using static PlayerStates;
 
 public class PlayerStates : MonoBehaviour
 {
@@ -25,6 +27,17 @@ public class PlayerStates : MonoBehaviour
 
     public GameObject startPanel;
     public GameObject endPanel;
+
+    private SaveData savedData;
+
+    [System.Serializable]
+    public struct SaveData
+    {
+        public float health;
+        public float hunger;
+        public Vector3 position;
+        public List<string> hotBarItems;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -78,7 +91,7 @@ public class PlayerStates : MonoBehaviour
 
     }
 
-    public void UpdateHunegrUI()
+    public void UpdateHungerUI()
     {
         HungerText.text = "HUNGER: " + (int)currentHunger;
         HungerySlider.value = currentHunger;
@@ -105,8 +118,26 @@ public class PlayerStates : MonoBehaviour
         if(!startPanel.activeSelf && !PlayerMovement.dialogue)
         {
             HungerByTime();
-            UpdateHunegrUI();
+            UpdateHungerUI();
         }
 
     }
+    public void SaveGame()
+    {
+        savedData.health = currentHealth;
+        savedData.hunger = currentHunger;
+        savedData.position = transform.position;
+
+        Debug.Log("Game saved!");
+    }
+
+    public void LoadGame()
+    {
+        currentHealth = savedData.health;
+        currentHunger = savedData.hunger;
+        transform.position = savedData.position;
+
+        Debug.Log("Game loaded!");
+    }
+
 }

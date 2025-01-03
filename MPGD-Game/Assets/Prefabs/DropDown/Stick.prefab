@@ -123,6 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: e5a8ccd852e60fd4e817d506b3ce55c0, type: 2}
+  icon: {fileID: 21300000, guid: 0e1ccb64303778e4081913a6d9cca677, type: 3}
 --- !u!114 &8410016551634219097
 MonoBehaviour:
   m_ObjectHideFlags: 0

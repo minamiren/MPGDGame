@@ -135,12 +135,11 @@ public class Inventory : MonoBehaviour
         ItemController itemController = pickup.GetComponent<ItemController>();
         itemText.text = itemController.item.itemName; // Use itemName here
 
-
-        // showing image(not yet)
+        // showing image
         Image icon = currentButton.transform.GetChild(0).GetComponent<Image>();
-        if (icon != null && pickup.GetComponent<SpriteRenderer>() != null)
+        if (icon != null && itemController.icon != null)
         {
-            icon.sprite = pickup.GetComponent<SpriteRenderer>().sprite;
+            icon.sprite = itemController.icon;
             icon.enabled = true;
         }
 
@@ -230,12 +229,11 @@ public class Inventory : MonoBehaviour
         TextMeshProUGUI itemText = hotbarButton.transform.Find("ItemText").GetComponent<TextMeshProUGUI>();
         itemText.text = " ";
 
-        /* remove item image(not yet)
+        // remove item icon
         Image icon = hotbarButton.transform.GetChild(0).GetComponent<Image>();
         icon.sprite = null;
         icon.enabled = false;
-        */
-        
+
         hotbarButton.onClick.RemoveAllListeners();
 
         int index = hotbarButtons.IndexOf(hotbarButton);
