@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4eb56f15524998341940862666c138c9, type: 3}
-  m_Name: Rope
+  m_Name: Knife
   m_EditorClassIdentifier: 
-  id: 7
-  itemName: Rope
+  id: 5
+  itemName: Knife
   value: 1
   icon: {fileID: 0}
   count: 0

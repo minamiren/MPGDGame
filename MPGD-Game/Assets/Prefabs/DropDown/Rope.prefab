@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2466687706825637962
+--- !u!1 &1594785558474403453
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,49 +8,49 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2642234439084309384}
-  - component: {fileID: 6617301796112454604}
-  - component: {fileID: 887478772375351044}
-  - component: {fileID: 4396397574367041555}
-  - component: {fileID: 8393482385074695046}
-  - component: {fileID: 1361573982177444829}
+  - component: {fileID: 3633133223431050070}
+  - component: {fileID: 8968451551166146334}
+  - component: {fileID: 6149308836962881425}
+  - component: {fileID: 5140329692982965948}
+  - component: {fileID: 7119124406576629090}
+  - component: {fileID: 2487424747557984475}
   m_Layer: 0
   m_Name: Rope
-  m_TagString: PickUp
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2642234439084309384
+--- !u!4 &3633133223431050070
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2466687706825637962}
+  m_GameObject: {fileID: 1594785558474403453}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 111.479225, y: 53.68734, z: 106.60855}
+  m_LocalPosition: {x: 148, y: 1.9700003, z: 106}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &6617301796112454604
+--- !u!33 &8968451551166146334
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2466687706825637962}
+  m_GameObject: {fileID: 1594785558474403453}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &887478772375351044
+--- !u!23 &6149308836962881425
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2466687706825637962}
+  m_GameObject: {fileID: 1594785558474403453}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -86,13 +86,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &4396397574367041555
+--- !u!135 &5140329692982965948
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2466687706825637962}
+  m_GameObject: {fileID: 1594785558474403453}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -107,29 +107,29 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8393482385074695046
+--- !u!114 &7119124406576629090
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2466687706825637962}
+  m_GameObject: {fileID: 1594785558474403453}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 453d9f268035dc041a3246b5c0d76d16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: f81d0ac91779d4b49b055040e0c659a7, type: 2}
---- !u!114 &1361573982177444829
+  item: {fileID: 11400000, guid: aa8f2f845ee536e4880805169d707cfa, type: 2}
+--- !u!114 &2487424747557984475
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2466687706825637962}
+  m_GameObject: {fileID: 1594785558474403453}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fdd7ed929da55044a98e00dbb8254dce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: f81d0ac91779d4b49b055040e0c659a7, type: 2}
+  item: {fileID: 11400000, guid: aa8f2f845ee536e4880805169d707cfa, type: 2}

@@ -304,7 +304,6 @@ public class NPCDialogue : MonoBehaviour
             {
                 if(barItem.Contains(item))
                 {
-                    Debug.Log("Found item " + item);
                     hasItem = true;
                 }
             }
