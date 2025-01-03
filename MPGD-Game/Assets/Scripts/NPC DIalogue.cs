@@ -58,12 +58,10 @@ public class NPCDialogue : MonoBehaviour
     private struct AwaitedItems
     {
         public string[] waitingList;
-        public string[] returnedList;
         public string defaultDialogue;
-        public AwaitedItems(string[] waitingList, string[] returnedList, string defaultDialogue)
+        public AwaitedItems(string[] waitingList, string defaultDialogue)
         {
             this.waitingList = waitingList;
-            this.returnedList = returnedList;
             this.defaultDialogue = defaultDialogue;
         }
     }
@@ -71,6 +69,8 @@ public class NPCDialogue : MonoBehaviour
 
     // Items to give the player
     public GameObject stick;
+    public GameObject knife;
+    public GameObject rope;
 
     private void Awake()
     {
@@ -100,12 +100,18 @@ public class NPCDialogue : MonoBehaviour
         dialogue.Add(new DialogueLine(false, "We are part of an exploratory party, but there was a cave-in and we were separated. It's likely our team thinks that we were lost to the falling rocks.", "", "", "", "", 0, false, false));
         dialogue.Add(new DialogueLine(false, "We are on our own until we find something that we can use to help ourselves.", "", "", "", "", 0, false, false));
         dialogue.Add(new DialogueLine(false, "Why don't you try exploring some? We need food to survive.", "", "", "", "", 0, true, true));
-        dialogue.Add(new DialogueLine(false, "Now that you have a stick, why don't you go fetch me more food?", "", "", "", "", 0, true, true));
-        dialogue.Add(new DialogueLine(false, "Now that you have two sticks, go win.", "", "", "", "", 0, true, false));
+        dialogue.Add(new DialogueLine(false, "I've given you some sticks to use to light the fire in the cave.", "", "", "", "", 0, true, false));
+        dialogue.Add(new DialogueLine(false, "In order to signal the party looking for us, wee need to climb the mountain.", "", "", "", "", 0, false, false));
+        dialogue.Add(new DialogueLine(false, "Maybe with some tools, we can create some rope to do so.", "", "", "", "", 0, false, false));
+        dialogue.Add(new DialogueLine(false, "Some of the monsters around seem to be made of materials. Can you find me a stone and a stick?", "", "", "", "", 0, true, true));
+        dialogue.Add(new DialogueLine(false, "With the stones and the stick, I will make you a knife.", "", "", "", "", 0, false, false));
+        dialogue.Add(new DialogueLine(false, "Now if you go cut down some vines, I will weave you a rope to climb the mountain.", "", "", "", "", 0, true, true));
+        dialogue.Add(new DialogueLine(false, "You've done it!", "", "", "", "", 0, false, false));
         //dialogue.Add(new DialogueLine(false, "", "", "", "", "", 0, false, false));
 
-        itemExchange.Add(new AwaitedItems(new string[] {"Food"}, new string[] {"Stick"}, "If you bring me food, I might be able to do something with it."));
-        itemExchange.Add(new AwaitedItems(new string[] {"Food"}, new string[] {"Stick"}, "If you bring me food, can transmute it into a secret second stick."));
+        itemExchange.Add(new AwaitedItems(new string[] {"Food"}, "I'll trade you some food for something that might be useful."));
+        itemExchange.Add(new AwaitedItems(new string[] {"Stick", "Stone"}, "Fight some enemies to find me a stone and a stick. I can make you a tool with it."));
+        itemExchange.Add(new AwaitedItems(new string[] {"Vine", "Vine", "Vine"}, "It will take at least three vines to make a rope strong and long enough."));
     }
 
     // Update is called once per frame
@@ -126,12 +132,10 @@ public class NPCDialogue : MonoBehaviour
                 // Dialogue not currently being shown
                 if (dialogue.Count <= dialogueIndex)
                 {
-                    string defaultLine = "Use the items I've given you near the lake next to the mountains in order to escape.";
+                    string defaultLine = "Use the rope I've given you near the lake next to the mountain in order to climb it and escape.";
                     if (waitingForItem)
                     {
                         bool hasItems = HandleItemCheck(itemIndex);
-                        Debug.Log(hasItems);
-                        Debug.Log(itemIndex);
                         if (!hasItems)
                         {
                             defaultLine = itemExchange[itemIndex].defaultDialogue;
@@ -147,9 +151,6 @@ public class NPCDialogue : MonoBehaviour
                     if (waitingForItem)
                     {
                         bool hasItems = HandleItemCheck(itemIndex);
-                        Debug.Log("not at end of dialogue");
-                        Debug.Log(hasItems);
-                        Debug.Log(itemIndex);
                         if (!hasItems)
                         {
                             DefaultDialogueLine(itemExchange[itemIndex].defaultDialogue);
@@ -288,16 +289,11 @@ public class NPCDialogue : MonoBehaviour
     {
         AwaitedItems items = itemExchange[idx];
         string[] hotbar = Inventory.Instance.GetHotBarList();
-        Debug.Log(hotbar);
         bool broughtAllItems = true;
-        foreach(string food in hotbar)
-        {
-            Debug.Log(food);
-        }
         bool hasItem = false;
         foreach (string item in items.waitingList)
         {
-            // if hotbar does not contain tiem, broughtAllItems is false
+            // if hotbar does not contain item, broughtAllItems is false
             // if hotbar at any point contains item, becomes true
             // have to do comparison this way to handle clones
             foreach (string barItem in hotbar)
@@ -309,11 +305,12 @@ public class NPCDialogue : MonoBehaviour
             }
             broughtAllItems = hasItem;
         }
+        Debug.Log(broughtAllItems);
         if(broughtAllItems)
         {
+            // If we have all the items required, remove them to give them to the NPC
             foreach (string item in items.waitingList)
             {
-                //int index = System.Array.IndexOf(hotbar, item);
                 for(int i = 0; i < hotbar.Length; i++)
                 {
                     if (hotbar[i].Contains(item))
@@ -323,11 +320,25 @@ public class NPCDialogue : MonoBehaviour
                     }
                 }
             }
-            foreach (string ret in items.returnedList) 
+            // Make sure that we return the proper item depending on which stage of dialogue we are at
+            switch(itemIndex)
             {
-                Inventory.Instance.AddItem(stick);
+                case 0:
+                    Inventory.Instance.AddItem(stick);
+                    break;
+                case 1:
+                    Inventory.Instance.AddItem(knife);
+                    break;
+                case 2:
+                    Inventory.Instance.AddItem(rope);
+                    break;
+                default:
+                    Debug.Log("We have given all items back");
+                    break;
             }
-            if(itemIndex == 1)
+
+            // We received the last item and it is time to go win the game
+            if(itemIndex == itemExchange.Count-1)
             {
                 WinGame.Instance.SetWinCondition(true);
             }
