@@ -308,7 +308,11 @@ public class NPCDialogue : MonoBehaviour
                     hasItem = true;
                 }
             }
-            broughtAllItems = hasItem;
+            // if false, we do not have an item and don't want to update to true
+            if(broughtAllItems)
+            {
+                broughtAllItems = hasItem;
+            }
             hasItem = false;
         }
         if(broughtAllItems)

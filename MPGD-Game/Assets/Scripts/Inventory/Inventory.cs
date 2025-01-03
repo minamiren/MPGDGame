@@ -214,7 +214,13 @@ public class Inventory : MonoBehaviour
                     currentHotbarCount--;
                 } else
                 {
-                    // drop item in front of player
+                    // Do not allow player to get rid of the axe or trees, but can get rid of stones and sticks
+                    if (item.itemName == "Stone" || item.itemName == "Stick")
+                    {
+                        ClearHotBarSlot(hotbarButtons[slotIndex]);
+                        PickUps[slotIndex] = null;
+                        currentHotbarCount--;
+                    }
                 }
             };
         }
