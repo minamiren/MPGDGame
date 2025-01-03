@@ -310,7 +310,6 @@ public class NPCDialogue : MonoBehaviour
             broughtAllItems = hasItem;
             hasItem = false;
         }
-        Debug.Log("did we receive all items? "+broughtAllItems);
         if(broughtAllItems)
         {
             // If we have all the items required, remove them to give them to the NPC

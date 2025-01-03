@@ -104,9 +104,9 @@ public class Inventory : MonoBehaviour
                 }
             }
             if (itemAdded && pickup.CompareTag("Food") && objectSpawn != null)
-                {
-                    objectSpawn.SpawnNewFood();
-                }
+            {
+                objectSpawn.SpawnNewFood();
+            }
             // PickUps.Add(pickup);
             UpdateHotBar(pickup, availableSlot); // add the object to hotbar and update to show
             currentHotbarCount++; // the number of object hotbar holding++
@@ -203,14 +203,19 @@ public class Inventory : MonoBehaviour
                 Item item = itemController.item;
                 GameObject player = GameObject.FindWithTag("Player");
                 playerHungry = player.GetComponent<PlayerStates>();
-
-                if (playerHungry != null)
+                if (item.itemName == "Food")
                 {
-                    playerHungry.FillBelly(PlayerFillBelly);
+                    if (playerHungry != null)
+                    {
+                        playerHungry.FillBelly(PlayerFillBelly);
+                    }
+                    ClearHotBarSlot(hotbarButtons[slotIndex]);
+                    PickUps[slotIndex] = null;
+                    currentHotbarCount--;
+                } else
+                {
+                    // drop item in front of player
                 }
-                ClearHotBarSlot(hotbarButtons[slotIndex]);
-                PickUps[slotIndex] = null;
-                currentHotbarCount--;
             };
         }
     }
