@@ -114,7 +114,7 @@ public class NPCDialogue : MonoBehaviour
 
         itemExchange.Add(new AwaitedItems(new string[] {"Food"}, "Explore a little bit and bring me some food if you can."));
         itemExchange.Add(new AwaitedItems(new string[] {"Stick", "Stone"}, "Fight some enemies to find me a stone and a stick. I can make you a tool with it."));
-        itemExchange.Add(new AwaitedItems(new string[] {"Little Tree"}, "Go explore the trees for small ones and use your axe to cut them down."));
+        itemExchange.Add(new AwaitedItems(new string[] {"Little Tree"}, "Go explore the trees for small ones and use your axe to cut them down. The properties that make them small also appear to make them sparkle slightly."));
         itemExchange.Add(new AwaitedItems(new string[] { "Little Tree" }, "Continue searching the trees for small trees to cut down."));
         itemExchange.Add(new AwaitedItems(new string[] { "Little Tree" }, "Only one more small tree and I will have enough to create a long enough rope for you."));
     }

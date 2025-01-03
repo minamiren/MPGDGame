@@ -1739,6 +1739,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: NPC
       objectReference: {fileID: 0}
+    - target: {fileID: 2505419883642283755, guid: 0ae9d054d0abc654894f62c75c199a13, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 3e7c66a4389a3c34ba70f00d905190e8, type: 2}
+    - target: {fileID: 2505419883642283755, guid: 0ae9d054d0abc654894f62c75c199a13, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 889546562475993677, guid: 3e7c66a4389a3c34ba70f00d905190e8, type: 2}
+    - target: {fileID: 2505419883642283755, guid: 0ae9d054d0abc654894f62c75c199a13, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3141476471197895874, guid: 0ae9d054d0abc654894f62c75c199a13, type: 3}
       propertyPath: axe
       value: 
@@ -1759,6 +1771,10 @@ PrefabInstance:
       propertyPath: dialogueBox
       value: 
       objectReference: {fileID: 954946278}
+    - target: {fileID: 4236082226395272623, guid: 0ae9d054d0abc654894f62c75c199a13, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2901,7 +2917,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 59287070824462395, guid: 77975b8a9e04c0f4b83993b5fac79ac3, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -150
+      value: -75
       objectReference: {fileID: 0}
     - target: {fileID: 428455351636747234, guid: 77975b8a9e04c0f4b83993b5fac79ac3, type: 3}
       propertyPath: m_IsActive
@@ -2947,9 +2963,29 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1690954463256469545, guid: 77975b8a9e04c0f4b83993b5fac79ac3, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -270
+      objectReference: {fileID: 0}
+    - target: {fileID: 1690954463256469545, guid: 77975b8a9e04c0f4b83993b5fac79ac3, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1690954463256469545, guid: 77975b8a9e04c0f4b83993b5fac79ac3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1690954463256469545, guid: 77975b8a9e04c0f4b83993b5fac79ac3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1700001943224109071, guid: 77975b8a9e04c0f4b83993b5fac79ac3, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 1700001943224109071, guid: 77975b8a9e04c0f4b83993b5fac79ac3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2766494906507029738, guid: 77975b8a9e04c0f4b83993b5fac79ac3, type: 3}
       propertyPath: m_Enabled
@@ -3177,6 +3213,14 @@ PrefabInstance:
     - target: {fileID: 8536088922589803085, guid: 77975b8a9e04c0f4b83993b5fac79ac3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8948215009083275563, guid: 77975b8a9e04c0f4b83993b5fac79ac3, type: 3}
+      propertyPath: m_fontSize
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 8948215009083275563, guid: 77975b8a9e04c0f4b83993b5fac79ac3, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 9037278299266754950, guid: 77975b8a9e04c0f4b83993b5fac79ac3, type: 3}
       propertyPath: m_AnchoredPosition.y
