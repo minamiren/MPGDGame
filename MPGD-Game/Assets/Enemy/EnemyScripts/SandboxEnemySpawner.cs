@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour
+public class SandboxEnemySpawner : MonoBehaviour
 {
     public GameObject enemyPrefab;      // Reference to the enemy prefab
     public Transform[] spawnPoints;    // Array of spawn points
-    public int maxEnemies = 3;          // Maximum number of enemies allowed at a time
+    public int maxEnemies = 1;          // Maximum number of enemies allowed at a time
 
     private int currentEnemyCount = 0;  // Current number of active enemies
 
@@ -26,13 +26,6 @@ public class EnemySpawner : MonoBehaviour
 
             GameObject newEnemy = Instantiate(enemyPrefab, selectedSpawnPoint.position, selectedSpawnPoint.rotation);
             currentEnemyCount++;
-
-            // Optional: Set a reference to this spawner in the enemy
-            EnemyHealth enemyHealth = newEnemy.GetComponent<EnemyHealth>();
-            if (enemyHealth != null)
-            {
-                enemyHealth.SetSpawner(this);
-            }
         }
     }
 
@@ -43,4 +36,5 @@ public class EnemySpawner : MonoBehaviour
         SpawnEnemy(); // Spawn a new enemy to replace the destroyed one
     }
 }
+
 

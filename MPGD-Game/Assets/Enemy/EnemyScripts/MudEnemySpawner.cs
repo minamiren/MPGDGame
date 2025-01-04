@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour
+public class MudEnemySpawner : MonoBehaviour
 {
     public GameObject enemyPrefab;      // Reference to the enemy prefab
     public Transform[] spawnPoints;    // Array of spawn points
@@ -26,13 +26,6 @@ public class EnemySpawner : MonoBehaviour
 
             GameObject newEnemy = Instantiate(enemyPrefab, selectedSpawnPoint.position, selectedSpawnPoint.rotation);
             currentEnemyCount++;
-
-            // Optional: Set a reference to this spawner in the enemy
-            EnemyHealth enemyHealth = newEnemy.GetComponent<EnemyHealth>();
-            if (enemyHealth != null)
-            {
-                enemyHealth.SetSpawner(this);
-            }
         }
     }
 
