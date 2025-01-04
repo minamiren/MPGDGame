@@ -5045,6 +5045,82 @@ PrefabInstance:
       propertyPath: m_Name
       value: SandboxEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 4652700840937510462, guid: 4a6a740c3edcf4d0f9e65f4ad198ead2, type: 3}
+      propertyPath: ShapeModule.type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652700840937510462, guid: 4a6a740c3edcf4d0f9e65f4ad198ead2, type: 3}
+      propertyPath: ShapeModule.angle
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652700840937510462, guid: 4a6a740c3edcf4d0f9e65f4ad198ead2, type: 3}
+      propertyPath: SizeModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652700840937510462, guid: 4a6a740c3edcf4d0f9e65f4ad198ead2, type: 3}
+      propertyPath: NoiseModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652700840937510462, guid: 4a6a740c3edcf4d0f9e65f4ad198ead2, type: 3}
+      propertyPath: VelocityModule.x.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652700840937510462, guid: 4a6a740c3edcf4d0f9e65f4ad198ead2, type: 3}
+      propertyPath: VelocityModule.y.scalar
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652700840937510462, guid: 4a6a740c3edcf4d0f9e65f4ad198ead2, type: 3}
+      propertyPath: VelocityModule.z.scalar
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652700840937510462, guid: 4a6a740c3edcf4d0f9e65f4ad198ead2, type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652700840937510462, guid: 4a6a740c3edcf4d0f9e65f4ad198ead2, type: 3}
+      propertyPath: NoiseModule.strength.scalar
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652700840937510462, guid: 4a6a740c3edcf4d0f9e65f4ad198ead2, type: 3}
+      propertyPath: VelocityModule.radial.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652700840937510462, guid: 4a6a740c3edcf4d0f9e65f4ad198ead2, type: 3}
+      propertyPath: ShapeModule.randomDirectionAmount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652700840937510462, guid: 4a6a740c3edcf4d0f9e65f4ad198ead2, type: 3}
+      propertyPath: VelocityModule.radial.minMaxState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652700840937510462, guid: 4a6a740c3edcf4d0f9e65f4ad198ead2, type: 3}
+      propertyPath: InitialModule.gravityModifier.scalar
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652700840937510462, guid: 4a6a740c3edcf4d0f9e65f4ad198ead2, type: 3}
+      propertyPath: VelocityModule.speedModifier.minMaxState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652700840937510462, guid: 4a6a740c3edcf4d0f9e65f4ad198ead2, type: 3}
+      propertyPath: VelocityModule.radial.maxCurve.m_Curve.Array.data[0].time
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652700840937510462, guid: 4a6a740c3edcf4d0f9e65f4ad198ead2, type: 3}
+      propertyPath: VelocityModule.radial.maxCurve.m_Curve.Array.data[1].time
+      value: 0.8955078
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652700840937510462, guid: 4a6a740c3edcf4d0f9e65f4ad198ead2, type: 3}
+      propertyPath: VelocityModule.radial.maxCurve.m_Curve.Array.data[0].value
+      value: 0.64197946
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652700840937510462, guid: 4a6a740c3edcf4d0f9e65f4ad198ead2, type: 3}
+      propertyPath: VelocityModule.radial.maxCurve.m_Curve.Array.data[1].value
+      value: -0.2469101
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652700840937510462, guid: 4a6a740c3edcf4d0f9e65f4ad198ead2, type: 3}
+      propertyPath: VelocityModule.speedModifier.maxCurve.m_Curve.Array.data[1].value
+      value: 0.5555554
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

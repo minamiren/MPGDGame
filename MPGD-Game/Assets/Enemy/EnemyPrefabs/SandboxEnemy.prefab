@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   seedExp: {fileID: 4652700840937510462}
-  timeBetweenAttacks: 5
+  timeBetweenAttacks: 8
   sprayDuration: 0.5
 --- !u!114 &1521713858184745233
 MonoBehaviour:
@@ -200,7 +200,7 @@ MonoBehaviour:
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 50
   sightRange: 40
-  attackRange: 3
+  attackRange: 5
   playerInSightRange: 0
   playerInAttackRange: 0
 --- !u!1001 &678789584690146437
