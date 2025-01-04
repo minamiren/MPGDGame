@@ -42,8 +42,6 @@ public class PlayerMovement : MonoBehaviour
         rb.freezeRotation = true;  // Prevent unwanted rotation
         transform.rotation = Quaternion.Euler(0f, 90f, 0f);//keep the player's world coordinate, rotateY in 90 degree.
         UnityEngine.Cursor.lockState = CursorLockMode.Confined; // keep confined in the game window
-
-   
     }
 
     void Update()
@@ -96,6 +94,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnFire(InputAction.CallbackContext context)
     {
+        if (PauseMenu.isPaused)
+            return;
         if (!dialogue && context.performed && Time.time >= lastFireTime + fireCooldown)
         {
             Debug.Log("Fire action triggered!");
@@ -141,8 +141,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void LookAround()
     {
+        if (PauseMenu.isPaused) 
+            return;
         // Adjust rotation angles based on mouse input
-        if(!inventory.activeSelf)
+        if (!inventory.activeSelf)
         {
             rotationY -= lookInput.y * lookSpeed; // Invert Y-axis
             rotationY = Mathf.Clamp(rotationY, -20f, 20f); // Limit up and down rotation
@@ -152,5 +154,10 @@ public class PlayerMovement : MonoBehaviour
         // Apply the rotation to the camera
         playerCamera.localEulerAngles = new Vector3(rotationY, 0, 0);
         transform.localEulerAngles = new Vector3(0, rotationX, 0);
+    }
+
+    public void SetSensitivity(float sensitivity)
+    {
+        lookSpeed = sensitivity;
     }
 }

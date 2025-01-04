@@ -5,10 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
+
     public GameObject pauseMenuUI;
     public GameObject settingsMenuUI;
+    public GameObject startGameUI;
 
-    private bool isPaused = false;
+    public static bool isPaused = false;
 
     void Start()
     {
@@ -19,7 +21,12 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (isPaused)
+            if (settingsMenuUI.activeSelf)
+            {
+                // 如果目前是設定選單，關閉設定選單並返回暫停選單
+                CloseSettings();
+            }
+            else if (isPaused)
             {
                 Resume();
             }
@@ -34,7 +41,6 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(false);
         isPaused = false;
         Time.timeScale = 1f;
-        LockPlayerControls(false);
     }
 
     public void Pause()
@@ -43,23 +49,30 @@ public class PauseMenu : MonoBehaviour
         settingsMenuUI.SetActive(false);
         isPaused = true;
         Time.timeScale = 0f;
-        LockPlayerControls(true);
-    }
-
-    private void LockPlayerControls(bool lockState)
-    {
-        
     }
 
     public void OpenSettings()
     {
         pauseMenuUI.SetActive(false);
         settingsMenuUI.SetActive(true);
+        Time.timeScale = 0f;
     }
 
     public void CloseSettings()
     {
         settingsMenuUI.SetActive(false);
         pauseMenuUI.SetActive(true);
+        isPaused = true;
+        Time.timeScale = 0f;
+    }
+    public void BacktoMenu()
+    {
+        pauseMenuUI.SetActive(false);
+        startGameUI.SetActive(true);
+    }
+    public void StartGame()
+    {
+        isPaused = false;
+        Time.timeScale = 1f;
     }
 }
