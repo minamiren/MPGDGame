@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -5,7 +6,7 @@ public class MudEnemyStates : MonoBehaviour
 {
     public NavMeshAgent agent;
     public Transform player;
-    public LayerMask whatIsGround, whatIsPlayer;
+    public LayerMask whatIsGround, whatIsPlayer, whatIsEnemy;
 
     // Patroling
     public Vector3 walkPoint;
@@ -17,6 +18,11 @@ public class MudEnemyStates : MonoBehaviour
     public bool playerInSightRange, playerInAttackRange;
 
     private MudEnemyAttack mudEnemyAttack;
+
+    // Group Behavior
+    public float groupRange = 10f; // Range to detect nearby enemies
+    public float alignmentStrength = 0.5f; // Strength of alignment behavior
+    public float cohesionStrength = 0.5f; // Strength of cohesion behavior
 
     private void Awake()
     {
@@ -34,6 +40,8 @@ public class MudEnemyStates : MonoBehaviour
         if (!playerInSightRange && !playerInAttackRange) Patroling();
         if (playerInSightRange && !playerInAttackRange) ChasePlayer();
         if (playerInAttackRange && playerInSightRange) mudEnemyAttack.AttackPlayer();
+
+        ApplyGroupBehavior();
     }
 
     private void Patroling()
@@ -66,5 +74,50 @@ public class MudEnemyStates : MonoBehaviour
     {
         agent.SetDestination(player.position);
     }
-}
 
+    private void ApplyGroupBehavior()
+    {
+        // Get all nearby enemies
+        Collider[] nearbyEnemies = Physics.OverlapSphere(transform.position, groupRange, whatIsEnemy);
+
+        Vector3 cohesionVector = Vector3.zero; // Move towards the center of nearby enemies
+        Vector3 alignmentVector = Vector3.zero; // Align movement with nearby enemies
+        int groupCount = 0;
+
+        foreach (Collider collider in nearbyEnemies)
+        {
+            if (collider.gameObject != gameObject) // Avoid self
+            {
+                cohesionVector += collider.transform.position;
+                alignmentVector += collider.GetComponent<NavMeshAgent>().velocity;
+                groupCount++;
+            }
+        }
+
+        if (groupCount > 0)
+        {
+            // Calculate average position and velocity
+            cohesionVector /= groupCount;
+            alignmentVector /= groupCount;
+
+            // Apply cohesion (move towards group center)
+            Vector3 cohesionDirection = (cohesionVector - transform.position).normalized * cohesionStrength;
+
+            // Apply alignment (match group movement)
+            Vector3 alignmentDirection = alignmentVector.normalized * alignmentStrength;
+
+            // Combine forces
+            Vector3 groupMovement = cohesionDirection + alignmentDirection;
+
+            // Adjust the agent's destination
+            agent.SetDestination(transform.position + groupMovement);
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        // Visualize group range
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, groupRange);
+    }
+}
