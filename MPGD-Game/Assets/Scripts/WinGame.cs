@@ -16,7 +16,6 @@ public class WinGame : MonoBehaviour
 
     private bool winListen;
 
-    // bad way
     public GameObject player;
 
     private void Awake()
@@ -47,8 +46,13 @@ public class WinGame : MonoBehaviour
 
     public void SetWinCondition(bool canWin)
     {
-        Debug.Log("set condition");
         winCondition = canWin;
+        Debug.Log("set condition");
+    }
+
+    public void GetWinCondition()
+    {
+        Debug.Log(winCondition);
     }
 
     // Show 'press E to use win items' if in range of player

@@ -104,9 +104,9 @@ public class Inventory : MonoBehaviour
                 }
             }
             if (itemAdded && pickup.CompareTag("Food") && objectSpawn != null)
-                {
-                    objectSpawn.SpawnNewFood();
-                }
+            {
+                objectSpawn.SpawnNewFood();
+            }
             // PickUps.Add(pickup);
             UpdateHotBar(pickup, availableSlot); // add the object to hotbar and update to show
             currentHotbarCount++; // the number of object hotbar holding++
@@ -135,11 +135,12 @@ public class Inventory : MonoBehaviour
         ItemController itemController = pickup.GetComponent<ItemController>();
         itemText.text = itemController.item.itemName; // Use itemName here
 
-        // showing image
+
+        // showing image(not yet)
         Image icon = currentButton.transform.GetChild(0).GetComponent<Image>();
-        if (icon != null && itemController.icon != null)
+        if (icon != null && pickup.GetComponent<SpriteRenderer>() != null)
         {
-            icon.sprite = itemController.icon;
+            icon.sprite = pickup.GetComponent<SpriteRenderer>().sprite;
             icon.enabled = true;
         }
 
@@ -195,31 +196,33 @@ public class Inventory : MonoBehaviour
         if (slotIndex < hotbarSlotOccupied.Length && hotbarSlotOccupied[slotIndex])
         {
             GameObject pickup = PickUps[slotIndex];
-            if (pickup != null && pickup.CompareTag("Food"))
+            ItemController itemController = pickup.GetComponent<ItemController>();
+
+            if (itemController != null)
             {
-                ItemController itemController = pickup.GetComponent<ItemController>();
-
-                if (itemController != null)
+                Item item = itemController.item;
+                GameObject player = GameObject.FindWithTag("Player");
+                playerHungry = player.GetComponent<PlayerStates>();
+                if (item.itemName == "Food")
                 {
-                    Item item = itemController.item;
-                    GameObject player = GameObject.FindWithTag("Player");
-                    playerHungry = player.GetComponent<PlayerStates>();
-
                     if (playerHungry != null)
                     {
                         playerHungry.FillBelly(PlayerFillBelly);
                     }
-
-                    // 清空該熱鍵欄槽位
                     ClearHotBarSlot(hotbarButtons[slotIndex]);
                     PickUps[slotIndex] = null;
                     currentHotbarCount--;
+                } else
+                {
+                    // Do not allow player to get rid of the axe or trees, but can get rid of stones and sticks
+                    if (item.itemName == "Stone" || item.itemName == "Stick")
+                    {
+                        ClearHotBarSlot(hotbarButtons[slotIndex]);
+                        PickUps[slotIndex] = null;
+                        currentHotbarCount--;
+                    }
                 }
-            }
-            else
-            {
-                Debug.Log($"Cannot use item in slot {slotIndex}. It is not tagged as 'Food'.");
-            }
+            };
         }
     }
 
@@ -229,11 +232,12 @@ public class Inventory : MonoBehaviour
         TextMeshProUGUI itemText = hotbarButton.transform.Find("ItemText").GetComponent<TextMeshProUGUI>();
         itemText.text = " ";
 
-        // remove item icon
+        /* remove item image(not yet)
         Image icon = hotbarButton.transform.GetChild(0).GetComponent<Image>();
         icon.sprite = null;
         icon.enabled = false;
-
+        */
+        
         hotbarButton.onClick.RemoveAllListeners();
 
         int index = hotbarButtons.IndexOf(hotbarButton);
