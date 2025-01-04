@@ -100,13 +100,14 @@ public class Inventory : MonoBehaviour
                 {
                     PickUps[i] = pickup;
                     itemAdded = true;
+                    SoundManager.PlaySound(SoundType.REWARD);
                     break;
                 }
             }
             if (itemAdded && pickup.CompareTag("Food") && objectSpawn != null)
-                {
-                    objectSpawn.SpawnNewFood();
-                }
+            {
+                objectSpawn.SpawnNewFood();
+            }
             // PickUps.Add(pickup);
             UpdateHotBar(pickup, availableSlot); // add the object to hotbar and update to show
             currentHotbarCount++; // the number of object hotbar holding++
@@ -203,14 +204,25 @@ public class Inventory : MonoBehaviour
                 Item item = itemController.item;
                 GameObject player = GameObject.FindWithTag("Player");
                 playerHungry = player.GetComponent<PlayerStates>();
-
-                if (playerHungry != null)
+                if (item.itemName == "Food")
                 {
-                    playerHungry.FillBelly(PlayerFillBelly);
+                    if (playerHungry != null)
+                    {
+                        playerHungry.FillBelly(PlayerFillBelly);
+                    }
+                    ClearHotBarSlot(hotbarButtons[slotIndex]);
+                    PickUps[slotIndex] = null;
+                    currentHotbarCount--;
+                } else
+                {
+                    // Do not allow player to get rid of the axe or trees, but can get rid of stones and sticks
+                    if (item.itemName == "Stone" || item.itemName == "Stick")
+                    {
+                        ClearHotBarSlot(hotbarButtons[slotIndex]);
+                        PickUps[slotIndex] = null;
+                        currentHotbarCount--;
+                    }
                 }
-                ClearHotBarSlot(hotbarButtons[slotIndex]);
-                PickUps[slotIndex] = null;
-                currentHotbarCount--;
             };
         }
     }

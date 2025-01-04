@@ -45,6 +45,7 @@ public class PlayerStates : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        SoundManager.PlaySound(SoundType.PLAYERHURT);
         //currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
         //HealthText.text = "HEALTH: " + (int)currentHealth;
@@ -93,6 +94,7 @@ public class PlayerStates : MonoBehaviour
     {
         //gameState.text = "Game Over!";
         endPanel.SetActive(true);
+        SoundManager.PlaySound(SoundType.GAMEOVER);
 
     }
     // Update is called once per frame
