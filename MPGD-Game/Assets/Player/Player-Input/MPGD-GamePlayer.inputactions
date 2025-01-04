@@ -15,6 +15,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Sprint",
+                    "type": "Button",
+                    "id": "c62469ea-1174-49bc-8c3f-ea6d67fc17b9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Look",
                     "type": "Value",
                     "id": "9f5e75d5-5c9e-41ec-929c-003e495c8d42",
@@ -36,9 +45,6 @@
                     "name": "Fire",
                     "type": "Button",
                     "id": "4a924c81-a7df-4bfe-af61-4195e4ae497b",
-                    "name": "Interact",
-                    "type": "Button",
-                    "id": "aa12dcd4-4758-4352-9172-ff817b8d0cb9",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -47,7 +53,7 @@
                 {
                     "name": "Interact",
                     "type": "Button",
-                    "id": "6477474f-7ed8-4b45-897e-fc3e642c439f",
+                    "id": "4cbd432d-6450-4da2-917b-968e3141b4aa",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -193,7 +199,12 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Fire",
-                    "id": "44050f80-532b-425a-b3bb-fb00095d0e2d",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d5b8eb95-e2f1-4c14-9286-e2353dac84d4",
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
@@ -215,12 +226,12 @@
                 },
                 {
                     "name": "",
-                    "id": "58db6484-95d9-414e-8e2d-a401edd935d4",
-                    "path": "<Keyboard>/e",
+                    "id": "f3815437-6ba9-4d8c-b3e8-e831d97d8509",
+                    "path": "<Keyboard>/shift",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Interact",
+                    "action": "Sprint",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

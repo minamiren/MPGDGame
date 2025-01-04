@@ -13,5 +13,6 @@ public class DropDown : MonoBehaviour
         int randomIndex = Random.Range(0, dropPrefabs.Length);
 
         Instantiate(dropPrefabs[randomIndex], dropPosition, Quaternion.identity);
+        
     }
 }

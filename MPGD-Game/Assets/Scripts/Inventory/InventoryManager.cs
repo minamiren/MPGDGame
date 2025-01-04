@@ -28,6 +28,7 @@ public class InventoryManager : MonoBehaviour
     {
         // TODO: add check for item already exists. if so, increase count 
         items.Add(item);
+
     }
 
     public void Remove(Item item)
