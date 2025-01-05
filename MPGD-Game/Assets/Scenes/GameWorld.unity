@@ -4214,6 +4214,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 6110768648867879084, guid: 61ded5d8da1447543aba5e2c6c52ce98, type: 3}
+      propertyPath: dialogue
+      value: 
+      objectReference: {fileID: 1250601146}
+    - target: {fileID: 6110768648867879084, guid: 61ded5d8da1447543aba5e2c6c52ce98, type: 3}
       propertyPath: Corosshair
       value: 
       objectReference: {fileID: 1567630814}

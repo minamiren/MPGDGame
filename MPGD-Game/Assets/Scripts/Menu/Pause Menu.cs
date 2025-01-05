@@ -10,6 +10,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject settingsMenuUI;
     public GameObject startGameUI;
     public GameObject Corosshair;
+    public GameObject dialogue;
 
     public static bool isPaused = false;
 
@@ -20,20 +21,22 @@ public class PauseMenu : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (!dialogue.activeSelf)
         {
-            if (settingsMenuUI.activeSelf)
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                // 如果目前是設定選單，關閉設定選單並返回暫停選單
-                CloseSettings();
-            }
-            else if (isPaused)
-            {
-                Resume();
-            }
-            else
-            {
-                Pause();
+                if (settingsMenuUI.activeSelf)
+                {
+                    CloseSettings();
+                }
+                else if (isPaused)
+                {
+                    Resume();
+                }
+                else
+                {
+                    Pause();
+                }
             }
         }
     }
