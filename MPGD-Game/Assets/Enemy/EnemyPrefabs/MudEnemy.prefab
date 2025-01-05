@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 5413079274723155872}
   - component: {fileID: 6527736349533538221}
   - component: {fileID: 7926813270827973332}
-  - component: {fileID: 1987648257236369471}
   - component: {fileID: 8433268074442306510}
   - component: {fileID: 6320966637573642522}
   - component: {fileID: 1113259896926543129}
+  - component: {fileID: 7393180607646251625}
   m_Layer: 10
   m_Name: MudEnemy
   m_TagString: Enemy
@@ -34,7 +34,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 98.6, y: 1.96, z: 124.08}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3275607517126155136}
@@ -127,18 +127,6 @@ MonoBehaviour:
   dropPrefabs:
   - {fileID: 2539479653348189805, guid: 133b62ebfe32c62429c7b52a20ac44c0, type: 3}
   - {fileID: 9205403111066279728, guid: f9714246a596a6f4f994a4371814f45d, type: 3}
---- !u!114 &1987648257236369471
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6905037871808664499}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a430edceabdcb436fa5916fd51960d70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8433268074442306510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,6 +197,18 @@ MonoBehaviour:
   groupRange: 12
   alignmentStrength: 0.2
   cohesionStrength: 0.3
+--- !u!114 &7393180607646251625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6905037871808664499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a430edceabdcb436fa5916fd51960d70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8103758466052284665
 PrefabInstance:
   m_ObjectHideFlags: 0
