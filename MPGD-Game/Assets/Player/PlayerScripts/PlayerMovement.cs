@@ -115,14 +115,9 @@ public class PlayerMovement : MonoBehaviour
     public void GameStart()
     {
         SoundManager.PlaySound(SoundType.GAMESTART);
-        if (dialogue)
-        {
-            currentState = GameState.DialogueScene;
-        }
-        else
-        {
-            currentState = GameState.PlayScene;
-        }
+       
+        currentState = GameState.PlayScene;
+       
         
         updateCursorState();
     }
