@@ -102,7 +102,6 @@ public class PlayerMovement : MonoBehaviour
             case GameState.PlayScene:
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false; // Hide cursor during gameplay
-                SoundManager.PlaySound(SoundType.BG_PLAY);
                 break;
 
             case GameState.DialogueScene:
@@ -116,14 +115,9 @@ public class PlayerMovement : MonoBehaviour
     public void GameStart()
     {
         SoundManager.PlaySound(SoundType.GAMESTART);
-        if (dialogue)
-        {
-            currentState = GameState.DialogueScene;
-        }
-        else
-        {
-            currentState = GameState.PlayScene;
-        }
+       
+        currentState = GameState.PlayScene;
+       
         
         updateCursorState();
     }
@@ -163,6 +157,11 @@ public class PlayerMovement : MonoBehaviour
         {
             crosshairImage.enabled = hasGun;
         }
+    }
+
+    public void ResetPlayer()
+    {
+        SetGunPossession(false);
     }
 
     // This method will be called to set the gunAnimator after pickup
@@ -244,6 +243,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnFire(InputAction.CallbackContext context)
     {
+        if (PauseMenu.isPaused)
+            return;
         if (!dialogue && context.performed && Time.time >= lastFireTime + fireCooldown && hasGun)
         {
             Debug.Log("Fire action triggered!");
@@ -369,8 +370,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void LookAround()
     {
+        if (PauseMenu.isPaused) 
+            return;
         // Adjust rotation angles based on mouse input
-        if(!inventory.activeSelf)
+        if (!inventory.activeSelf)
         {
             rotationY -= lookInput.y * lookSpeed; // Invert Y-axis
             rotationY = Mathf.Clamp(rotationY, -20f, 20f); // Limit up and down rotation
@@ -380,5 +383,10 @@ public class PlayerMovement : MonoBehaviour
         // Apply the rotation to the camera
         playerCamera.localEulerAngles = new Vector3(rotationY, 0, 0);
         transform.localEulerAngles = new Vector3(0, rotationX, 0);
+    }
+
+    public void SetSensitivity(float sensitivity)
+    {
+        lookSpeed = sensitivity;
     }
 }

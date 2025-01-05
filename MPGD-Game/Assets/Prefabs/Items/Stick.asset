@@ -15,5 +15,4 @@ MonoBehaviour:
   id: 3
   itemName: Stick
   value: 1
-  icon: {fileID: 0}
-  count: 0
+  icon: {fileID: 21300000, guid: 02ff976d39577774bb44b83610e61dec, type: 3}
