@@ -271,5 +271,15 @@ public class Inventory : MonoBehaviour
             hotbarSlotOccupied[i] = false;
         }
     }
-
+    public void ClearHotbar()
+    {
+        for (int i = 0; i < hotbarButtons.Count; i++)
+        {
+            ClearHotBarSlot(hotbarButtons[i]);
+            PickUps[i] = null;
+            hotbarSlotOccupied[i] = false;
+        }
+        currentHotbarCount = 0;
+        Debug.Log("Hotbar cleared!");
+    }
 }
