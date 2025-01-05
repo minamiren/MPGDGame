@@ -53,6 +53,10 @@ public class PlayerStates : MonoBehaviour
 
         currentHunger = maxFullBelly;
         currentHealth = maxHealth;
+
+        savedData.health = currentHealth;
+        savedData.hunger = currentHunger;
+        savedData.position = transform.position;
     }
 
     public void TakeDamage(int damage)

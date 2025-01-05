@@ -23,4 +23,12 @@ public class BackgroundMusic : MonoBehaviour
             audioSource.volume = volume;
         }
     }
+
+    public void PauseMusic()
+    {
+        if (audioSource != null && audioSource.isPlaying)
+        {
+            audioSource.Pause();
+        }
+    }
 }

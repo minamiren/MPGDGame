@@ -9,6 +9,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenuUI;
     public GameObject settingsMenuUI;
     public GameObject startGameUI;
+    public GameObject Corosshair;
 
     public static bool isPaused = false;
 
@@ -39,6 +40,7 @@ public class PauseMenu : MonoBehaviour
     public void Resume()
     {
         pauseMenuUI.SetActive(false);
+        Corosshair.SetActive(true);
         isPaused = false;
         Time.timeScale = 1f;
     }
@@ -47,6 +49,7 @@ public class PauseMenu : MonoBehaviour
     {
         pauseMenuUI.SetActive(true);
         settingsMenuUI.SetActive(false);
+        Corosshair.SetActive(false);
         isPaused = true;
         Time.timeScale = 0f;
     }

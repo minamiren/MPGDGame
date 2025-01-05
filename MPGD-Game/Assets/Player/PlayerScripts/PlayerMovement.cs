@@ -102,7 +102,6 @@ public class PlayerMovement : MonoBehaviour
             case GameState.PlayScene:
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false; // Hide cursor during gameplay
-                SoundManager.PlaySound(SoundType.BG_PLAY);
                 break;
 
             case GameState.DialogueScene:

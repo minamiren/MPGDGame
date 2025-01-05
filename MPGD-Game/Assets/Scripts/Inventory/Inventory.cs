@@ -152,25 +152,25 @@ public class Inventory : MonoBehaviour
 
     private void MoveToInventory( Button hotbarButton)
     {
-        // Find the index of the hotbar button that was clicked
-        int index = hotbarButtons.IndexOf(hotbarButton);
-        if (PickUps[index] != null)
-        {
-            GameObject pickup = PickUps[index];
-            ItemController itemController = pickup.GetComponent<ItemController>();
+        //// Find the index of the hotbar button that was clicked
+        //int index = hotbarButtons.IndexOf(hotbarButton);
+        //if (PickUps[index] != null)
+        //{
+        //    GameObject pickup = PickUps[index];
+        //    ItemController itemController = pickup.GetComponent<ItemController>();
 
-            if (itemController != null)
-            {
-                // If the gameobject is valid add the item to the inventory
-                Item item = itemController.item;
-                //InventoryManager.Instance.CleanContent();
-                InventoryManager.Instance.AddToInventory(item); 
-                ClearHotBarSlot(hotbarButton);
-                hotbarSlotOccupied[index] = false;
-                currentHotbarCount--;
-                PickUps[index] = null; // remove object from the hotbar
-            }
-        }
+        //    if (itemController != null)
+        //    {
+        //        // If the gameobject is valid add the item to the inventory
+        //        Item item = itemController.item;
+        //        //InventoryManager.Instance.CleanContent();
+        //        InventoryManager.Instance.AddToInventory(item); 
+        //        ClearHotBarSlot(hotbarButton);
+        //        hotbarSlotOccupied[index] = false;
+        //        currentHotbarCount--;
+        //        PickUps[index] = null; // remove object from the hotbar
+        //    }
+        //}
     }
 
     // The same as use, but for use when giving an item to the NPC. So there is no effect for the player
