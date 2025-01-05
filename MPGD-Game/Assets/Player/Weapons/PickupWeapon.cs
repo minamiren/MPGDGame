@@ -14,12 +14,21 @@ public class PickupWeapon : MonoBehaviour
     private bool gunPickedUp = false;
     public TextMeshProUGUI pickupText;
 
+    private Vector3 initialPosition;
+    private Transform initialParent;
+    private bool initialIsKinematic;
+
     private void Start()
     {
+        initialPosition = transform.position;
+        initialParent = transform.parent;
+        initialIsKinematic = GetComponent<Rigidbody>().isKinematic;
+
         if (pickupText != null)
         {
             pickupText.enabled = true;  // Initially visual the pickup text
         }
+
     }
     void OnTriggerEnter(Collider other)
     {
@@ -80,5 +89,40 @@ public class PickupWeapon : MonoBehaviour
             player.GetComponent<PlayerMovement>().SetGunAnimator(gunAnimator);
         }
         */
+    }
+    public void ResetWeapon()
+    {
+        transform.SetParent(initialParent);
+        transform.position = initialPosition;
+
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = initialIsKinematic;
+        }
+
+        Collider collider = GetComponent<Collider>();
+        if (collider != null)
+        {
+            collider.enabled = true;
+        }
+
+        gunPickedUp = false;
+
+        if (pickupText != null)
+        {
+            pickupText.enabled = true;
+        }
+
+        PlayerMovement player = FindObjectOfType<PlayerMovement>();
+        if (player != null)
+        {
+            Animator playerAnimator = player.GetComponentInChildren<Animator>();
+            if (playerAnimator != null)
+            {
+                playerAnimator.SetBool("IsGun", false);
+                playerAnimator.ResetTrigger("ShootGun");
+            }
+        }
     }
 }

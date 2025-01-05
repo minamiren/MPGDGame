@@ -164,6 +164,11 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void ResetPlayer()
+    {
+        SetGunPossession(false);
+    }
+
     // This method will be called to set the gunAnimator after pickup
     /*
     public void SetGunAnimator(Animator gunAnimator)

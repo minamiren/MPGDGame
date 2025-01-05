@@ -27,6 +27,10 @@ public class PlayerStates : MonoBehaviour
 
     public GameObject startPanel;
     public GameObject endPanel;
+    public GameObject player;
+    public GameObject Gunn;
+
+    public PickupWeapon weapon;
 
     private SaveData savedData;
 
@@ -154,5 +158,6 @@ public class PlayerStates : MonoBehaviour
         currentHunger = savedData.hunger;
 
         transform.position = new Vector3(38.49f, 1.34f, 80.17f);
+
     }
 }
