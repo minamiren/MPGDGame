@@ -3934,7 +3934,7 @@ MonoBehaviour:
   enemyPrefab: {fileID: 1246127678010495997, guid: 510af4a29113e46438e006a86e599f27, type: 3}
   spawnPoints:
   - {fileID: 1175478970}
-  maxEnemies: 1
+  maxEnemies: 2
 --- !u!1001 &1836545472
 PrefabInstance:
   m_ObjectHideFlags: 0
