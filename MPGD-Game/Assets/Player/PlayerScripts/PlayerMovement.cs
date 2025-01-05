@@ -245,7 +245,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (PauseMenu.isPaused)
             return;
-        if (!dialogue && context.performed && Time.time >= lastFireTime + fireCooldown)
+        if (!dialogue && context.performed && Time.time >= lastFireTime + fireCooldown && hasGun)
         {
             Debug.Log("Fire action triggered!");
 
