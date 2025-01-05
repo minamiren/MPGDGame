@@ -136,12 +136,12 @@ public class Inventory : MonoBehaviour
         ItemController itemController = pickup.GetComponent<ItemController>();
         itemText.text = itemController.item.itemName; // Use itemName here
 
-
-        // showing image(not yet)
+        // showing image
         Image icon = currentButton.transform.GetChild(0).GetComponent<Image>();
-        if (icon != null && pickup.GetComponent<SpriteRenderer>() != null)
+        if (icon != null && itemController.icon != null)
         {
-            icon.sprite = pickup.GetComponent<SpriteRenderer>().sprite;
+            icon.color = Color.white;
+            icon.sprite = itemController.icon;
             icon.enabled = true;
         }
 
@@ -152,25 +152,25 @@ public class Inventory : MonoBehaviour
 
     private void MoveToInventory( Button hotbarButton)
     {
-        // Find the index of the hotbar button that was clicked
-        int index = hotbarButtons.IndexOf(hotbarButton);
-        if (PickUps[index] != null)
-        {
-            GameObject pickup = PickUps[index];
-            ItemController itemController = pickup.GetComponent<ItemController>();
+        //// Find the index of the hotbar button that was clicked
+        //int index = hotbarButtons.IndexOf(hotbarButton);
+        //if (PickUps[index] != null)
+        //{
+        //    GameObject pickup = PickUps[index];
+        //    ItemController itemController = pickup.GetComponent<ItemController>();
 
-            if (itemController != null)
-            {
-                // If the gameobject is valid add the item to the inventory
-                Item item = itemController.item;
-                //InventoryManager.Instance.CleanContent();
-                InventoryManager.Instance.AddToInventory(item); 
-                ClearHotBarSlot(hotbarButton);
-                hotbarSlotOccupied[index] = false;
-                currentHotbarCount--;
-                PickUps[index] = null; // remove object from the hotbar
-            }
-        }
+        //    if (itemController != null)
+        //    {
+        //        // If the gameobject is valid add the item to the inventory
+        //        Item item = itemController.item;
+        //        //InventoryManager.Instance.CleanContent();
+        //        InventoryManager.Instance.AddToInventory(item); 
+        //        ClearHotBarSlot(hotbarButton);
+        //        hotbarSlotOccupied[index] = false;
+        //        currentHotbarCount--;
+        //        PickUps[index] = null; // remove object from the hotbar
+        //    }
+        //}
     }
 
     // The same as use, but for use when giving an item to the NPC. So there is no effect for the player
@@ -233,11 +233,12 @@ public class Inventory : MonoBehaviour
         TextMeshProUGUI itemText = hotbarButton.transform.Find("ItemText").GetComponent<TextMeshProUGUI>();
         itemText.text = " ";
 
-        /* remove item image(not yet)
+        // remove item image
         Image icon = hotbarButton.transform.GetChild(0).GetComponent<Image>();
+        //icon.color = Color.white;
         icon.sprite = null;
         icon.enabled = false;
-        */
+        
         
         hotbarButton.onClick.RemoveAllListeners();
 
@@ -247,7 +248,6 @@ public class Inventory : MonoBehaviour
             hotbarSlotOccupied[index] = false;
         }
     }
-
 
     public int FindFirstAvailableSlot()
     {
@@ -271,4 +271,15 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public void ClearHotbar()
+    {
+        for (int i = 0; i < hotbarButtons.Count; i++)
+        {
+            ClearHotBarSlot(hotbarButtons[i]);
+            PickUps[i] = null;
+            hotbarSlotOccupied[i] = false;
+        }
+        currentHotbarCount = 0;
+        Debug.Log("Hotbar cleared!");
+    }
 }

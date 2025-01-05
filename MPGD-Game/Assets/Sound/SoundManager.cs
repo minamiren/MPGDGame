@@ -16,8 +16,7 @@ public enum SoundType
     ENEMIEDIE,
     GAMEOVER,
     REWARD,
-    GAMESTART,
-    BG_PLAY
+    GAMESTART
 }
 [RequireComponent(typeof(AudioSource))]
 public class SoundManager : MonoBehaviour
