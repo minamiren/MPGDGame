@@ -17,11 +17,12 @@ public class SettingsManager : MonoBehaviour
 
     private void Start()
     {
+        // Initialize
         if (volumeSlider != null)
         {
             float savedVolume = PlayerPrefs.GetFloat("Volume", 1);
             volumeSlider.onValueChanged.RemoveAllListeners();
-            volumeSlider.value = savedVolume; // ³]¸m·Æ±ìªì©l­È
+            volumeSlider.value = savedVolume;
             SetVolume(savedVolume);
             volumeSlider.onValueChanged.AddListener(SetVolume);
         }
@@ -42,6 +43,7 @@ public class SettingsManager : MonoBehaviour
         PlayerPrefs.SetFloat("Volume", volume);
         PlayerPrefs.Save();
 
+        //update the volume
         if (backgroundMusic != null)
         {
             backgroundMusic.SetVolume(volume);
@@ -50,11 +52,13 @@ public class SettingsManager : MonoBehaviour
 
     public void SetSensitivity(float sensitivity)
     {
+        // Calculate the look speed based on sensitivity
         float lookSpeed = Mathf.Lerp(0.05f, 0.6f, sensitivity);
 
         PlayerPrefs.SetFloat("Sensitivity", sensitivity);
         PlayerPrefs.Save();
 
+        //update to lookspeed
         if (playerMovement != null)
         {
             playerMovement.SetSensitivity(lookSpeed);

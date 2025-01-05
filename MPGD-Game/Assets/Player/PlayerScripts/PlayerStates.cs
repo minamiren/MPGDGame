@@ -151,6 +151,7 @@ public class PlayerStates : MonoBehaviour
     }
     public void RestartGame()
     {
+        // reset player state
         currentHealth = maxHealth;
         currentHunger = maxFullBelly;
 

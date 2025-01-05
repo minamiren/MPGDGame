@@ -92,9 +92,11 @@ public class PickupWeapon : MonoBehaviour
     }
     public void ResetWeapon()
     {
+        // Restore the weapon to its initial parent and position
         transform.SetParent(initialParent);
         transform.position = initialPosition;
 
+        // Reset the Rigidbody and Collider
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb != null)
         {
@@ -109,19 +111,19 @@ public class PickupWeapon : MonoBehaviour
 
         gunPickedUp = false;
 
+        // Re-enable the pickup text UI if available
         if (pickupText != null)
         {
             pickupText.enabled = true;
         }
-
-        PlayerMovement player = FindObjectOfType<PlayerMovement>();
+        // Find the Player object and reset animation states
+        PlayerMovement player = Object.FindFirstObjectByType<PlayerMovement>();
         if (player != null)
         {
             Animator playerAnimator = player.GetComponentInChildren<Animator>();
             if (playerAnimator != null)
             {
                 playerAnimator.SetBool("IsGun", false);
-                playerAnimator.ResetTrigger("ShootGun");
             }
         }
     }
