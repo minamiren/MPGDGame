@@ -37,23 +37,6 @@ public class SandboxEnemyAttack : MonoBehaviour
         seedExp.Stop();
     }
 
-    //private void OnParticleCollision(GameObject other)
-    //{
-    //    if (other.CompareTag("Player"))
-    //    {
-    //        DealDamageToPlayer();
-    //    }
-    //}
-
-    //private void DealDamageToPlayer()
-    //{
-    //    PlayerStates playerHealth = player.GetComponent<PlayerStates>();
-    //    if (playerHealth != null)
-    //    {
-    //        playerHealth.TakeDamage(10); // Adjust damage value as necessary
-    //    }
-    //}
-
     private void ResetAttack()
     {
         alreadyAttacked = false;

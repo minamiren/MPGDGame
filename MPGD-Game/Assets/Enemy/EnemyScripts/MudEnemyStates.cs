@@ -37,9 +37,18 @@ public class MudEnemyStates : MonoBehaviour
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        if (!playerInSightRange && !playerInAttackRange) Patroling();
-        if (playerInSightRange && !playerInAttackRange) ChasePlayer();
-        if (playerInAttackRange && playerInSightRange) mudEnemyAttack.AttackPlayer();
+        // Enemies can only react if the player has collected food
+        if (PlayerFoodCollection.hasCollectedFood)
+        {
+            if (!playerInSightRange && !playerInAttackRange) Patroling();
+            if (playerInSightRange && !playerInAttackRange) ChasePlayer();
+            if (playerInAttackRange && playerInSightRange) mudEnemyAttack.AttackPlayer();
+        }
+        else
+        {
+            // Continue patrol if the player hasn't collected food
+            Patroling();
+        }
 
         ApplyGroupBehavior();
     }
