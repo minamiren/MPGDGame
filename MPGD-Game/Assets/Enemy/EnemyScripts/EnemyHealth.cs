@@ -11,11 +11,11 @@ public class EnemyHealth : MonoBehaviour
 
     private Color[] healthColors = new Color[]
     {
-        Color.green,
-        new Color(1f, 0.64f, 0f),
-        Color.red,
-        new Color(0.65f, 0.16f, 0.16f),
-        Color.black
+        new Color(0.66f, 0.71f, 0.61f),  // Sage Green
+        new Color(0.66f, 0.72f, 0.55f),  // Faded Green
+        new Color(0.83f, 0.79f, 0.34f),  // Yellowing
+        new Color(0.48f, 0.29f, 0.24f),  // Brownish
+        new Color(0.82f, 0.82f, 0.82f)   // Pale Grey
     };
 
     private void Awake()
