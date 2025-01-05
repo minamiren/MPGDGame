@@ -100,6 +100,7 @@ public class Inventory : MonoBehaviour
                 {
                     PickUps[i] = pickup;
                     itemAdded = true;
+                    SoundManager.PlaySound(SoundType.REWARD);
                     break;
                 }
             }
