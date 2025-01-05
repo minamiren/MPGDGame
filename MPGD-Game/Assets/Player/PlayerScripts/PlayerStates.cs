@@ -24,6 +24,7 @@ public class PlayerStates : MonoBehaviour
     public TextMeshProUGUI gameState;
 
     public GameObject startPanel;
+    public GameObject endPanel;
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +45,7 @@ public class PlayerStates : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        SoundManager.PlaySound(SoundType.PLAYERHURT);
         //currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
         //HealthText.text = "HEALTH: " + (int)currentHealth;
@@ -90,7 +92,10 @@ public class PlayerStates : MonoBehaviour
 
     public void PlayerDie()
     {
-        gameState.text = "Game Over!";
+        //gameState.text = "Game Over!";
+        endPanel.SetActive(true);
+        SoundManager.PlaySound(SoundType.GAMEOVER);
+
     }
     // Update is called once per frame
     void Update()

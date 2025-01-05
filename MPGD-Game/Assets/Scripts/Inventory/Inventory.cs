@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 
 public class Inventory : MonoBehaviour
 {
+    public static Inventory Instance;
     public GameObject[] PickUps;
     public List<Button> hotbarButtons;
 
@@ -23,6 +24,13 @@ public class Inventory : MonoBehaviour
     
     public int PlayerFillBelly = 10;
 
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+    }
     void Start()
     {
         hotbarSlotOccupied = new bool[hotbarButtons.Count];
@@ -59,6 +67,21 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public string[] GetHotBarList()
+    {
+        string[] names = new string[PickUps.Length];
+        for (int i = 0; i < PickUps.Length; i++)
+        {
+            if(PickUps[i] != null)
+            {
+                names[i] = PickUps[i].name;
+            } else
+            {
+                names[i] = "";
+            }
+        }
+        return names;
+    }
 
     public void AddItem(GameObject pickup)
     {        
@@ -77,13 +100,14 @@ public class Inventory : MonoBehaviour
                 {
                     PickUps[i] = pickup;
                     itemAdded = true;
+                    SoundManager.PlaySound(SoundType.REWARD);
                     break;
                 }
             }
             if (itemAdded && pickup.CompareTag("Food") && objectSpawn != null)
-                {
-                    objectSpawn.SpawnNewFood();
-                }
+            {
+                objectSpawn.SpawnNewFood();
+            }
             // PickUps.Add(pickup);
             UpdateHotBar(pickup, availableSlot); // add the object to hotbar and update to show
             currentHotbarCount++; // the number of object hotbar holding++
@@ -149,6 +173,25 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    // The same as use, but for use when giving an item to the NPC. So there is no effect for the player
+    // It just leaves the inventory
+    public void GiveHotbarItem(int slotIndex)
+    {
+        if (slotIndex < hotbarSlotOccupied.Length && hotbarSlotOccupied[slotIndex])
+        {
+            GameObject pickup = PickUps[slotIndex];
+            ItemController itemController = pickup.GetComponent<ItemController>();
+
+            if (itemController != null)
+            {
+                Item item = itemController.item;
+                ClearHotBarSlot(hotbarButtons[slotIndex]);
+                PickUps[slotIndex] = null;
+                currentHotbarCount--;
+            };
+        }
+    }
+
     private void UseHotbarItem(int slotIndex)
     {
         if (slotIndex < hotbarSlotOccupied.Length && hotbarSlotOccupied[slotIndex])
@@ -161,14 +204,25 @@ public class Inventory : MonoBehaviour
                 Item item = itemController.item;
                 GameObject player = GameObject.FindWithTag("Player");
                 playerHungry = player.GetComponent<PlayerStates>();
-
-                if (playerHungry != null)
+                if (item.itemName == "Food")
                 {
-                    playerHungry.FillBelly(PlayerFillBelly);
+                    if (playerHungry != null)
+                    {
+                        playerHungry.FillBelly(PlayerFillBelly);
+                    }
+                    ClearHotBarSlot(hotbarButtons[slotIndex]);
+                    PickUps[slotIndex] = null;
+                    currentHotbarCount--;
+                } else
+                {
+                    // Do not allow player to get rid of the axe or trees, but can get rid of stones and sticks
+                    if (item.itemName == "Stone" || item.itemName == "Stick")
+                    {
+                        ClearHotBarSlot(hotbarButtons[slotIndex]);
+                        PickUps[slotIndex] = null;
+                        currentHotbarCount--;
+                    }
                 }
-                ClearHotBarSlot(hotbarButtons[slotIndex]);
-                PickUps[slotIndex] = null;
-                currentHotbarCount--;
             };
         }
     }

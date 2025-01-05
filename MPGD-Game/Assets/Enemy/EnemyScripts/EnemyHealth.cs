@@ -56,6 +56,7 @@ public class EnemyHealth : MonoBehaviour
         {
             dropDown.DropItem(transform.position);
         }
+        SoundManager.PlaySound(SoundType.ENEMIEDIE);
         Destroy(gameObject);
     }
 }

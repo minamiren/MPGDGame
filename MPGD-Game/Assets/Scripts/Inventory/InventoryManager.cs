@@ -28,6 +28,7 @@ public class InventoryManager : MonoBehaviour
     {
         // TODO: add check for item already exists. if so, increase count 
         items.Add(item);
+
     }
 
     public void Remove(Item item)
@@ -76,7 +77,6 @@ public class InventoryManager : MonoBehaviour
             var removeButton = obj.transform.Find("ExitButton").GetComponent<Button>();
 
             itemName.text = item.itemName;
-            itemIcon.sprite = item.icon;
 
             if (enableRemove.isOn)
             {
