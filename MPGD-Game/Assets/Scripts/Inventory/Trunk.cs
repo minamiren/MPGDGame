@@ -39,6 +39,8 @@ public class Trunk : MonoBehaviour
                 {
                     inventory.SetActive(false);
                     InventoryManager.Instance.CleanContent();
+                    //inventory.SetActive(false);
+                    //InventoryManager.Instance.CleanContent();
                 }
             }
         }
