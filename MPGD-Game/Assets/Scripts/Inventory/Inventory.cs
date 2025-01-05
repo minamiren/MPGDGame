@@ -249,7 +249,6 @@ public class Inventory : MonoBehaviour
         }
     }
 
-
     public int FindFirstAvailableSlot()
     {
         // to check for available slots
@@ -271,6 +270,7 @@ public class Inventory : MonoBehaviour
             hotbarSlotOccupied[i] = false;
         }
     }
+
     public void ClearHotbar()
     {
         for (int i = 0; i < hotbarButtons.Count; i++)

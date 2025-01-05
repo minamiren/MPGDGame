@@ -145,5 +145,14 @@ public class PlayerStates : MonoBehaviour
 
         Debug.Log("Game loaded!");
     }
+    public void RestartGame()
+    {
+        currentHealth = maxHealth;
+        currentHunger = maxFullBelly;
 
+        currentHealth = savedData.health;
+        currentHunger = savedData.hunger;
+
+        transform.position = new Vector3(38.49f, 1.34f, 80.17f);
+    }
 }
