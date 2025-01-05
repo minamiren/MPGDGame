@@ -64,7 +64,6 @@ public class PlayerMovement : MonoBehaviour
         StartScene,
         PlayScene,
         DialogueScene
-
     };
     public GameState currentState = GameState.StartScene;
 
@@ -109,6 +108,7 @@ public class PlayerMovement : MonoBehaviour
                 Cursor.visible = true;
                 break;
         }
+
     }
     
     //Set the StartButton to connect here, which change the GameState after clicking:
@@ -128,6 +128,7 @@ public class PlayerMovement : MonoBehaviour
             updateCursorState();  // Reapply the cursor state when the game regains focus
         }
     }
+
 
     void Update()
     {
