@@ -5433,7 +5433,7 @@ PrefabInstance:
 
         1-6: Use from HotBar
 
-        ESC Key: PauseMenue /
+        ESC Key: Pause Menu /
         Show Cursor'
       objectReference: {fileID: 0}
     - target: {fileID: 7680466964873643616, guid: 77975b8a9e04c0f4b83993b5fac79ac3, type: 3}
