@@ -5,7 +5,7 @@ You must survive while fighting off enemies in order to escape the place that yo
 
 ## How to play:
 Visit https://minamiren.github.io/MPGDBuild/[VERSION]/index.html
-- Current version is: v2.0
+- Current version is: v2.1
 
 ## Controls:
 - Mouse Movement: Look around
