@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:MPGD-Game/Assets/PlaySoundEnter.cs.meta
+guid: 108a5c12ec21d9847b2a06ecf659964f
+========
+guid: c08386be873273d4e8003f03b1d2620c
+>>>>>>>> main:MPGD-Game/Assets/Scripts/WinGame.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
