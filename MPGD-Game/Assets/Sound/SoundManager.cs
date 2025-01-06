@@ -15,6 +15,7 @@ public enum SoundType
     //Whole Game
     ENEMIEDIE,
     GAMEOVER,
+    GAMEWIN,
     REWARD,
     GAMESTART
 }
