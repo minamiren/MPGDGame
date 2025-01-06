@@ -5438,11 +5438,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7680466964873643616, guid: 77975b8a9e04c0f4b83993b5fac79ac3, type: 3}
       propertyPath: m_fontSize
-      value: 80
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 7680466964873643616, guid: 77975b8a9e04c0f4b83993b5fac79ac3, type: 3}
       propertyPath: m_fontSizeBase
-      value: 80
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 8083128971534046687, guid: 77975b8a9e04c0f4b83993b5fac79ac3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
