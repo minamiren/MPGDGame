@@ -8,12 +8,21 @@ using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Player Walk & Sprint, LookAround")]
     public float moveSpeed = 5f; // Movement speed
     public float sprintSpeed = 10f; //Sprint speed
     private bool isSprinting = false; //Sprint state
-
-
     public float lookSpeed = 0.1f;  // Mouse look speed
+    public Transform playerCamera; // Reference to the camera
+
+    private Vector2 movementInput; // Store movement input
+    private Vector2 lookInput; // Store look input
+    private float rotationY = 0f;  // Vertical rotation angle
+    private float rotationX = 0f;  // Horizontal rotation angle
+    private Rigidbody rb;
+
+
+    [Header("Jump")]
     public float jumpSpeed = 5f; //Jump speed
     public float lastJumpTime = 0f;
     public float jumpCooldown = 0.2f;
@@ -21,34 +30,28 @@ public class PlayerMovement : MonoBehaviour
     public bool isGrounded = true;
 
 
+    [Header("Attack")]
     public float lastFireTime = 0f;//Attacking
     public float fireCooldown = 0.5f;
     public GameObject stickPrefab;
     public Transform shootingPoint;
     public ParticleSystem FireEffect1;
 
-    public Transform playerCamera; // Reference to the camera
+    [Header("Condition, Trigger from others")]
     public GameObject inventory;
-
-    private Vector2 movementInput; // Store movement input
-    private Vector2 lookInput; // Store look input
-    private float rotationY = 0f;  // Vertical rotation angle
-    private float rotationX = 0f;  // Horizontal rotation angle
     public static bool dialogue = false;
 
-    private Rigidbody rb;
-
-    //=====Crosshair=======
+    [Header("Crosshair")]
     public Texture2D crosshairTexture; // Crosshair icon texture
     public Vector2 crosshairHotspot = new Vector2(16, 16); // The center of the crosshair texture
     public Image crosshairImage; // Reference to the UI Image for crosshair
 
-    //=====Animation======
+    [Header("Animation")]
     public Animator animator;
     private bool hasGun = false;
     public Animator gunAnimator;
 
-    //====Sound=====
+    [Header("Player Sound")]
     private float footstepTimer = 0f;
     private float currentFootstepInterval;
     private float walkFootstepInterval = 0.5f;  // Time between steps while walking
@@ -255,37 +258,6 @@ public class PlayerMovement : MonoBehaviour
             FireEffect1.Play();
 
             SoundManager.PlaySound(SoundType.GUNSHOOT);
-            /*
-             if (gunAnimator != null)
-             {
-                 gunAnimator.SetTrigger("Shoot");
-             }
-            */
-
-            /*
-            // Get the mouse position and create a ray from the camera to that point
-            Vector2 mousePosition = Mouse.current.position.ReadValue();
-            Ray cameraRay = Camera.main.ScreenPointToRay(mousePosition);
-
-            // Calculate the direction from the shooting point to the mouse's world position
-            Vector3 targetPoint = cameraRay.GetPoint(1000f); // Get a point far away along the ray
-            Vector3 direction = (targetPoint - shootingPoint.position).normalized;
-            // Perform a raycast from shootingPoint in the calculated direction
-            if (Physics.Raycast(shootingPoint.position, direction, out RaycastHit hit))
-            {
-
-                GameObject stickInstance = Instantiate(stickPrefab, shootingPoint.position, shootingPoint.rotation);
-                StickThrow stickThrowScript = stickInstance.GetComponent<StickThrow>();
-                if(stickThrowScript != null)
-                {
-                    stickThrowScript.SetTartget(hit.point);
-                }
-
-                lastFireTime = Time.time;
-            }
-            // Instantiate(stickPrefab, shootingPoint.position, Quaternion.identity);
-            // lastFireTime = Time.time;
-            */
 
             Ray cameraRay = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
             if (Physics.Raycast(cameraRay, out RaycastHit hit, 100f))
@@ -305,6 +277,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    //Blender tree aniamtion here
     private void updateAnimation()
     {
         if (movementInput == Vector2.zero)
@@ -356,8 +329,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovePlayer()
     {
-        //Debug.Log("Movement Input: " + movementInput);  // Debug the input
-
+      
         //===Check if sprint or walk======
         float currentSpeed = isSprinting ? sprintSpeed : moveSpeed;
         //Debug.Log($"Current Speed: {currentSpeed}");
@@ -367,7 +339,6 @@ public class PlayerMovement : MonoBehaviour
         move = transform.TransformDirection(move); // Transform to world space
 
         // Move the player
-        // transform.position += move * moveSpeed * Time.deltaTime;
         rb.MovePosition(rb.position + move * currentSpeed * Time.deltaTime);
         //Debug.Log("Move Vector: " + move);
     }
