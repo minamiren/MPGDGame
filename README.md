@@ -5,7 +5,7 @@ You must survive while fighting off enemies in order to escape the place that yo
 
 ## How to play:
 Visit https://minamiren.github.io/MPGDBuild/[VERSION]/index.html
-- Current version is: v2.0
+- Current version is: v2.1
 
 ## Controls:
 - Mouse Movement: Look around
@@ -41,3 +41,5 @@ Visit https://minamiren.github.io/MPGDBuild/[VERSION]/index.html
 - NPC:
 - https://assetstore.unity.com/packages/3d/characters/humanoids/fantasy/stylized-npc-peasant-nolant-demo-252440
 - https://www.youtube.com/watch?v=X-7A0WzSx5A
+- Sound:
+- https://pixabay.com/sound-effects/
