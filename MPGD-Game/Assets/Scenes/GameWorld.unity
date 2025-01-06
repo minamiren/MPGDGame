@@ -5419,29 +5419,30 @@ PrefabInstance:
       value: 'CONTROLS
 
 
-        Mouse: Look around
+        Mouse Movement: Look around
 
-        WASD/Arrows: Move
+        WASD/Arrows:
+        Move
 
-        Space:
-        Attack
+        Space: Jump
 
-        E: Interact with object
+        Mouse Left Click: Attack
 
-        Left click: Select
+        E: Interact
+        with object
 
-        1-6:
-        Use from HotBar
+        1-6: Use from HotBar
 
-        esc: PauseMenue / Show Cursor'
+        ESC Key: PauseMenue /
+        Show Cursor'
       objectReference: {fileID: 0}
     - target: {fileID: 7680466964873643616, guid: 77975b8a9e04c0f4b83993b5fac79ac3, type: 3}
       propertyPath: m_fontSize
-      value: 95
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 7680466964873643616, guid: 77975b8a9e04c0f4b83993b5fac79ac3, type: 3}
       propertyPath: m_fontSizeBase
-      value: 95
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 8083128971534046687, guid: 77975b8a9e04c0f4b83993b5fac79ac3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
