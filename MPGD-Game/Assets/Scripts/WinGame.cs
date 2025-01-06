@@ -41,6 +41,7 @@ public class WinGame : MonoBehaviour
         if(interact.ReadValue<float>() == 1 && winListen)
         {
             winScreen.SetActive(true);
+            SoundManager.PlaySound(SoundType.GAMEWIN);
         }
     }
 

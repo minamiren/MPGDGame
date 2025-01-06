@@ -360,4 +360,27 @@ public class NPCDialogue : MonoBehaviour
         }
         return broughtAllItems;
     }
+    public void RestartDialogue()
+    {
+        // Reset dialogue-related states
+        startDialogue = false;
+        mostRecentResponse = "";
+        dialogueIndex = 0;
+        itemIndex = 0;
+        waitingForItem = false;
+        closeDialogue = false;
+        keyReleased = true;
+
+        // Deactivate the dialogue UI
+        template.SetActive(false);
+        PlayerMovement.dialogue = false;
+
+        // Optionally re-enable the dialogue text prompt if player is still in range
+        if (playerInRange)
+        {
+            dialogueText.enabled = true;
+        }
+
+        Debug.Log("Dialogue has been restarted.");
+    }
 }
